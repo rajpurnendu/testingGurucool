@@ -2,6 +2,7 @@
 import ReusableCard from "./reusableCard";
 import { card } from "./arraytext";
 import { useState } from "react";
+import Link from "next/link";
 
 const Services = () => {
   const [cards, setCards] = useState(card);
@@ -19,15 +20,15 @@ const Services = () => {
         <h1 className="text-center lg:text-[2.125rem] text-base font-semibold lg:mb-[8px]">
           Services
         </h1>
-        <p className="text-center text-sm lg:text-[1.25rem] lg:mb-[1.87rem] mb-[1rem] font-normal">
-          We provide all astrology based services here at gurucool, be it
-          astrolgical consultations, Gods& Devotion, Blogs
+        <p className="text-center  text-sm lg:text-[1.25rem] leading-[30px] lg:mb-[1.87rem] mb-[1rem] font-normal">
+          We provide all astrology-based services here at Gurucool, whether
+          astrological consultations, gods and devotion, or blogs.
         </p>
       </div>
 
       <div className="flex mx-auto pl-6 lg:px-0 md:px-[0px]">
         <div
-          className="md:min-w-[220px] lg:min-w-[562px]  md:min-h-[420px] lg:min-h-[724px] min-w-[100px] min-h-[182px] px-[11.52px] lg:px-[65px] lg:py-[50px] py-[30px] bg-black bg-opacity-20 md:rounded-xl lg:rounded-xl rounded-[3.5px] gap-[15px] justify-center items-end lg:gap-[85px] flex flex-col bg-bottom lg:bg-center bg-cover md:bg-center"
+          className="md:min-w-[220px] lg:min-w-[562px]   min-w-[100px]  px-[11.52px] lg:px-[65px] lg:py-[50px] py-[30px] bg-black bg-opacity-20 md:rounded-xl lg:rounded-xl rounded-[3.5px] gap-[15px] justify-center items-end lg:gap-[85px] flex flex-col bg-bottom lg:bg-center bg-cover md:bg-center"
           style={{
             backgroundImage: `url(${cards[0].img.src})`,
             backgroundBlendMode: "hue",
@@ -44,11 +45,13 @@ const Services = () => {
               {cards[0].desc}
             </p>
           </div>
-          <div className="lg:p-4 p-[2.83px] md:p-4 bg-emerald-500 justify-center items-center gap-2.5 inline-flex">
-            <p className="text-right text-white text-[9.27px] md:text-lg lg:text-lg font-semibold leading-3">
-              Consult Now
-            </p>
-          </div>
+          <Link href={cards[0].url}>
+            <div className="lg:p-4 p-[2.83px] md:p-4 bg-emerald-500 justify-center  border border-transparent items-center gap-2.5 inline-flex hover:border-black">
+              <p className="text-right text-white text-[9.27px] md:text-lg lg:text-lg font-semibold leading-3">
+                {cards[0].btn}
+              </p>
+            </div>
+          </Link>
         </div>
         <div className="right flex flex-col lg:gap-x-[0.88rem] gap-2 lg:gap-y-[1.06rem] md:gap-x-[0.70rem] md:gap-y-[0.6rem] ">
           <div className="upper flex flex-wrap ml-[0.87rem] lg:gap-x-[0.88rem] gap-x-[4px] gap-y-[8px]  lg:gap-y-[1.06rem]">

@@ -10,14 +10,14 @@ const page = ({
   searchParams,
 }: {
   params: { filtername: string[] };
-  searchParams?: { query?: string; page?: string };
+  searchParams?: { filter?: string; id?: string };
 }) => {
   return (
     <>
       <Banner />
       <Services />
       <Testmonial />
-      <TopRated_astrologer searchParams={searchParams} />
+      <TopRated_astrologer searchParam={searchParams} />
       <ReaderSection />
       <ContentSection />
       <Faq searchParams={searchParams} />

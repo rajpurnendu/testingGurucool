@@ -17,57 +17,69 @@ export const card = [
         id: 0,
         title: "On call consultation",
         subtitle:"Get the best aarti collection only here at gurucool",
-        desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
-        img: callImg
+        desc: "Quick information at your fingertips! On-call consultation to know answers to life's questions with our astrology experts.",
+        img: callImg,
+        btn:"Consult Now",
+        url:'/call-to-astrologers'
     },
     {
         id: 1,
         title: "Aarti & Devotion",
         subtitle:"Get the best aarti collection only here at gurucool",
-        desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
-        img: aarti
+        desc: " Join Aarti and Bhakti collections where you can create a harmonious relationship with Gods with sacred bhajans, aarti, chalisa, stotram, etc.",
+        img: aarti,
+        btn:"Read More",
+        url:'/call-to-astrologers'
     },
     {
         id: 2,
         title: "Live Astrologers",
         desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
         subtitle: "Chat consultation with astrologers anytime anywhere",
-        img: live
+        img: live,
+        btn:"Explore More",
+        url:'/call-to-astrologers'
     },
     {
         id: 3,
         title: "Gods & Goddesses",
-        desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
+        desc: "Create a spiritual connection with the timeless knowledge of the Gods and Goddesses, their rituals, and their cosmic form beyond limits.",
         subtitle: "Chat consultation with astrologers anytime anywhere",
-        img: gods
+        img: gods,
+        btn:"Read More",
+        url:'/call-to-astrologers'
     },
     {
         id: 4,
         title: "Chat consultations",
         desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
         subtitle: "Chat consultation with astrologers anytime anywhere",
-        img: chat
+        img: chat,
+        btn:'Chat Now',
+        url:'/call-to-astrologers'
     },
-    {
-        id: 5,
-        title: "Kundali Matching",
-        desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
-        subtitle: "Chat consultation with astrologers anytime anywhere",
-        img: kundali
-    },
-    {
-        id: 6,
-        title: "Live horoscope",
-        desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
-        subtitle: "Chat consultation with astrologers anytime anywhere",
-        img: horoscope
-    },
+    // {
+    //     id: 5,
+    //     title: "Kundali Matching",
+    //     desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
+    //     subtitle: "Chat consultation with astrologers anytime anywhere",
+    //     img: kundali
+    // },
+    // {
+    //     id: 6,
+    //     title: "Live horoscope",
+    //     desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
+    //     subtitle: "Chat consultation with astrologers anytime anywhere",
+    //     img: horoscope
+    // },
     {
         id: 7,
         title: 'Blogs & readers section',
-        desc: "We provide on call consultation with our experienced astrologers so that you can seek solution for your problem in the best possible manner without any hassle and great clarity .",
+        desc: "Welcome to our blog section. Find articles, informative blogs, and amazing stories.",
         subtitle: 'Chat consulation with astrologers anytime anywhere',
-        img: blog
+        img: blog,
+        btn:'Read More',
+        url:'/blogs'
     }
 ]
 
@@ -110,28 +122,19 @@ export const card3 = [
     {
         title: '10K+',
         subtitle: 'Consultations',
-        desc: `We have around 100+ astrologers
-        who will provide the best solution
-        for your life problems.All the astrologers
-        verified and trustworthy.`,
-        img: gif1
+        desc: `Change your life with GuruCool. Get solutions for your love, career, and future problems from the best astrologers in personal consultation sessions through call and chat!`
+       , img: gif1
     },
     {
         title: '100+',
         subtitle: 'Verified Astrologers',
-        desc: `We have around 100+ astrologers
-        who will provide the best solution
-        for your life problems.All the astrologers
-        verified and trustworthy.`,
+        desc: `With GuruCool's 120 Trusted Astrologers Life Solutions - Verified and Trustworthy to Guiding You Through Every Challenge.`,
         img: gif2
     },
     {
         title: '10K+',
         subtitle: 'Happy Users',
-        desc: `We have around 100+ astrologers
-        who will provide the best solution
-        for your life problems. All the astrologers
-        verified and trustworthy.`,
+        desc: `Join 10,000+ satisfied customers on GuruCool! Discover life-changing astrological guidance and embark on your personal journey today!`,
         img: gif3
     }
 ]

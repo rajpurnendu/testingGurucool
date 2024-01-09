@@ -7,7 +7,7 @@ const Testmonial = () => {
     <div className="lg:w-[72rem] w-auto m-auto mt-[36px] lg:mt-[3.75rem]">
       <div className="px-[20px]">
         <h1 className="text-center lg:text-[2.125rem] text-base font-semibold lg:mb-[0.5rem]">
-          Testimonial
+          Testimonials
         </h1>
         <p className="text-center text-sm lg:text-[1.25rem] lg:mb-[1.87rem] mb-[1rem] font-normal">
           People have shown high trust in us, which can be seen in their
@@ -76,7 +76,7 @@ lg:block
 font-medium
 leading-snug"
         >
-          {desc}
+          {desc.slice(0, 120)}...
         </h3>
       </div>
     </div>
