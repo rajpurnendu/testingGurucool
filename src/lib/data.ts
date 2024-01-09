@@ -1,4 +1,4 @@
-import { G_GET_BLOGS, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE } from "./apilinks";
+import { G_GET_BLOGS, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_HOMEPAGE_ASTROLOGERS } from "./apilinks";
 // import { setCookie } from 'cookies-next';
 
 
@@ -79,4 +79,27 @@ export async function getUserprofile(loginToken:string):Promise<any | undefined>
     } catch (error) {
         throw new Error('Failed to fetch Single blog data.');
     }
+}
+
+
+export async function GET_Spec_Astrologer (query:string):Promise<any | undefined>{
+  try {
+    const response = await fetch(
+      GET_HOMEPAGE_ASTROLOGERS(query),
+      { next: { revalidate: 4 }}
+    );
+    if (response.ok) {
+      const data = await response.json(); 
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+      throw new Error('Failed to fetch Single blog data.');
+  }
 }

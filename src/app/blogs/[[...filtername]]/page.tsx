@@ -63,7 +63,7 @@ const Blogmain = async ({
     <Suspense fallback={<h1>Loading...</h1>}>
       <div
         className="max-w-6xl mx-auto px-4 md:px-0 box-border"
-        style={{ marginTop: "30px" }}
+        style={{ marginTop: "70px" }}
       >
         <div>
           {/* Filter Section  */}

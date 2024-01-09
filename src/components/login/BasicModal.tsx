@@ -285,29 +285,31 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
                             />
                           </div>
                         </div>
+
+                        <div className="text-[10px] p-2 text-center mt-1 text-white md:text-[12px]">
+                          We will send you a one-time verification code through
+                          SMS
+                        </div>
+                        <div className="flex gap-6 pt-6 w-[100%]">
+                          <button
+                            className="flex items-center justify-center h-10 w-full bg-green-600 rounded-md text-white cursor-pointer transition duration-300 ease-in-out hover:bg-green-700 focus:outline-none"
+                            // onClick={handleSendotp}
+                            type="submit"
+                            onClick={(e) => {
+                              e.preventDefault(); // Add this line to prevent form submission
+                              handleSendotp();
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault(); // Add this line to prevent form submission
+                                handleResendOTP();
+                              }
+                            }}
+                          >
+                            Get OTP
+                          </button>
+                        </div>
                       </form>
-                      <div className="text-[10px] p-2 text-center mt-1 text-white md:text-[12px]">
-                        We will send you a one-time verification code through
-                        SMS
-                      </div>
-                      <div className="flex gap-6 pt-6 w-[100%]">
-                        <button
-                          className="flex items-center justify-center h-10 w-full bg-green-600 rounded-md text-white cursor-pointer transition duration-300 ease-in-out hover:bg-green-700 focus:outline-none"
-                          onClick={handleSendotp}
-                          // onClick={(e) => {
-                          //   e.preventDefault(); // Add this line to prevent form submission
-                          //   handleSendotp();
-                          // }}
-                          // onKeyDown={(e) => {
-                          //   if (e.key === "Enter") {
-                          //     e.preventDefault(); // Add this line to prevent form submission
-                          //     handleResendOTP();
-                          //   }
-                          // }}
-                        >
-                          Get OTP
-                        </button>
-                      </div>
                     </div>
                   )}
                 </div>

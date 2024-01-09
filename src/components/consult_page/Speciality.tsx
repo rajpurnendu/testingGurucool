@@ -44,7 +44,6 @@ const Speciality = () => {
       ),
       url: "/call-to-astrologers/Love",
     },
-
     {
       id: 2,
       name: (
@@ -187,7 +186,7 @@ const Speciality = () => {
 
   return (
     <>
-      <div className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 sticky top-[61.5px] bg-white z-10">
+      <div className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 sticky top-[60px] bg-white z-10">
         <h6 className="mb-[10px] md:mb-[24px] text-[20px] sm:text-[20px] md:text-[26px] font-medium text-[#3D3D3D] text-left md:block">
           Specialities
         </h6>

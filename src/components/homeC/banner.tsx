@@ -1,6 +1,7 @@
 import Image from "next/image";
 import hand from "@/../public/assets/hand.webp";
 import bannerImg from "../../../public/assets/background.webp";
+import Link from "next/link";
 
 const Banner = () => {
   return (
@@ -19,21 +20,17 @@ const Banner = () => {
         <div className="flex flex-col  lg:gap-[3.19rem] gap-[15px]">
           <div className="flex flex-col gap-0 w-[117px] md:w-full lg:w-auto lg:gap-4">
             <h1 className="m-0 lg:text-white md:text-white text-neutral-700 text-base lg:text-[2.5rem] font-semibold">
-              Best in Class
+              Unlock Astrology
             </h1>
             <h2 className="m-0 text-[#26C884] text-base lg:text-[2.5rem] font-semibold">
-              Astrological Solutions
+              Secrets with GuruCool
             </h2>
           </div>
-          <p className="lg:text-white md:w-[400px]  md:text-white  text-neutral-700 w-[290px] lg:w-[600px] text-xs md:text-xs lg:text-[1.125rem] leading-[15px] lg:leading-none font-normal lg:font-semibold text-justify">
-            Talk to our highly skilled astrologers and procure the best remedies
-            for your problems, at one place only. We have solutions for all your
-            life problems,be it love life marriage, career or anything we have
-            got you all covered. gurucool is the best astrrology website it
-            provides astrology predictions
+          <p className="lg:text-white md:w-[400px]  md:text-white  text-neutral-700 w-[290px] lg:w-[600px] text-xs md:text-xs lg:text-[1.125rem] leading-[15px] lg:leading-normal font-normal lg:font-semibold text-justify">
+            {`Explore astrology secrets solutions with GuruCool astrologers: Your one-stop destination for personalized love, career, and marriage predictions. Find solutions to life's challenges through tarot cards, numerology, and zodiac insights.`}
           </p>
-          <button className=" w-fit lg:w-[285px] lg:h-[71px] rounded-lg font-semibold md:text-base text-sm lg:text-[1.25rem] bg-[#26c884] text-white px-[10px] py-[10px]  lg:px-[1.62rem] lg:py-[0.94rem]">
-            Get consultation
+          <button className=" w-fit lg:w-[285px] lg:h-[71px] rounded-lg font-semibold md:text-base text-sm lg:text-[1.25rem] bg-[#26c884] text-white px-[10px] py-[10px]  lg:px-[1.62rem] lg:py-[0.94rem] hover:border border-black">
+            <Link href="/call-to-astrologers">Get consultation</Link>
           </button>
         </div>
         <Image
