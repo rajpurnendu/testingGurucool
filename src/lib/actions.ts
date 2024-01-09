@@ -1,0 +1,105 @@
+'use server';
+
+import { cookies } from 'next/headers';
+import { setCookie, deleteCookie, hasCookie, getCookie, getCookies } from 'cookies-next';
+import { P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER } from './apilinks';
+ // setCookie('test', 'purnendu.....', { cookies });
+export async function testAction(requestData: { code: string, phone: string, isInternational: boolean }): Promise<any | undefined> {
+  try {
+    const response = await fetch(P_SEND_LOGIN_OTP, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      // Handle non-successful responses
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    // console.log(result);
+    
+    return result;
+  } catch (error) {
+    // Handle errors during the fetch or JSON parsing
+    console.error('Error:', error);
+    // You can throw the error again if you want to propagate it further
+    throw error;
+  }
+}
+
+export async function verifyOtp(requestData: {phone: string, userOTP: string }): Promise<any | undefined> {
+  // console.log(requestData);
+  
+  try {
+    const response = await fetch(P_VERIFY_LOGIN_OTP, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+      cache: 'no-store'
+    });
+
+    const result = await response.json();
+    // console.log(result);
+    setCookie('loginToken', result?.token, { cookies, secure: true, httpOnly: true, sameSite: 'strict',maxAge: 60*60*24 });
+    setCookie('phone', requestData.phone, { cookies});
+    return result;
+  } catch (error) {
+    // Handle errors during the fetch or JSON parsing
+    console.error('Error:', error);
+    // You can throw the error again if you want to propagate it further
+    throw error;
+  }
+}
+
+export async function logout() {
+  cookies().delete('loginToken');
+}
+
+export async function registerNewUser(requestData: {
+  file: File | null,
+  firstName:string,
+  lastName: string,
+  email: string | undefined,
+  code: string,
+  isInternational: boolean,
+  website: string,
+  gender: string,
+  referralCode: string | undefined,
+}): Promise<any | undefined> {
+  // console.log(requestData);
+  const cookieStore = cookies();
+  const phoneNumber = cookieStore.get("phone");
+  try {
+    const response=await fetch(REGISTER_NEW_USER,{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({...requestData,phone:phoneNumber?.value}),
+      cache:'no-store'
+    })
+
+    if(!response.ok){
+      throw new Error("Network response was not ok!!");
+    }
+   
+    const data=await response.json();
+    setCookie('loginToken', data?.token, { cookies, secure: true, httpOnly: true, sameSite: 'strict',maxAge: 60*60*24 });
+
+    return data;
+  } catch (error) {
+       console.error("There was a problem with the fetch operation:", error);
+  }
+}
+
+
+
+
+
