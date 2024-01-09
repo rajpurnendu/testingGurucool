@@ -1,0 +1,104 @@
+/* .loginComponent{
+    width: 100%;
+    height: 100vh;
+    background-color: transparent !important;
+    position: fixed;
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+}
+.loginBox{
+    background-color: aquamarine;
+} */
+
+.phoneNumber  {
+    /* display: none !important; */
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    /* margin: 0 0 12px 0; */
+  }
+
+  .countrycode {
+    width: 100%;
+    background-color: antiquewhite !important;
+    font-size: 14px;
+    cursor: pointer !important;
+    border-radius: 4px;
+  }
+  .countrycode:focus {
+    border-color: #848484 !important;
+    outline: #848484 !important;
+  }
+  .countrycode div:focus {
+    border-color: 3px solid #848484 !important;
+    outline: 3px solid #848484 !important;
+  }
+  .countrycode .css-1ez5hlx-control:hover {
+    border-color: 3px solid #848484 !important;
+  }
+
+  .phoneNumberInput {
+    background-color: aliceblue;
+    font-size: 14px;
+  }
+  .phoneNumberInput:focus {
+    background-color: antiquewhite;
+  }
+  input{
+    font-size: 16px !important;
+    touch-action: manipulation;
+  }
+  #login-banner .owl-theme .owl-dots .owl-dot span{
+    width: 33.31px;
+    height: 6.34px;
+
+    background: #AA7AFF;
+    border-radius: 26.1708px;
+}
+.owl-theme .owl-nav.disabled + .owl-dots {
+  margin-top: -26px !important;
+}
+.owl-carousel .owl-stage-outer {
+  z-index: -1 !important;  
+}
+#login-banner .owl-theme .owl-dots .owl-dot {
+  padding: 0.5px;
+}
+@media (max-width: 768px) {
+    #login-banner .owl-theme .owl-dots .owl-dot span {
+      width: 20px;
+      height: 4px;
+      
+      background: #AA7AFF;
+      border-radius: 26.1708px;
+    }
+  }
+#login-banner .owl-theme .owl-dots .owl-dot.active span{
+    background-color: #8D66D4;
+    
+}
+
+.login-otp-container {
+  /* Your custom container styles */
+  gap: 5px;
+}
+
+.login-otp-input {
+  /* Your custom input styles */
+  width: 30.6px !important;
+  height: 30.6px !important;
+  text-align: center;
+  font-size: 10px !important;
+  border: 1px solid #fff;
+  border-radius: 6px;
+
+  @media (min-width: 768px) {
+    width: 40px !important;
+  height: 40px !important;
+  font-size: 14px !important;
+  }
+}
+.otp-input:focus {
+    border: 2px solid #fff !important;
+}
+
