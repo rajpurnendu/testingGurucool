@@ -127,7 +127,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               </svg>
               {loginToken && (
                 <p className="text-[14px] md:text-[16px] font-medium text-white">
-                  {walletbal}
+                  {Math.round(walletbal * 100) / 100}
                 </p>
               )}
             </div>
