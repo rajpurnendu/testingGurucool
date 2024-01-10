@@ -39,17 +39,33 @@ const Footerweb = () => {
               <div>
                 <h4 className="text-[20px]">Company</h4>
                 <div>
-                  <p className="my-[3px] mx-0 cursor-pointer">About Us</p>
-                  <p className="my-[3px] mx-0 cursor-pointer">Privacy Policy</p>
-                  <p className="my-[3px] mx-0 cursor-pointer"> T & C </p>
+                  <Link href="/aboutUs">
+                    <p className="my-[3px] mx-0 cursor-pointer">About Us</p>
+                  </Link>
+                  <Link href="/privacy">
+                    <p className="my-[3px] mx-0 cursor-pointer">
+                      Privacy Policy
+                    </p>
+                  </Link>
+                  <Link href="/termandconditions">
+                    <p className="my-[3px] mx-0 cursor-pointer"> T & C </p>
+                  </Link>
                 </div>
               </div>
               <div>
                 <h4 className="text-[20px]">Support</h4>
                 <div>
-                  <p className="my-[3px] mx-0 cursor-pointer">Contact us</p>
-                  <p className="my-[3px] mx-0 cursor-pointer">Refund Policy</p>
-                  <p className="my-[3px] mx-0 cursor-pointer">Disclaimer</p>
+                  <Link href="/contactUs">
+                    <p className="my-[3px] mx-0 cursor-pointer">Contact us</p>
+                  </Link>
+                  <Link href="/refund-policy">
+                    <p className="my-[3px] mx-0 cursor-pointer">
+                      Refund Policy
+                    </p>
+                  </Link>
+                  <Link href="/desclaimer">
+                    <p className="my-[3px] mx-0 cursor-pointer">Disclaimer</p>
+                  </Link>
                 </div>
               </div>
             </div>

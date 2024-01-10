@@ -3,17 +3,17 @@ import GodCard from "./godCard";
 const ContentSection = () => {
   return (
     <div
-      className=" m-auto lg:mt-[3.75rem] mt-[32px] lg:px-[25px] md:px-[23px]
-    lg:pb-[60px] pb-[32px]"
+      className=" m-auto xl:mt-[3.75rem] mt-[32px] xl:px-[25px] md:px-[23px]
+    xl:pb-[60px] pb-[32px]"
     >
       <h1
-        className="text-center w-[86px] mx-auto lg:w-full text-neutral-700
+        className="text-center w-[86px] mx-auto xl:w-full text-neutral-700
 text-base
-lg:text-xl
+xl:text-xl
 
 font-semibold
 mb-[12px]
-lg:mb-[24px]
+xl:mb-[24px]
 "
       >
         What is astrology ?
@@ -21,19 +21,19 @@ lg:mb-[24px]
       <p
         className="text-neutral-700
         w-[300px]
-        lg:w-full
+        xl:w-full
         mx-auto
         text-sm
-lg:text-lg text-center
-font-semibold lg:mb-[1.88rem] mb-[10px]"
+xl:text-lg text-center
+font-semibold xl:mb-[1.88rem] mb-[10px]"
       >
         Unveiling Your Divine Path to Success with GuruCool.
       </p>
-      <div className="w-[341px] lg:w-[72rem] mx-auto md:w-[100%]">
+      <div className="w-[341px] xl:w-[72rem] mx-auto md:w-[100%]">
         <p
           className="text-center text-neutral-700
-text-xs lg:text-base
-font-medium lg:mb-2 mb-1
+text-xs xl:text-base
+font-medium xl:mb-2 mb-1
 leading-snug"
         >
           {`Astrology holds the key to unlocking the hidden mysteries of your life. At GuruCool, we understand the profound impact astrology can have on your journey toward success and fulfillment. By harnessing the power of celestial bodies, astrology provides unique insights into different aspects of your life, allowing you to make informed decisions and embrace your true potential.
@@ -42,39 +42,39 @@ leading-snug"
         </p>
         <p
           className="text-center text-neutral-700
-text-xs lg:text-base
-font-medium lg:mb-2 mb-1
+text-xs xl:text-base
+font-medium xl:mb-2 mb-1
 leading-snug"
         >
           {`If you're wondering, "Where can I find the best astrologers near me?" GuruCool has a team of highly skilled astrologers who are dedicated to assisting you. Whether you prefer to talk to an astrologer face-to-face or have an online consultation, we have the perfect solution for you.`}
         </p>
         <p
           className="text-center text-neutral-700
-text-xs lg:text-base
-font-medium lg:mb-2 mb-1
+text-xs xl:text-base
+font-medium xl:mb-2 mb-1
 leading-snug"
         >
           {`With our personalized consultations, our astrologers delve into your birth chart[kundali], meticulously examining the positions of celestial bodies such as the Sun, Moon, and planets. We offer tailored guidance that aligns with your unique circumstances by analyzing their influences on various aspects of your life, including personality traits, relationships, and career prospects.`}
         </p>
         <p
           className="text-center text-neutral-700
-text-xs lg:text-base
-font-medium lg:mb-2 mb-1
+text-xs xl:text-base
+font-medium xl:mb-2 mb-1
 leading-snug"
         >
           {`Astrology is a powerful tool that can help you gain clarity, make informed decisions, and navigate the ups and downs of life. Our comprehensive astrology services at GuruCool go beyond birth chart analysis. We delve into elements, moon signs, numerology, and even tarot to provide you with a holistic understanding of your life's journey.`}
         </p>
         <p
           className="text-center text-neutral-700
-text-xs lg:text-base
-font-medium lg:mb-2 mb-1
+text-xs xl:text-base
+font-medium xl:mb-2 mb-1
 leading-snug"
         >
           {`Astrology holds the key to transforming your life in profound ways. At GuruCool, we understand the immense benefits that astrology can bring to your journey of self-discovery and personal growth.`}
         </p>
         <p
           className="text-center text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -82,14 +82,14 @@ leading-snug"
         </p>
         <p
           className="text-neutral-700 mb-1
-text-xs lg:text-lg
+text-xs xl:text-lg
 font-semibold"
         >
           {` Here's how astrology can benefit you:`}
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -97,7 +97,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -107,7 +107,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -115,7 +115,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -124,7 +124,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700 mb-2
-text-xs lg:text-base
+text-xs xl:text-base
 font-medium
 leading-snug"
         >
@@ -133,7 +133,7 @@ leading-snug"
         </p>
         <p
           className=" text-center text-neutral-700
-text-xs lg:text-base
+text-xs xl:text-base
 font-medium
 leading-snug"
         >
@@ -142,14 +142,14 @@ leading-snug"
         </p>
         <p
           className="text-neutral-700 mb-1
-text-xs lg:text-lg
+text-xs xl:text-lg
 font-semibold"
         >
           {`Our Astrology Service:-`}
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -157,7 +157,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -165,7 +165,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -176,7 +176,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -187,7 +187,7 @@ leading-snug"
         </p>
         <p
           className="text-neutral-700 mb-1
-text-xs lg:text-lg
+text-xs xl:text-lg
 font-semibold"
         >
           {`"Personalized Astrological Consultations at Gurucool"`}
@@ -195,13 +195,13 @@ font-semibold"
 
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
           <span
             className="text-neutral-700
-text-xs lg:text-base
+text-xs xl:text-base
 font-semibold"
           >
             Unveiling Your Cosmic Blueprint:
@@ -211,7 +211,7 @@ font-semibold"
 
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -220,7 +220,7 @@ leading-snug"
 
         <p
           className=" text-neutral-700
-text-xs lg:text-base mb-1
+text-xs xl:text-base mb-1
 font-medium
 leading-snug"
         >
@@ -228,7 +228,7 @@ leading-snug"
         </p>
         <p
           className=" text-neutral-700
-text-xs lg:text-base
+text-xs xl:text-base
 font-medium
 leading-snug"
         >

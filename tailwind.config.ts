@@ -24,9 +24,19 @@ const config: Config = {
             animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
           },
         },
+        blink: {
+          '0%, 100%': {
+          opacity:'1'
+          },
+          '50%': {
+            opacity:'0'
+          },
+        },
       },
       animation: {
         bounce: 'bounce 3s infinite',
+        blink: 'blink 1s linear infinite',
+      
       },
     },
   },

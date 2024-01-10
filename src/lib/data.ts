@@ -1,4 +1,4 @@
-import { G_GET_BLOGS, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_HOMEPAGE_ASTROLOGERS } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS, G_GET_BLOGS, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_HOMEPAGE_ASTROLOGERS } from "./apilinks";
 // import { setCookie } from 'cookies-next';
 
 
@@ -103,3 +103,30 @@ export async function GET_Spec_Astrologer (query:string):Promise<any | undefined
       throw new Error('Failed to fetch Single blog data.');
   }
 }
+
+
+
+// export async function getAllConsultAstrologers() {
+  
+//     try {
+//       const response = await fetch(
+//         G_GET_ALL_CONSULT_ASTROLOGERS(), { next: { revalidate: 0 } }
+//       );
+//       if (response.ok) {
+//         const data = await response.json(); 
+//         // console.log(data);
+           
+//         // setCookie('loginToken', 'kkkkkkkkk');
+//         return data;
+//       } else {
+//         console.error(
+//           "Error fetching data:",
+//           response.status,
+//           response.statusText
+//         );
+//         return undefined;
+//       }
+//     } catch (error) {
+//         throw new Error('Failed to fetch Single blog data.');
+//     }
+// }

@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Image
-        className="lg:w-[350px] w-[200px] md:w-[300px] h-full mb-4 animate-bounce"
+        className="xl:w-[350px] w-[200px] md:w-[300px] h-full mb-4 animate-bounce"
         width="500"
         height="500"
         src={img.src}
@@ -16,9 +16,9 @@ export default function NotFound() {
       <p className="text-gray-500 mt-2">
         {"The page you are looking for doesn't exist."}
       </p>
-      <Link href="/">
+      <Link href="/call-to-astrologers">
         <p className="mt-4 text-blue-500 hover:underline">
-          Go back to the home page
+          Go back to Consult Page
         </p>
       </Link>
     </div>

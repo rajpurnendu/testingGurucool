@@ -8,9 +8,9 @@ import { IoCall } from "react-icons/io5";
 import Spec from "../../../public/assets/Spec.svg";
 
 const ConsultCard = () => {
-  const array = [1, 2, 3, 4, 5, 6, 7, 8];
+  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
-    <div className="flex flex-wrap mb-[2rem] gap-[15px] md:gap-[20px] justify-center">
+    <div className="flex flex-wrap gap-[15px] md:gap-[20px] justify-center mt-[56px]">
       {array.map((curr, index) => {
         return (
           <div

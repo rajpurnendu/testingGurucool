@@ -48,12 +48,16 @@ const FooterMobile = () => {
                 </h5>
                 <div>
                   <p className="text-[14px] font-normal m-[7px] p-0">Home</p>
-                  <p className="text-[14px] font-normal m-[7px] p-0">
-                    Privacy Policy
-                  </p>
-                  <p className="text-[14px] font-normal m-[7px] p-0">
-                    Terms and Conditions
-                  </p>
+                  <Link href="/privacy">
+                    <p className="text-[14px] font-normal m-[7px] p-0">
+                      Privacy Policy
+                    </p>
+                  </Link>
+                  <Link href="/termandconditions">
+                    <p className="text-[14px] font-normal m-[7px] p-0">
+                      Terms and Conditions
+                    </p>
+                  </Link>
                 </div>
               </div>
               <div>
@@ -61,15 +65,21 @@ const FooterMobile = () => {
                   Support
                 </h5>
                 <div>
-                  <p className="text-[14px] font-normal m-[7px] p-0">
-                    Contact Us
-                  </p>
-                  <p className="text-[14px] font-normal m-[7px] p-0">
-                    Refund Policy
-                  </p>
-                  <p className="text-[14px] font-normal m-[7px] p-0">
-                    Disclaimer
-                  </p>
+                  <Link href="/contactUs">
+                    <p className="text-[14px] font-normal m-[7px] p-0">
+                      Contact Us
+                    </p>
+                  </Link>
+                  <Link href="/refund-policy">
+                    <p className="text-[14px] font-normal m-[7px] p-0">
+                      Refund Policy
+                    </p>
+                  </Link>
+                  <Link href="/desclaimer">
+                    <p className="text-[14px] font-normal m-[7px] p-0">
+                      Disclaimer
+                    </p>
+                  </Link>
                 </div>
               </div>
             </div>
