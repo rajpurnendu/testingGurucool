@@ -51,7 +51,7 @@ const Speciality = () => {
           className={clsx(
             `text-[14px] md:text-[20px] text-gray-600 font-semibold`,
             {
-              "text-cyan-400": pathname === `/call-to-astrologers/Marriage`,
+              "text-cyan-300": pathname === `/call-to-astrologers/Marriage`,
             }
           )}
         >
@@ -61,7 +61,7 @@ const Speciality = () => {
       icon: (
         <GiBigDiamondRing
           className={clsx(`w-[20px] md:w-[24px] h-auto text-gray-600`, {
-            "text-cyan-400": pathname === `/call-to-astrologers/Marriage`,
+            "text-cyan-300": pathname === `/call-to-astrologers/Marriage`,
           })}
         />
       ),
@@ -74,7 +74,7 @@ const Speciality = () => {
           className={clsx(
             `text-[14px] md:text-[20px] text-gray-600 font-semibold`,
             {
-              "text-cyan-600": pathname === `/call-to-astrologers/Career`,
+              "text-cyan-700": pathname === `/call-to-astrologers/Career`,
             }
           )}
         >
@@ -84,7 +84,7 @@ const Speciality = () => {
       icon: (
         <MdBusinessCenter
           className={clsx(`w-[20px] md:w-[24px] h-auto text-gray-600`, {
-            "text-cyan-600": pathname === `/call-to-astrologers/Career`,
+            "text-cyan-700": pathname === `/call-to-astrologers/Career`,
           })}
         />
       ),
@@ -97,7 +97,7 @@ const Speciality = () => {
           className={clsx(
             `text-[14px] md:text-[20px] text-gray-600 font-semibold`,
             {
-              "text-blue-800": pathname === `/call-to-astrologers/Business`,
+              "text-blue-600": pathname === `/call-to-astrologers/Business`,
             }
           )}
         >
@@ -107,7 +107,7 @@ const Speciality = () => {
       icon: (
         <MdBusiness
           className={clsx(`w-[20px] md:w-[24px] h-auto text-gray-600`, {
-            "text-blue-800": pathname === `/call-to-astrologers/Business`,
+            "text-blue-600": pathname === `/call-to-astrologers/Business`,
           })}
         />
       ),

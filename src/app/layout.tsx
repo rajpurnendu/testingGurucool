@@ -4,6 +4,8 @@ import "./globals.css";
 import Mainfooter from "@/components/Footer/Mainfooter";
 import Header from "@/components/header/Header";
 import { cookies } from "next/headers";
+import Head from "next/head";
+
 
 const inter = Inter({ subsets: ["latin"] });
 

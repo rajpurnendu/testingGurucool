@@ -127,20 +127,20 @@ const SideBar = ({
   };
   return (
     <div
-      className={`fixed top-0 right-0 transition-all duration-500 ease-in-out ${
+      className={`fixed top-0 right-0 transition-all duration-500 ease-in-out animate__animated animate__bounce ${
         isOpen ? "flex" : "hidden"
       } w-full h-full bg-[rgba(0,0,0,0.7)]  z-20`}
     >
       <div
-        className={`lg:h-screen lg:w-[33%] w-full h-[60%] md:h-screen md:w-[50%] bg-white ${
+        className={`xl:h-screen xl:w-[40%] w-full h-[60%] md:h-screen md:w-[50%] bg-white  ${
           isOpen
-            ? "lg:translate-x-0 lg:translate-y-0 md:translate-x-0 md:translate-y-0 translate-x-0 translate-y-0"
-            : "lg:translate-x-full lg:translate-y-0 md:translate-y-0 md:translate-x-full translate-x-0 translate-y-full"
+            ? "xl:translate-x-0 xl:translate-y-0 md:translate-x-0 md:translate-y-0 translate-x-0 translate-y-0"
+            : "xl:translate-x-full xl:translate-y-0 md:translate-y-0 md:translate-x-full translate-x-0 translate-y-full"
         }
-          fixed lg:top-0 lg:right-0 bottom-0 md:right-0 z-20 transition-transform ease-in-out duration-500`}
+          fixed xl:top-0 xl:right-0 bottom-0 md:right-0 z-20 transition-transform ease-in-out duration-500`}
       >
         <div className="w-full p-3 flex justify-between">
-          <p className="lg:text-[20px] text-[18px] font-[300] lg:font-[400]">
+          <p className="xl:text-[20px] text-[18px] font-[300] xl:font-[400]">
             Filter
           </p>
           <div
@@ -152,7 +152,7 @@ const SideBar = ({
         </div>
         <div className="bg-black border"></div>
 
-        <div className="flex lg:gap-4  gap-1 items-center justify-center lg:mt-4 mt-2">
+        <div className="flex xl:gap-4  gap-1 items-center justify-center xl:mt-4 mt-2">
           <div
             className={`${
               index == 1
@@ -162,14 +162,14 @@ const SideBar = ({
             onClick={() => handleFunction(1)}
           >
             <p
-              className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+              className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
             >
               Skills
             </p>
           </div>
 
           <h6
-            className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+            className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
           >
             |
           </h6>
@@ -182,14 +182,14 @@ const SideBar = ({
             onClick={() => handleFunction(2)}
           >
             <p
-              className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+              className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
             >
               Specialities
             </p>
           </div>
 
           <h6
-            className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+            className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
           >
             |
           </h6>
@@ -203,14 +203,14 @@ const SideBar = ({
             onClick={() => handleFunction(3)}
           >
             <p
-              className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+              className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
             >
               Language
             </p>
           </div>
 
           <h6
-            className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+            className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
           >
             |
           </h6>
@@ -224,13 +224,13 @@ const SideBar = ({
             onClick={() => handleFunction(4)}
           >
             <p
-              className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+              className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
             >
               Price
             </p>
           </div>
           <h6
-            className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+            className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
           >
             |
           </h6>
@@ -243,7 +243,7 @@ const SideBar = ({
             onClick={() => handleFunction(5)}
           >
             <p
-              className={`lg:font-[500] text-[15px]  lg:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
+              className={`xl:font-[500] text-[15px]  xl:text-[1rem] text-[rgb(123,123,123)] hover:text-[#965EFB]`}
             >
               Gender
             </p>
@@ -272,9 +272,9 @@ const SideBar = ({
         </div>
 
         <div
-          className={`lg:p-3 p-2 ${
+          className={`xl:p-3 p-2 ${
             index == 1 ? "flex" : "hidden"
-          } flex-wrap gap-4 w-full h-[160px] md:h-[300px] lg:h-[250px] overflow-y-scroll`}
+          } flex-wrap gap-4 w-full h-[160px] md:h-[300px] xl:h-[250px] overflow-y-scroll`}
         >
           {special.map((data, index) => (
             <div

@@ -11,10 +11,10 @@ export function middleware(request: NextRequest) {
     // console.log('====================================');
     // console.log(request.cookies.get('loginToken')?.value);
     
-//   return NextResponse.redirect(new URL('/', request.url));
+  // return NextResponse.redirect(new URL('/', request.url));
 }
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/blogs/:path*','/profile/:path*'],
+  matcher: ['/wallet/:path*','/profile/:path*'],
 }

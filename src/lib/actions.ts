@@ -2,7 +2,9 @@
 
 import { cookies } from 'next/headers';
 import { setCookie, deleteCookie, hasCookie, getCookie, getCookies } from 'cookies-next';
-import { P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER } from './apilinks';
+import { P_PUT_USER_DETAILS, P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER } from './apilinks';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
  // setCookie('test', 'purnendu.....', { cookies });
 export async function testAction(requestData: { code: string, phone: string, isInternational: boolean }): Promise<any | undefined> {
   try {
@@ -97,6 +99,38 @@ export async function registerNewUser(requestData: {
   } catch (error) {
        console.error("There was a problem with the fetch operation:", error);
   }
+}
+
+export async function updateUser(
+  loginToken:string,
+  formData: FormData,
+) {
+  try {
+    const response=await fetch(P_PUT_USER_DETAILS(formData.get("firstName") as string,formData.get("lastName") as string,formData.get("gender") as string,formData.get("email") as string),{
+      method:'POST',
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+        'Content-Type': 'application/json',
+      },
+      cache:'no-store'
+    })
+
+    if(!response.ok){
+      throw new Error("Network response was not ok!!");
+    }
+    // const data=await response.json();
+
+    // console.log('====================================');
+    // console.log(data);
+    // console.log('====================================');
+    // return data;
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+  }
+
+  revalidatePath('/my-profile');
+  redirect('/my-profile');
+
 }
 
 
