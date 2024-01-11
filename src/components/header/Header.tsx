@@ -202,6 +202,8 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               userDetails?.avatar?.url ? (
                 <Image
                   className="relative"
+                  width={25}
+                  height={25}
                   src={userDetails?.avatar?.url || ""}
                   alt="userProfile"
                 />
