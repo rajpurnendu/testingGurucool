@@ -1,3 +1,4 @@
+import Consultationhistory from "@/components/userprofile/consultationhistory/Consultationhistory";
 import Followingastrologers from "@/components/userprofile/following/Followingastrologers";
 import Rechargehistory from "@/components/userprofile/rechargehistory/Rechargehistory";
 import Userdetails from "@/components/userprofile/userdetails/Userdetails";
@@ -17,8 +18,8 @@ const Userprofile = ({
       <Userdetails loginToken={loginToken?.value} edit={edit} />
       {/* <Birtchart /> */}
       <Followingastrologers loginToken={loginToken?.value as string} />
-      <Rechargehistory />
-      {/* <Consultationhistory /> */}
+      <Rechargehistory loginToken={loginToken?.value as string} />
+      <Consultationhistory />
     </>
   );
 };
