@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { FaUserCircle } from "react-icons/fa"; // Assuming you have react-icons installed
 import Gurucool_Logo from "../../../public/assets/GurucoolNewWebLogo.svg";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -10,12 +11,23 @@ import clsx from "clsx";
 import { BasicModal } from "../login/BasicModal";
 import { logout } from "@/lib/actions";
 import { getUserprofile } from "@/lib/data";
+import BreadCrumps from "../breadCrumps/BreadCrumps";
 
 const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [menuState, setMenuState] = useState("menu");
   const pathname = usePathname();
+  const [open, setOpen] = useState(true);
+  const [userDetails, setUserDetails] = useState<any>();
   const [login, setLogin] = useState(false);
   const [walletbal, setWalletbal] = useState(0);
+  const [drop, setDrop] = useState(false);
+
+  function ToggelOpen() {
+    setOpen(!open);
+  }
+  function toggelDrop() {
+    setDrop(!drop);
+  }
 
   useEffect(() => {
     const userProfile = async () => {
@@ -25,9 +37,13 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
         // console.log(data);
         // console.log("====================================");
         setWalletbal(data?.wallet_balance);
+        setUserDetails(data.user);
       }
     };
     userProfile();
+    setTimeout(() => {
+      ToggelOpen();
+    }, 8000);
   }, [loginToken]);
 
   const onToggleMenu = () => {
@@ -37,9 +53,21 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
     <>
       {login && <BasicModal setLogin={setLogin} />}
 
-      <div className="bg-[#965EFB] fixed top-0 left-0 right-0 z-20">
-        <nav className="max-w-6xl mx-auto flex justify-between items-center px-2 py-2">
-          <div className="max-h-full">
+      <div
+        className={`bg-[#965EFB] fixed ${
+          open == false ? "top-0" : "top-12"
+        }  left-0 right-0 z-20`}
+      >
+        <nav className="relative max-w-6xl mx-auto flex justify-between items-center px-2 py-2">
+          <div className="max-h-full flex gap-2">
+            {menuState === "menu" ? (
+              <Bars3Icon
+                className="w-6 text-blue-50 cursor-pointer md:hidden"
+                onClick={onToggleMenu}
+              />
+            ) : (
+              <></>
+            )}
             {/* <div className="md:w-200 md:h-200 sm:w-150 sm:h-150 w-100 h-100"> */}
             <Image
               src={Gurucool_Logo}
@@ -52,15 +80,30 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
           <div
             className={`md:static absolute ${
               menuState === "menu"
-                ? "translate-y-[-100vh]"
-                : "translate-y-[0vh]"
-            } md:translate-y-[0vh] bg-[#965EFB] md:min-h-fit min-h-[60vh] left-0 top-[99%] w-full flex md:justify-center px-5 border-t-2 border-white md:border-none transition delay-300 duration-300 ease-in-out`}
+                ? "translate-x-[-100vh] xl:translate-x-[0] md:translate-x-0"
+                : "translate-x-[0vh]"
+            } md:translate-y-[0vh] bg-[#965EFB] md:min-h-full min-h-[100vh] left-0 top-[0] xl:w-full  flex md:justify-center px-5  border-white md:border-none transition  duration-200 ease-in-out`}
           >
             <ul className="flex py-4 md:py-0 md:flex-row flex-col md:items-center md:gap-[3vw] gap-8">
+              <div className="flex gap-4">
+                <Image
+                  src={Gurucool_Logo}
+                  width={130}
+                  height={130}
+                  alt="Gurucool"
+                  className="md:hidden"
+                />
+                <XMarkIcon
+                  className="w-8 text-blue-50 cursor-pointer md:hidden transition delay-300 duration-300 ease-in-out"
+                  onClick={onToggleMenu}
+                />
+              </div>
+
               <li>
                 <Link
+                  onClick={onToggleMenu}
                   className={clsx(
-                    `py-1.5 px-4 rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
+                    `py-1.5 px-4 text-[14px] lg:text-[16px] rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
                       "border-2 border-white": pathname === `/`,
                     }
@@ -72,10 +115,11 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               </li>
               <li>
                 <Link
+                  onClick={onToggleMenu}
                   className={clsx(
                     `py-1.5 px-4 rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
-                      "md:border-2 border-white border-b-2":
+                      "md:border-2 border-white border-b-2 text-[14px] lg:text-[16px]":
                         pathname === `/call-to-astrologers`,
                     }
                   )}
@@ -86,8 +130,9 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               </li>
               <li>
                 <Link
+                  onClick={onToggleMenu}
                   className={clsx(
-                    `py-1.5 px-4 rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
+                    `py-1.5 px-4 text-[14px] lg:text-[16px] rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
                       "border-2 border-white": pathname === `/blogs`,
                     }
@@ -101,7 +146,11 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 border-2 border-white rounded-xl">
+            <div
+              className={`flex ${
+                loginToken ? "visible" : "invisible"
+              } items-center gap-2 px-2 py-1 md:px-4 md:py-2 border-2 border-white rounded-xl`}
+            >
               <svg
                 width="25"
                 height="25"
@@ -125,13 +174,12 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              {loginToken && (
-                <p className="text-[14px] md:text-[16px] font-medium text-white">
-                  {walletbal}
-                </p>
-              )}
+
+              <p className="text-[14px] lg:text-[16px] font-medium text-white">
+                ₹{walletbal.toFixed(1)}
+              </p>
             </div>
-            {loginToken ? (
+            {/* {loginToken ? (
               <button
                 className="w-max bg-[#965EFB] px-4 py-2 rounded-full text-white font-semibold border-2 border-white"
                 onClick={async () => {
@@ -149,21 +197,58 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               >
                 Log In
               </button>
-            )}
-
-            {menuState === "menu" ? (
-              <Bars3Icon
-                className="w-6 text-blue-50 cursor-pointer md:hidden transition delay-300 duration-300 ease-in-out"
-                onClick={onToggleMenu}
-              />
+            )} */}
+            {loginToken ? (
+              userDetails?.avatar?.url ? (
+                <Image
+                  className="relative"
+                  src={userDetails?.avatar?.url || ""}
+                  alt="userProfile"
+                />
+              ) : (
+                <div
+                  onClick={toggelDrop}
+                  className="cursor-pointer relative inline-block w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center justify-center items-center mx-auto my-2 xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
+                >
+                  {userDetails?.firstName?.charAt(0)}
+                  {userDetails?.lastName?.charAt(0)}
+                </div>
+              )
             ) : (
-              <XMarkIcon
-                className="w-6 text-blue-50 cursor-pointer md:hidden transition delay-300 duration-300 ease-in-out"
-                onClick={onToggleMenu}
+              <FaUserCircle
+                className="block text-[25px] xl:text-[40px] text-[#c4c4c4] cursor-pointer"
+                onClick={() => {
+                  setLogin(true);
+                }}
               />
             )}
+            {loginToken ? (
+              <div
+                className={`animate__animated animate__bounceIn absolute top-[101.5%] right-0 ${
+                  drop ? "block" : "hidden"
+                } bg-white shadow-lg p-[10px] z-[1000] w-[214px] h-auto rounded-[4px] transition-all duration-500 ease-in-out`}
+              >
+                <div className="flex flex-col items-start gap-2">
+                  <Link href="/my-profile" onClick={toggelDrop}>
+                    My Profile
+                  </Link>
+                  <Link href="wallet" onClick={toggelDrop}>
+                    Wallet
+                  </Link>
+                  <button
+                    onClick={async () => {
+                      logout();
+                      toggelDrop;
+                    }}
+                  >
+                    Log Out
+                  </button>
+                </div>
+              </div>
+            ) : null}
           </div>
         </nav>
+        <BreadCrumps state={open} fn={ToggelOpen} />
       </div>
     </>
   );

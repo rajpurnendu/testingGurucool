@@ -218,7 +218,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
                           We have sent code to your Mobile
                         </div>
                         <div className="flex items-center justify-center gap-[9px] text-[10px] text-[#fff] md:text-[14px]">
-                          +918945989997
+                          {value}
                         </div>
                       </div>
                       {/* 3  */}

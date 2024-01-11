@@ -1,3 +1,5 @@
+import Followingastrologers from "@/components/userprofile/following/Followingastrologers";
+import Rechargehistory from "@/components/userprofile/rechargehistory/Rechargehistory";
 import Userdetails from "@/components/userprofile/userdetails/Userdetails";
 import { cookies } from "next/headers";
 
@@ -13,10 +15,10 @@ const Userprofile = ({
   return (
     <>
       <Userdetails loginToken={loginToken?.value} edit={edit} />
-      {/* <Birtchart />
-      <Followingastrologers />
+      {/* <Birtchart /> */}
+      <Followingastrologers loginToken={loginToken?.value as string} />
       <Rechargehistory />
-      <Consultationhistory /> */}
+      {/* <Consultationhistory /> */}
     </>
   );
 };

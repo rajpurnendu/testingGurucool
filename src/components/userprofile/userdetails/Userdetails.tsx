@@ -19,7 +19,7 @@ const Userdetails = async ({
   return (
     <div
       className="max-w-6xl my-0 pr-4 pl-4 pt-8 box-border border border-solid border-[#965efb] rounded-[10px] mb-[15px] mt-[15px] ml-4 mr-4 md:mx-auto"
-      style={{ marginTop: "200px" }}
+      style={{ marginTop: "80px" }}
     >
       {/* User Image  */}
       <div>

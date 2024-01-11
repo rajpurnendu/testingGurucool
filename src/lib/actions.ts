@@ -62,6 +62,8 @@ export async function verifyOtp(requestData: {phone: string, userOTP: string }):
 
 export async function logout() {
   cookies().delete('loginToken');
+  redirect('/');
+
 }
 
 export async function registerNewUser(requestData: {

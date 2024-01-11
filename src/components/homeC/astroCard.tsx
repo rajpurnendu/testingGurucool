@@ -7,6 +7,7 @@ function formatValue(value: number) {
 }
 
 const AstroCard = ({ data }: { data: any }) => {
+  // console.log();
   return (
     <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
       <Image
@@ -25,15 +26,15 @@ const AstroCard = ({ data }: { data: any }) => {
           src={data.user?.avatar?.url}
           alt="god"
         />
-        {data.status == "active" ? (
+        {data.callAvailability == "online" ? (
           <div>
             <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
             <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
           </div>
         ) : (
           <div>
-            <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] absolute bg-red-500 rounded-full" />
             <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] absolute bg-red-500 animate-ping rounded-full" />
+            <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] absolute bg-red-500 rounded-full" />
           </div>
         )}
       </div>
