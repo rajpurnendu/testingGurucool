@@ -32,4 +32,4 @@ export const P_PUT_USER_DETAILS = (firstName:string, lastName:string, gender:str
   `${BASE_URL}user/editProfile?firstName=${firstName}&lastName=${lastName}&gender=${gender}&email=${email}`;
 
 
-
+export const GET_ALL_FOLLOWING_ASTROLOGERS=BASE_URL+"user/getUserFollowing";

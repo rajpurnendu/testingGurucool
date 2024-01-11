@@ -6,7 +6,6 @@ import Header from "@/components/header/Header";
 import { cookies } from "next/headers";
 import Head from "next/head";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,6 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
         <link rel="icon" href="./favicon.ico" />
       </head>
       <body className={inter.className}>

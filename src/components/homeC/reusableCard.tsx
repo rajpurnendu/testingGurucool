@@ -14,7 +14,10 @@ const ReusableCard = ({
   return (
     <div
       className="xl:w-[281px] md:w-[250px] w-[106px] md:h-[100px] xl:h-[167px]  xl:px-10 px-[6px] py-[12px] xl:py-[45px] bg-black bg-opacity-10 md:rounded-[10px] xl:rounded-[10px] rounded-[3.15px] flex-col justify-start items-center gap-2.5 inline-flex bg-cover cursor-pointer"
-      style={{ backgroundImage: `url(${img.src})`, backgroundBlendMode: "hue" }}
+      style={{
+        backgroundImage: `url(${img.src})`,
+        backgroundBlendMode: "multiply",
+      }}
       onClick={() => {
         handleClick(index);
       }}
