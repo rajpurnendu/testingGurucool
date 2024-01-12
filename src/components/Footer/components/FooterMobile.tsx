@@ -169,7 +169,7 @@ const FooterMobile = () => {
             />
           </div>
         </div>
-        <p className="mt-[80px] text-[10px] font-normal text-center text-white">
+        <p className="mt-[80px] text-[10px] font-normal text-center text-white mb-5">
           © 2023 GuruCool.life. All rights reserved
         </p>
       </div>

@@ -58,7 +58,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
           open == false ? "top-0" : "top-12"
         }  left-0 right-0 z-20`}
       >
-        <nav className="relative max-w-6xl mx-auto flex justify-between items-center px-2 py-2">
+        <nav className="relative max-w-[72rem] h-[4rem] mx-auto flex justify-between items-center px-2 py-2">
           <div className="max-h-full flex gap-2">
             {menuState === "menu" ? (
               <Bars3Icon
@@ -212,8 +212,8 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                   onClick={toggelDrop}
                   className="cursor-pointer relative inline-block w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center justify-center items-center mx-auto my-2 xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
                 >
-                  {userDetails?.firstName?.charAt(0)}
-                  {userDetails?.lastName?.charAt(0)}
+                  {userDetails?.firstName?.charAt(0).toUpperCase()}
+                  {userDetails?.lastName?.charAt(0).toUpperCase()}
                 </div>
               )
             ) : (

@@ -33,3 +33,12 @@ export const P_PUT_USER_DETAILS = (firstName:string, lastName:string, gender:str
 
 
 export const GET_ALL_FOLLOWING_ASTROLOGERS=BASE_URL+"user/getUserFollowing";
+
+export const GET_ALL_CONSULTATIONS_DETAILS=(uid:number,consultationType:string)=>{
+    if(consultationType===""){
+        return `${BASE_URL}user/getUserConsultationRecord?uid=${uid}&perPage=100`;
+    }
+    else {
+        return `${BASE_URL}user/getUserConsultationRecord?uid=${uid}&consultationType=${consultationType}`;
+    }
+}

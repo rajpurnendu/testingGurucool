@@ -29,9 +29,12 @@ const Banner = () => {
           <p className="xl:text-white md:w-[400px]  md:text-white  text-neutral-700 w-[290px] xl:w-[600px] text-xs md:text-xs xl:text-[1.125rem] leading-[15px] xl:leading-normal font-normal xl:font-[500] text-justify">
             {`Explore astrology secrets solutions with GuruCool astrologers: Your one-stop destination for personalized love, career, and marriage predictions. Find solutions to life's challenges through tarot cards, numerology, and zodiac insights.`}
           </p>
-          <button className=" w-fit xl:w-[285px] xl:h-[71px] rounded-lg font-[500] md:text-base text-sm xl:text-[1.25rem] bg-[#26c884] text-white px-[10px] py-[10px]  xl:px-[1.62rem] xl:py-[0.94rem] hover:border border-black">
-            <Link href="/call-to-astrologers">Get consultation</Link>
-          </button>
+          <Link
+            href="/call-to-astrologers"
+            className=" w-fit xl:w-[285px] xl:h-[71px] rounded-lg font-[500] md:text-base text-sm xl:text-[1.25rem] bg-[#26c884] text-white px-[10px] py-[10px]  xl:px-[1.62rem] xl:py-[0.94rem] hover:border border-black flex items-center justify-center"
+          >
+            Get consultation
+          </Link>
         </div>
         <Image
           className="absolute xl:relative md:relative md:w-[200px] h-auto z-[-1] right-10 xl:right-0  top-0 w-[150px] xl:flex xl:w-[454px] xl:h-[477px]"

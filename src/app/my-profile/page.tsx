@@ -19,7 +19,7 @@ const Userprofile = ({
       {/* <Birtchart /> */}
       <Followingastrologers loginToken={loginToken?.value as string} />
       <Rechargehistory loginToken={loginToken?.value as string} />
-      <Consultationhistory />
+      <Consultationhistory loginToken={loginToken?.value} />
     </>
   );
 };
