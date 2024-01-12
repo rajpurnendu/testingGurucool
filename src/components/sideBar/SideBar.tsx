@@ -127,17 +127,17 @@ const SideBar = ({
   };
   return (
     <div
-      className={`fixed top-0 right-0 transition-all duration-500 ease-in-out animate__animated animate__bounce ${
-        isOpen ? "flex" : "hidden"
+      className={`fixed top-0 right-0 transition-all duration-500 ease-in-out  ${
+        isOpen ? "visible" : "invisible"
       } w-full h-full bg-[rgba(0,0,0,0.7)]  z-20`}
     >
       <div
         className={`xl:h-screen xl:w-[40%] w-full h-[60%] md:h-screen md:w-[50%] bg-white  ${
           isOpen
-            ? "xl:translate-x-0 xl:translate-y-0 md:translate-x-0 md:translate-y-0 translate-x-0 translate-y-0"
-            : "xl:translate-x-full xl:translate-y-0 md:translate-y-0 md:translate-x-full translate-x-0 translate-y-full"
+            ? "md:translate-x-0 translate-y-0 md:translate-y-0"
+            : "md:translate-x-full translate-y-full md:translate-y-0"
         }
-          fixed xl:top-0 xl:right-0 bottom-0 md:right-0 z-20 transition-transform ease-in-out duration-500`}
+          fixed xl:top-0 xl:right-0 bottom-0 md:right-0 z-20  ease-in-out duration-300`}
       >
         <div className="w-full p-3 flex justify-between">
           <p className="xl:text-[20px] text-[18px] font-[300] xl:font-[400]">
@@ -570,6 +570,7 @@ const SideBar = ({
           </button>
         </div>
       </div>
+    
     </div>
   );
 };
