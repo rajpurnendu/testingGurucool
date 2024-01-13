@@ -1,5 +1,10 @@
+import MainAstrologerProfile from "../../../components/AstrologerProfile/MainAstrologerProfile";
 const page = () => {
-  return <div></div>;
+  return (
+    <div>
+      <MainAstrologerProfile />
+    </div>
+  );
 };
 
 export default page;

@@ -1,6 +1,6 @@
 import { RxCross2 } from "react-icons/rx";
 
-const BreadCrumps = ({ state, fn }: { state: boolean; fn: Function }) => {
+const TopBar = ({ state, fn }: { state: boolean; fn: Function }) => {
   return (
     <>
       <div
@@ -60,4 +60,4 @@ const BreadCrumps = ({ state, fn }: { state: boolean; fn: Function }) => {
     </>
   );
 };
-export default BreadCrumps;
+export default TopBar;

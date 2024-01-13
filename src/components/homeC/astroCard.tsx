@@ -6,6 +6,9 @@ function formatValue(value: number) {
   return `${formattedValue}K`;
 }
 
+
+
+
 const AstroCard = ({ data }: { data: any }) => {
   // console.log();
   return (
