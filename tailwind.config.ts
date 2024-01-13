@@ -49,6 +49,29 @@ const config: Config = {
         ".no-scrollbar":{
           '-ms-overflow-style':"none",
           "scrollbar-width":'none'
+        },
+        '.scrollbar-thin':{
+          scrollbarWidth:'thin',
+          scrollbarColor:'rgb(31,29,29) white'
+        },
+        '.scrollbar-webkit':{
+          '&::-webkit-scrollbar':{
+            width:'6px',
+            overflow:'visible'
+          
+          },
+          "&::-webkit-scrollbar-track":{
+            background:'#707070',
+            borderRadius:'46px',
+
+          },
+          "&::-webkit-scrollbar-thumb":{
+            backgroundColor:'#C4C4C4',
+            borderRadius:'100px',
+            height:'10px',
+            width:'100px',
+          },
+
         }
       };
       addUtilities(newUtilities);

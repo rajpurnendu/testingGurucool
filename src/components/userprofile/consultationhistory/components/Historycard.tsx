@@ -20,7 +20,7 @@ const Historycard = ({ item }: { item: any }) => {
           <p
             className={clsx("font-semibold mb-0 text-[19px]", {
               "text-[#38CC24]": consultationstatus,
-              "text-[#e91b1b]": consultationstatus,
+              "text-[#e91b1b]": !consultationstatus,
             })}
           >
             {consultationstatus ? "Completed" : "Failed"}

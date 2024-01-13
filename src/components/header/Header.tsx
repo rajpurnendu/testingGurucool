@@ -11,7 +11,7 @@ import clsx from "clsx";
 import { BasicModal } from "../login/BasicModal";
 import { logout } from "@/lib/actions";
 import { getUserprofile } from "@/lib/data";
-import BreadCrumps from "../breadCrumps/BreadCrumps";
+import TopBar from "../TopBar/TopBar";
 
 const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [menuState, setMenuState] = useState("menu");
@@ -33,6 +33,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
     const userProfile = async () => {
       if (loginToken) {
         let data = await getUserprofile(loginToken);
+
         // console.log("====================================");
         // console.log(data);
         // console.log("====================================");
@@ -44,8 +45,9 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
     setTimeout(() => {
       ToggelOpen();
     }, 8000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginToken]);
-
+  console.log(userDetails);
   const onToggleMenu = () => {
     setMenuState((prevState) => (prevState === "menu" ? "close" : "menu"));
   };
@@ -200,17 +202,22 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             )} */}
             {loginToken ? (
               userDetails?.avatar?.url ? (
-                <Image
-                  className="relative"
-                  width={25}
-                  height={25}
-                  src={userDetails?.avatar?.url || ""}
-                  alt="userProfile"
-                />
+                <div
+                  onClick={toggelDrop}
+                  className="cursor-pointer overflow-hidden  inline-block w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center  mx-auto xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
+                >
+                  <Image
+                    className=" rounded-full"
+                    width="100"
+                    height="100"
+                    src={userDetails?.avatar?.url || ""}
+                    alt="userProfile"
+                  />
+                </div>
               ) : (
                 <div
                   onClick={toggelDrop}
-                  className="cursor-pointer relative inline-block w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center justify-center items-center mx-auto my-2 xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
+                  className="cursor-pointer relative flex justify-center  overflow-hidden w-[30px] h-[30px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4]  items-center mx-auto my-2 xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
                 >
                   {userDetails?.firstName?.charAt(0).toUpperCase()}
                   {userDetails?.lastName?.charAt(0).toUpperCase()}
@@ -250,7 +257,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             ) : null}
           </div>
         </nav>
-        <BreadCrumps state={open} fn={ToggelOpen} />
+        <TopBar state={open} fn={ToggelOpen} />
       </div>
     </>
   );
