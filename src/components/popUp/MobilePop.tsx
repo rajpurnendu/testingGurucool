@@ -7,7 +7,6 @@ const MobilePop = () => {
 
   const openModal = () => {
     setIsOpen(true);
-    // console.log("Cliked");
   };
 
   const closeModal = () => {

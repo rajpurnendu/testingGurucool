@@ -72,8 +72,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
           isInternational: false,
         })
           .then((result) => {
-            // Handle the result here
-            // console.log("Test Action Result:", result);
+           
             if (result?.success) {
               setOtpsendmsg(result?.message);
               setOtpsend(true);
@@ -110,12 +109,11 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
         .then((result) => {
           // console.log(result);
           if (result?.success) {
-            // console.log("Success Fully Login!");
+           
             //TODO: New User Logic and OLd use Logic here
             if (result.newUser) {
               //TODO: New User Logic
               router.push("/register");
-              // console.log(result?.newUser);
               setLogin(false);
             } else {
               toast.success("Successfully Login!");

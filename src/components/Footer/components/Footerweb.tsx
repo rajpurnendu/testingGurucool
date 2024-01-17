@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Footerweb = () => {
   return (
-    <div className="main-tool-bar w-[100%] h-[450px] bg-[#965efb] pt-[3.5%] pb-[3.5%] flex-col justify-between main-tool-bar hidden text-[white] md:flex">
+    <div className="main-tool-bar w-[100%] h-fit bg-[#965efb] pt-[3.5%] pb-[3.5%] flex-col justify-between main-tool-bar hidden text-[white] md:flex">
       <div className="mx-auto my-0 max-w-[72rem] box-border px-[1rem]">
         <div className="flex flex-col justify-between h-[80%]">
           <div className="flex justify-between mb-[20px]">
@@ -138,7 +138,7 @@ const Footerweb = () => {
           </div>
         </div>
       </div>
-      <p className="font-normal text-[15px] text-center text-[white] mt-4">
+      <p className="font-normal text-[15px] text-center text-white mt-20">
         © 2023 GuruCool.life. All rights reserved
       </p>
     </div>

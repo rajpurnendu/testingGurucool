@@ -34,9 +34,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
       if (loginToken) {
         let data = await getUserprofile(loginToken);
 
-        // console.log("====================================");
-        // console.log(data);
-        // console.log("====================================");
+    
         setWalletbal(data?.wallet_balance);
         setUserDetails(data.user);
       }
@@ -47,7 +45,6 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
     }, 8000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginToken]);
-  console.log(userDetails);
   const onToggleMenu = () => {
     setMenuState((prevState) => (prevState === "menu" ? "close" : "menu"));
   };

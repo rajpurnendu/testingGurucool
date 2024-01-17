@@ -12,7 +12,6 @@ import { useState } from "react";
 
 const Speciality = () => {
   const pathname = usePathname();
-  console.log(pathname);
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -48,21 +47,22 @@ const Speciality = () => {
       id: 2,
       name: (
         <p
-          className={clsx(
-            `text-[14px] md:text-[20px] text-gray-600 font-semibold`,
-            {
-              "text-cyan-300": pathname === `/call-to-astrologers/Marriage`,
-            }
-          )}
+          className={`text-[14px] md:text-[20px] font-semibold ${
+            pathname === "/call-to-astrologers/Marriage"
+              ? "text-[#34ebd8]"
+              : "text-gray-600"
+          }`}
         >
           Marriage
         </p>
       ),
       icon: (
         <GiBigDiamondRing
-          className={clsx(`w-[20px] md:w-[24px] h-auto text-gray-600`, {
-            "text-cyan-300": pathname === `/call-to-astrologers/Marriage`,
-          })}
+          className={`w-[20px] md:w-[24px] h-auto ${
+            pathname === `/call-to-astrologers/Marriage`
+              ? "text-[#34ebd8]"
+              : "text-gray-600"
+          }`}
         />
       ),
       url: "/call-to-astrologers/Marriage",
@@ -71,21 +71,22 @@ const Speciality = () => {
       id: 3,
       name: (
         <p
-          className={clsx(
-            `text-[14px] md:text-[20px] text-gray-600 font-semibold`,
-            {
-              "text-cyan-700": pathname === `/call-to-astrologers/Career`,
-            }
-          )}
+          className={`text-[14px] md:text-[20px] font-semibold ${
+            pathname === "/call-to-astrologers/Career"
+              ? "text-[#a834eb]"
+              : "text-gray-600"
+          }`}
         >
           Career
         </p>
       ),
       icon: (
         <MdBusinessCenter
-          className={clsx(`w-[20px] md:w-[24px] h-auto text-gray-600`, {
-            "text-cyan-700": pathname === `/call-to-astrologers/Career`,
-          })}
+          className={`w-[20px] md:w-[24px] h-auto ${
+            pathname === `/call-to-astrologers/Career`
+              ? "text-[#a834eb]"
+              : "text-gray-600"
+          }`}
         />
       ),
       url: "/call-to-astrologers/Career",
@@ -94,21 +95,22 @@ const Speciality = () => {
       id: 4,
       name: (
         <p
-          className={clsx(
-            `text-[14px] md:text-[20px] text-gray-600 font-semibold`,
-            {
-              "text-blue-600": pathname === `/call-to-astrologers/Business`,
-            }
-          )}
+          className={`text-[14px] md:text-[20px] font-semibold ${
+            pathname === "/call-to-astrologers/Business"
+              ? "text-[#1e88e5]"
+              : "text-gray-600"
+          }`}
         >
           Business
         </p>
       ),
       icon: (
         <MdBusiness
-          className={clsx(`w-[20px] md:w-[24px] h-auto text-gray-600`, {
-            "text-blue-600": pathname === `/call-to-astrologers/Business`,
-          })}
+          className={`w-[20px] md:w-[24px] h-auto ${
+            pathname === `/call-to-astrologers/Business`
+              ? "text-[#1e88e5]"
+              : "text-gray-600"
+          }`}
         />
       ),
       url: "/call-to-astrologers/Business",
