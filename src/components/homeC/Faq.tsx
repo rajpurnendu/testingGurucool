@@ -57,7 +57,7 @@ const Faq = ({ searchParams }: { searchParams: any }) => {
 
           <div className="w-fit">
             <p
-              className={` transition-all duration-500 ease-in-out text-neutral-700 text-[8px] md:text-[13px] xl:text-lg font-normal ${
+              className={` transition-all duration-500 ease-in-out text-neutral-700 text-[13px] md:text-[13px] xl:text-lg font-normal ${
                 filtername === data.id
                   ? " opacity-100 block"
                   : "opacity-0 hidden"

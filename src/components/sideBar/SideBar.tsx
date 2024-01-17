@@ -66,7 +66,6 @@ const SideBar = ({
   };
 
   useEffect(() => {
-    console.log(mainData);
   }, [mainData]);
   const handleApplyFunction = () => {
     // Create an object with selected filters

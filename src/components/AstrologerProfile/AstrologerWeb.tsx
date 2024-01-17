@@ -1,5 +1,10 @@
-import React, { use } from "react";
+"use client";
+import React, { use, useState } from "react";
+
 import Image from "next/image";
+import { Get_ASTROLOGER_FEEDBACK } from "@/lib/data";
+import call2 from "../../../public/assets/AstrologerProfileIcons/call2.svg";
+import checkicon from "../../../public/assets/AstrologerProfileIcons/check.png";
 import ProfileImg from "../../../public/assets/AstrologerProfileIcons/profileImg.webp";
 import AstroImg from "../../../public/assets/AstrologerProfileIcons/astroImg.webp";
 import star from "../../../public/assets/AstrologerProfileIcons/Star.webp";
@@ -17,21 +22,65 @@ import career from "../../../public/assets/AstrologerProfileIcons/career.webp";
 import life from "../../../public/assets/AstrologerProfileIcons/life.webp";
 import business from "../../../public/assets/AstrologerProfileIcons/ruppee.webp";
 import star3 from "../../../public/assets/AstrologerProfileIcons/start3.webp";
+import Link from "next/link";
 
-const AstrologerWeb = () => {
+const AstrologerWeb = ({ data, feedback, loginToken }: any) => {
+  const [descLength, setdescLength] = useState(200);
+  const [imgLength, setimgLength] = useState(4);
+  const toggleDescription = () => {
+    setdescLength(data.description.length);
+  };
+
+  const Specialities: any = {
+    Love: { img: heart, desc: "Relationship" },
+    Marriage: { img: marriage, desc: "Kids,Divorce" },
+    Health: { img: health, desc: "Physical,Mental" },
+    Career: { img: career, desc: "Job, Education" },
+    Life: { img: life, desc: "Money,Family" },
+    Business: { img: business, desc: "Legal Matter" },
+  };
+
+  const toggleImgLength = () => {
+    setimgLength(data.images.length);
+  };
+  function formatValue(value: number) {
+    const formattedValue = (value / 1000).toFixed(1);
+    return `${formattedValue}K`;
+  }
+
+  function formatDateString(dateString: string) {
+    const date = new Date(dateString);
+    const month = date.toLocaleString("default", { month: "short" });
+    const year = date.getUTCFullYear();
+
+    return `${month} ${year}`;
+  }
   return (
-    <div className="my-[90px] mx-auto max-w-[72rem]  md:flex items-st flex-col justify-start gap-10">
-      <div className="bg-gradient-to-r max-w-[72rem] from-violet-100 via-white to-white rounded-xl shadow-md  items-end md:flex gap-[64.33px] p-[38.38px]  mx-auto">
-        <div className="flex flex-col items-center gap-[18.38px]">
-          <div className="overflow-hidden w-[183px] h-[183px] rounded-full flex items-center justify-center">
+    <div className="my-[90px] mx-auto max-w-[72rem] hidden  md:flex items-st flex-col justify-start gap-10">
+      <div className="bg-gradient-to-r  xl:max-w-[72rem] from-violet-100 via-white to-white rounded-md shadow-md  items-end md:flex md:gap-[20px] xl:gap-[64.33px] p-[20px] lg:p-[38.38px] mx-auto">
+        <div className="flex flex-col items-center relative gap-[18.38px]">
+          <div className="overflow-hidden  w-[183px] h-[183px] rounded-full flex items-center justify-center">
             <Image
-              src={ProfileImg}
+              src={data?.user?.avatar?.url}
               className="w-[183px] h-[183px]"
               width="138"
               height="138"
               alt="profile"
             />
           </div>
+          {data.mostTrusted == true ? (
+            <div className="absolute bottom-[36%] py-[5px] gap-2 items-center flex  px-[6px] rounded-bl-[24px] rounded-tr-[10px] bg-[#965EFB]">
+              <Image src={checkicon} className="w-[22px] h-[22px]" alt="icon" />
+              <p
+                className="text-stone-300
+text-[22.97px]
+font-semibold"
+              >
+                Most Choice
+              </p>
+            </div>
+          ) : null}
+
           <div className="flex gap-[10px]">
             <Image src={star} className="w-[31px] h-[31px]" alt="alt" />
             <Image src={star} className="w-[31px] h-[31px]" alt="alt" />
@@ -39,40 +88,47 @@ const AstrologerWeb = () => {
             <Image src={star} className="w-[31px] h-[31px]" alt="alt" />
             <Image src={star} className="w-[31px] h-[31px]" alt="alt" />
           </div>
-          <div className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md">
-            Follow
-          </div>
+          {loginToken ? (
+            <div className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md">
+              Follow
+            </div>
+          ) : (
+            <div className=" hover:shadow-lg cursor-not-allowed text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-zinc-400 rounded-md">
+              Follow
+            </div>
+          )}
         </div>
-        <div className="flex flex-col items-start gap-[42.5px] w-[601px]">
+        <div className="flex flex-col items-start gap-[42.5px] xl:w-[601px]">
           <div className="flex flex-col gap-[18.38px] items-start">
             <h1
               className="text-neutral-800
 text-[34px]
 font-semibold"
             >
-              Astrologer’s name here
+              {`${data.user.firstName} 
+              ${data.user.lastName}`}
             </h1>
             <div className=" flex gap-[10px] items-center">
               <Image src={language} width="30" height="30" alt="langugage" />
               <p
                 className="
               text-neutral-500
-              text-xl
+              text-md
               font-semibold
               leading-[25px]
               "
               >
-                Hindi, English, Kannada, Telugu
+                {data.languages.join(",")}
               </p>
             </div>
           </div>
-          <div className="p-[16px] w-fit flex items-center justify-center border-zinc-300 border rounded-md bg-white gap-[24px]">
+          <div className="p-[16px] w-fit flex items-center justify-center border-zinc-300 border rounded-md bg-white gap-[10px] lg:gap-[24px]">
             <div className="w-fit flex flex-col gap-[12px] items-center justify-center">
               <Image width="36" height="36" src={clock} alt="time" />
               <p
                 className="
                 text-zinc-500
-                text-xl
+                text-md
                 font-semibold
                 leading-[25px]"
               >
@@ -81,20 +137,22 @@ font-semibold"
               <p
                 className="
               text-violet-500
-              text-[34px]
+              lg:text-[34px]
+              text-[20px]
+
               font-semibold
               "
               >
-                12+ Yrs.
+                {data.experience}+ Yrs
               </p>
             </div>
             <div className="w-[0] h-[120px] border border-stone-300"></div>
-            <div className="w-fit flex flex-col gap-[12px] items-center justify-center">
+            <div className=" flex flex-col gap-[12px] items-center justify-center">
               <Image width="36" height="36" src={user} alt="time" />
               <p
                 className="
                 text-zinc-500
-                text-xl
+                text-md
                 font-semibold
                 leading-[25px]"
               >
@@ -103,22 +161,27 @@ font-semibold"
               <p
                 className="
                 text-amber-500
-              text-[34px]
+                lg:text-[34px]
+                text-[20px]
               font-semibold
               "
               >
-                67
+                {data.followersCount}
               </p>
             </div>
             <div className="w-[0] h-[120px]  border border-stone-300"></div>
-            <div className="w-fit flex flex-col gap-[12px] items-center justify-center">
+            <div className=" flex flex-col gap-[12px] items-center justify-center">
               <Image width="36" height="36" src={star2} alt="time" />
               <p
                 className="
-                text-xl
+                text-md
+                text-center
+                block
+                w-full
                 text-zinc-500
 
                 font-semibold
+                
                 leading-[25px]"
               >
                 Clients Served
@@ -127,22 +190,30 @@ font-semibold"
                 className="
                 text-emerald-500
               
-              text-[34px]
+                lg:text-[34px]
+                text-[20px]
               font-semibold
               "
               >
-                37K
+                {formatValue(data.served)}
               </p>
             </div>
           </div>
         </div>
-        <div className="flex gap-[36.75px] flex-col">
-          <div className="cursor-pointer hover:shadow-lg gap-[18px] w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-neutral-200 rounded-tl-[6.89px] rounded-bl-[6.89px]">
-            <Image src={messge} alt="messge" width="29" height="29" />
+        <div className="flex xl:gap-[36.75px] gap-4 flex-col">
+          <div className="cursor-not-allowed hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-neutral-200 rounded-tl-[6.89px] rounded-bl-[6.89px]">
+            <Image
+              src={messge}
+              alt="messge"
+              className="w-25 h-25 lg:w-29 lg:h-29"
+              width="29"
+              height="29"
+            />
             <div>
               <p
                 className="text-zinc-500
-text-lg
+lg:text-lg
+text-sm
 font-medium
 leading-relaxed"
               >
@@ -151,7 +222,8 @@ leading-relaxed"
               <p
                 className="
               text-zinc-500
-              text-lg
+              lg:text-lg
+text-sm
               font-medium
             
               leading-relaxed"
@@ -160,90 +232,148 @@ leading-relaxed"
               </p>
             </div>
           </div>
-          <div className="cursor-pointer hover:shadow-lg gap-[18px] w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-emerald-500 rounded-tl-[6.89px] rounded-bl-[6.89px]">
-            <Image
-              src={call}
-              className="text-white"
-              alt="messge"
-              width="29"
-              height="29"
-            />
-            <div>
-              <p
-                className="text-white
-text-lg
+          {data.callAvailability === "online" ? (
+            <div className="cursor-pointer hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-emerald-500 rounded-tl-[6.89px] rounded-bl-[6.89px]">
+              <Image
+                src={call}
+                className="text-white w-25 h-25 lg:w-29 lg:h-29"
+                alt="messge"
+                width="29"
+                height="29"
+              />
+              <div>
+                <p
+                  className="text-white
+                lg:text-lg
+                text-left
+                text-sm
 font-medium
 leading-relaxed"
-              >
-                Call Now
-              </p>
-              <p
-                className="
+                >
+                  call now
+                </p>
+                <p
+                  className="
               text-white
-              text-lg
+              lg:text-lg
+text-sm
               font-medium
             
               leading-relaxed"
-              >
-                ₹ 24/min
-              </p>
+                >
+                  ₹{data.fee}/min
+                </p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="cursor-not-allowed hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-neutral-200 rounded-tl-[6.89px] rounded-bl-[6.89px]">
+              <Image
+                src={call2}
+                className="text-white w-25 h-25 lg:w-29 lg:h-29"
+                alt="messge"
+                width="29"
+                height="29"
+              />
+              <div>
+                <p
+                  className="text-zinc-500
+                lg:text-lg
+                text-left
+                text-sm
+font-medium
+leading-relaxed"
+                >
+                  Offline
+                </p>
+                <p
+                  className="
+                  text-zinc-500
+              lg:text-lg
+text-sm
+              font-medium
+            
+              leading-relaxed"
+                >
+                  ₹{data.fee}/min
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <div className=" gap-[16px] max-w-[72rem] rounded-2xl p-6  border-2 items-start flex flex-col  border-zinc-300  ">
-        <h2
-          className="text-neutral-700
+
+      <div className="p-5">
+        <div className=" gap-[16px] md:w-auto xl:max-w-[72rem] rounded-2xl p-6  border-2 items-start flex flex-col  border-zinc-300">
+          <h2
+            className="text-neutral-700
           w-full
 text-[26px]
 text-center
 font-semibold"
-        >
-          About Me
-        </h2>
-        <p
-          className="text-stone-600
-text-base
-font-medium
-leading-snug"
-        >
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-          officia deserunt mollit anim id es Excepteur sint occaecat cupidatat
-          non proident, sunt in culpa qui officia deserunt mollit anim id
-          esExcepteur sint occaecat cupid Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id es
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-          officia deserunt mollit anim id esExcepteur sint occaecat cupid
-          Excepteur{"  "}
-          <span
-            className="text-violet-500
-            cursor-pointer
+          >
+            About Me
+          </h2>
+          <p className={` text-stone-600 text-base font-medium leading-snug`}>
+            {data.description.slice(0, descLength)}
+            {descLength == data.description.length ? (
+              <span
+                onClick={() => setdescLength(200)}
+                className="text-violet-500
+cursor-pointer
 text-lg
 font-medium"
-          >
-            Read More
-          </span>
-        </p>
-        <div className="flex items-center justify-center gap-4">
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-          <Image src={AstroImg} width="107" height="117" alt="astroImg" />
-        </div>
-        <h3
-          className="cursor-pointer w-full text-right text-neutral-800
+              >
+                {" "}
+                Read Less
+              </span>
+            ) : (
+              <span
+                onClick={toggleDescription}
+                className="text-violet-500
+cursor-pointer
+text-lg
+font-medium"
+              >
+                {" "}
+                Read More
+              </span>
+            )}
+          </p>
+          <div className="flex items-center justify-center gap-4 overflow-x-scroll no-scrollbar">
+            {data.images.slice(0, imgLength).map((data: any) => (
+              <Image
+                key={data._id}
+                src={data.url}
+                width="107"
+                className="w-[107px] h-[107px]"
+                height="117"
+                alt="astroImg"
+              />
+            ))}
+          </div>
+          {data.images.length == imgLength ? (
+            <p
+              className="cursor-pointer w-full text-right text-neutral-800
 text-lg
 font-semibold"
-        >
-          See all
-        </h3>
+              onClick={() => setimgLength(4)}
+            >
+              See less
+            </p>
+          ) : (
+            <p
+              className="cursor-pointer w-full text-right text-neutral-800
+text-lg
+font-semibold"
+              onClick={toggleImgLength}
+            >
+              See all
+            </p>
+          )}
+        </div>
       </div>
-      <div className="flex gap-[32px] mx-auto max-w-[72rem] justify-center items-center">
+
+      <div className="flex gap-[10px] lg:gap-[32px] mx-auto  xl:max-w-[72rem] lg:justify-center items-start">
         <div className="flex flex-col items-start gap-2">
           <h3
             className="text-neutral-800
@@ -252,127 +382,36 @@ font-semibold"
           >
             Specialities
           </h3>
-          <div className="rounded-xl w-[556px] min-h-[359px]  flex-wrap shadow justify-start inline-flex gap-[26px] items-start p-4">
-            <div className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex">
-              <Image src={heart} height="32" width="32" alt="heart" />
-              <div>
-                <p
-                  className="text-neutral-800
-text-lg
-font-semibold
-"
-                >
-                  Love
-                </p>
-                <p
-                  className="text-neutral-500
-text-base
-font-medium leading-snug"
-                >
-                  Relationship
-                </p>
-              </div>
-            </div>
-            <div className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex">
-              <Image src={marriage} height="32" width="32" alt="marriage" />
-              <div>
-                <p
-                  className="text-neutral-800
-text-lg
-font-semibold
-"
-                >
-                  Marriage
-                </p>
-                <p
-                  className="text-neutral-500
-text-base
-font-medium leading-snug"
-                >
-                  Kids, Divorce
-                </p>
-              </div>
-            </div>
-            <div className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex">
-              <Image src={health} height="32" width="32" alt="health" />
-              <div>
-                <p
-                  className="text-neutral-800
-text-lg
-font-semibold
-"
-                >
-                  Health
-                </p>
-                <p
-                  className="text-neutral-500
-text-base
-font-medium leading-snug"
-                >
-                  Physical, Mental
-                </p>
-              </div>
-            </div>
-            <div className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex">
-              <Image src={career} height="32" width="32" alt="career" />
-              <div>
-                <p
-                  className="text-neutral-800
-text-lg
-font-semibold
-"
-                >
-                  Career
-                </p>
-                <p
-                  className="text-neutral-500
-text-base
-font-medium leading-snug"
-                >
-                  Job, Education
-                </p>
-              </div>
-            </div>
-            <div className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex">
-              <Image src={life} height="32" width="32" alt="life" />
-              <div>
-                <p
-                  className="text-neutral-800
-text-lg
-font-semibold
-"
-                >
-                  Life
-                </p>
-                <p
-                  className="text-neutral-500
-text-base
-font-medium leading-snug"
-                >
-                  Money, Family
-                </p>
-              </div>
-            </div>
-            <div className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex">
-              <Image src={business} height="32" width="32" alt="business" />
-              <div>
-                <p
-                  className="text-neutral-800
-text-lg
-font-semibold
-"
-                >
-                  Business
-                </p>
-                <p
-                  className="text-neutral-500
-text-base
-font-medium leading-snug"
-                >
-                  Legal Matter
-                </p>
-              </div>
-            </div>
+          <div className="rounded-md xl:w-[556px] md:w-[400px] xl:min-h-[359px]  flex-wrap shadow justify-start inline-flex gap-[26px] items-start p-4">
+            {data.specialization.map((specialtyName: any) => {
+              const specialityData = Specialities[specialtyName];
+
+              if (specialityData) {
+                return (
+                  <div
+                    key={specialtyName}
+                    className="p-4 min-w-[153px] rounded-2xl border border-stone-300 flex-col justify-center items-start gap-2 inline-flex"
+                  >
+                    <Image
+                      src={specialityData.img}
+                      height="32"
+                      width="32"
+                      alt="heart"
+                    />
+                    <div>
+                      <p className="text-neutral-800 text-lg font-semibold">
+                        {specialtyName}
+                      </p>
+                      <p className="text-neutral-500 text-base font-medium leading-snug">
+                        {specialityData.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+
+              return null; // Return null if specialityData is not found
+            })}
           </div>
         </div>
         <div className="flex flex-col items-start gap-2">
@@ -383,17 +422,22 @@ font-semibold"
           >
             Skills
           </h3>
-          <div className="w-[558px] h-[359.22px] p-2 items-start bg-white rounded-xl shadow  flex  flex-wrap gap-2">
-            <div className="px-6 w-fit py-3 h-fit bg-zinc-100 rounded-[64px] justify-center items-center gap-2.5 flex">
-              <div className=" text-neutral-500 text-base font-medium  leading-snug">
-                Vedic Astrology
+          <div className="lg:w-[558px] md:w-[350px] overflow-y-scroll scrollbar-thin scrollbar-webkit h-[460px] xl:h-[359.22px] p-2 items-start bg-white rounded-md shadow  flex  flex-wrap gap-2">
+            {data.skills.map((data: string) => (
+              <div
+                key={data}
+                className="px-6 w-fit py-3 h-fit bg-zinc-100 rounded-[64px] justify-center items-center gap-2.5 flex"
+              >
+                <div className=" text-neutral-500 text-base font-medium  leading-snug">
+                  {data}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-      <div className="min-w-[72rem] mx-auto">
-        <div className="flex items-start min-w-[72rem]  gap-4 flex-col">
+      <div className="max-w-[72rem] w-auto mx-auto">
+        <div className="flex items-start md:max-w-[72rem]  xl:min-w-[72rem]  gap-4 flex-col">
           <h3
             className="text-neutral-800
 text-[26px]
@@ -410,14 +454,14 @@ font-semibold"
 text-[26px]
 font-bold"
                 >
-                  5.0
+                  {data.rating.toFixed(1)}
                 </h3>
                 <p
                   className="text-zinc-500
 text-base
 font-medium"
                 >
-                  (500) Review
+                  {feedback.total} Review
                 </p>
               </div>
 
@@ -434,617 +478,115 @@ font-medium"
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-4 border-b border-gray-200 pb-4">
-              <div className="w-full items-start flex gap-[358px]">
-                <div className="flex gap-4 items-start">
-                  <div className="overflow-hidden rounded-full w-[60px] h-[60px]">
-                    <Image
-                      src={ProfileImg}
-                      width="60"
-                      height="60"
-                      alt="profile"
-                    />
+            {feedback.docs.map((datas: any) => (
+              <div
+                key={datas._id}
+                className="flex flex-col gap-4 border-b border-gray-200 pb-4"
+              >
+                <div className="w-full items-start justify-between flex gap-[358px]">
+                  <div className="flex gap-4 items-start">
+                    <div className="flex items-center justify-center bg-black overflow-hidden rounded-full w-[60px] h-[60px]">
+                      <p className="text-white">
+                        {datas.firstName.slice(0, 1)}
+                        {datas.lastName.slice(0, 1)}
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-start gap-1">
+                      <p
+                        className="text-neutral-800
+  text-lg
+  font-medium"
+                      >
+                        {`${datas.firstName} ${datas.lastName}`}
+                      </p>
+                      <p
+                        className="text-stone-300
+  text-sm
+  font-medium
+  "
+                      >
+                        {formatDateString(datas.createdAt)}
+                      </p>
+                    </div>
                   </div>
+                  <div className="flex gap-[6px]">
+                    <Image
+                      src={star4}
+                      className="w-5 h-5"
+                      width="24"
+                      height="24"
+                      alt="star"
+                    />
+                    <p
+                      className="text-stone-600
+  text-base
+  font-bold"
+                    >
+                      {datas.rating}.0
+                    </p>
+                  </div>
+                </div>
+                <p
+                  className="text-stone-600
+  text-base
+  font-medium"
+                >
+                  {datas.goodFeedback || datas.badFeedback}
+                </p>
+                <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
                   <div className="flex flex-col items-start gap-1">
                     <p
                       className="text-neutral-800
-text-lg
-font-medium"
+  text-base
+  font-semibold"
                     >
-                      Name of User
+                      {`${data.user.firstName} 
+              ${data.user.lastName}`}
                     </p>
                     <p
-                      className="text-stone-300
-text-sm
-font-medium
-"
+                      className="text-neutral-500
+  text-sm
+  font-normal leading-none"
                     >
-                      March 2022
+                      {formatDateString(datas.createdAt)}
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className="text-neutral-500
+                  text-base
+                  font-medium
+                  leading-snug"
+                    >
+                      Thank you for your feedback it was really great speaking
+                      to you.
+                    </p>
+                    <p
+                      className="text-neutral-500
+                  text-base
+                  font-medium
+                  leading-snug"
+                    >
+                      More Text can be added here. Thank you for your feedback
+                      it was really great speaking to you.
+                    </p>
+                    <p
+                      className="text-neutral-500
+  text-base
+  font-medium
+  leading-snug"
+                    >
+                      More Text can be added here.{" "}
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-[6px]">
-                  <Image
-                    src={star4}
-                    className="w-5 h-5"
-                    width="24"
-                    height="24"
-                    alt="star"
-                  />
-                  <p
-                    className="text-stone-600
-text-base
-font-bold"
-                  >
-                    5.0
-                  </p>
-                </div>
               </div>
-              <p
-                className="text-stone-600
-text-base
-font-medium"
-              >
-                Excepteur sint occaecat cupidatat non pident, sunt in culpa qui
-                officia wfe eedeserunt mollit anim id es Excepteur{" "}
-              </p>
-              <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                <div className="flex flex-col items-start gap-1">
-                  <p
-                    className="text-neutral-800
-text-base
-font-semibold"
-                  >
-                    Astro Name
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-sm
-font-normal leading-none"
-                  >
-                    March 2022
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    Thank you for your feedback it was really great speaking to
-                    you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    More Text can be added here. Thank you for your feedback it
-                    was really great speaking to you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-base
-font-medium
-leading-snug"
-                  >
-                    More Text can be added here.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 border-b border-gray-200 pb-4">
-              <div className="w-full items-start flex gap-[358px]">
-                <div className="flex gap-4 items-start">
-                  <div className="overflow-hidden rounded-full w-[60px] h-[60px]">
-                    <Image
-                      src={ProfileImg}
-                      width="60"
-                      height="60"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-1">
-                    <p
-                      className="text-neutral-800
-text-lg
-font-medium"
-                    >
-                      Name of User
-                    </p>
-                    <p
-                      className="text-stone-300
-text-sm
-font-medium
-"
-                    >
-                      March 2022
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-[6px]">
-                  <Image
-                    src={star4}
-                    className="w-5 h-5"
-                    width="24"
-                    height="24"
-                    alt="star"
-                  />
-                  <p
-                    className="text-stone-600
-text-base
-font-bold"
-                  >
-                    5.0
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-stone-600
-text-base
-font-medium"
-              >
-                Excepteur sint occaecat cupidatat non pident, sunt in culpa qui
-                officia wfe eedeserunt mollit anim id es Excepteur{" "}
-              </p>
-              <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                <div className="flex flex-col items-start gap-1">
-                  <p
-                    className="text-neutral-800
-text-base
-font-semibold"
-                  >
-                    Astro Name
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-sm
-font-normal leading-none"
-                  >
-                    March 2022
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    Thank you for your feedback it was really great speaking to
-                    you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    More Text can be added here. Thank you for your feedback it
-                    was really great speaking to you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-base
-font-medium
-leading-snug"
-                  >
-                    More Text can be added here.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 border-b border-gray-200 pb-4">
-              <div className="w-full items-start flex gap-[358px]">
-                <div className="flex gap-4 items-start">
-                  <div className="overflow-hidden rounded-full w-[60px] h-[60px]">
-                    <Image
-                      src={ProfileImg}
-                      width="60"
-                      height="60"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-1">
-                    <p
-                      className="text-neutral-800
-text-lg
-font-medium"
-                    >
-                      Name of User
-                    </p>
-                    <p
-                      className="text-stone-300
-text-sm
-font-medium
-"
-                    >
-                      March 2022
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-[6px]">
-                  <Image
-                    src={star4}
-                    className="w-5 h-5"
-                    width="24"
-                    height="24"
-                    alt="star"
-                  />
-                  <p
-                    className="text-stone-600
-text-base
-font-bold"
-                  >
-                    5.0
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-stone-600
-text-base
-font-medium"
-              >
-                Excepteur sint occaecat cupidatat non pident, sunt in culpa qui
-                officia wfe eedeserunt mollit anim id es Excepteur{" "}
-              </p>
-              <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                <div className="flex flex-col items-start gap-1">
-                  <p
-                    className="text-neutral-800
-text-base
-font-semibold"
-                  >
-                    Astro Name
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-sm
-font-normal leading-none"
-                  >
-                    March 2022
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    Thank you for your feedback it was really great speaking to
-                    you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    More Text can be added here. Thank you for your feedback it
-                    was really great speaking to you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-base
-font-medium
-leading-snug"
-                  >
-                    More Text can be added here.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 border-b border-gray-200 pb-4">
-              <div className="w-full items-start flex gap-[358px]">
-                <div className="flex gap-4 items-start">
-                  <div className="overflow-hidden rounded-full w-[60px] h-[60px]">
-                    <Image
-                      src={ProfileImg}
-                      width="60"
-                      height="60"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-1">
-                    <p
-                      className="text-neutral-800
-text-lg
-font-medium"
-                    >
-                      Name of User
-                    </p>
-                    <p
-                      className="text-stone-300
-text-sm
-font-medium
-"
-                    >
-                      March 2022
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-[6px]">
-                  <Image
-                    src={star4}
-                    className="w-5 h-5"
-                    width="24"
-                    height="24"
-                    alt="star"
-                  />
-                  <p
-                    className="text-stone-600
-text-base
-font-bold"
-                  >
-                    5.0
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-stone-600
-text-base
-font-medium"
-              >
-                Excepteur sint occaecat cupidatat non pident, sunt in culpa qui
-                officia wfe eedeserunt mollit anim id es Excepteur{" "}
-              </p>
-              <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                <div className="flex flex-col items-start gap-1">
-                  <p
-                    className="text-neutral-800
-text-base
-font-semibold"
-                  >
-                    Astro Name
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-sm
-font-normal leading-none"
-                  >
-                    March 2022
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    Thank you for your feedback it was really great speaking to
-                    you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    More Text can be added here. Thank you for your feedback it
-                    was really great speaking to you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-base
-font-medium
-leading-snug"
-                  >
-                    More Text can be added here.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 border-b border-gray-200 pb-4">
-              <div className="w-full items-start flex gap-[358px]">
-                <div className="flex gap-4 items-start">
-                  <div className="overflow-hidden rounded-full w-[60px] h-[60px]">
-                    <Image
-                      src={ProfileImg}
-                      width="60"
-                      height="60"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-1">
-                    <p
-                      className="text-neutral-800
-text-lg
-font-medium"
-                    >
-                      Name of User
-                    </p>
-                    <p
-                      className="text-stone-300
-text-sm
-font-medium
-"
-                    >
-                      March 2022
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-[6px]">
-                  <Image
-                    src={star4}
-                    className="w-5 h-5"
-                    width="24"
-                    height="24"
-                    alt="star"
-                  />
-                  <p
-                    className="text-stone-600
-text-base
-font-bold"
-                  >
-                    5.0
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-stone-600
-text-base
-font-medium"
-              >
-                Excepteur sint occaecat cupidatat non pident, sunt in culpa qui
-                officia wfe eedeserunt mollit anim id es Excepteur{" "}
-              </p>
-              <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                <div className="flex flex-col items-start gap-1">
-                  <p
-                    className="text-neutral-800
-text-base
-font-semibold"
-                  >
-                    Astro Name
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-sm
-font-normal leading-none"
-                  >
-                    March 2022
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    Thank you for your feedback it was really great speaking to
-                    you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    More Text can be added here. Thank you for your feedback it
-                    was really great speaking to you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-base
-font-medium
-leading-snug"
-                  >
-                    More Text can be added here.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 border-b border-gray-200 pb-4">
-              <div className="w-full items-start flex gap-[358px]">
-                <div className="flex gap-4 items-start">
-                  <div className="overflow-hidden rounded-full w-[60px] h-[60px]">
-                    <Image
-                      src={ProfileImg}
-                      width="60"
-                      height="60"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-1">
-                    <p
-                      className="text-neutral-800
-text-lg
-font-medium"
-                    >
-                      Name of User
-                    </p>
-                    <p
-                      className="text-stone-300
-text-sm
-font-medium
-"
-                    >
-                      March 2022
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-[6px]">
-                  <Image
-                    src={star4}
-                    className="w-5 h-5"
-                    width="24"
-                    height="24"
-                    alt="star"
-                  />
-                  <p
-                    className="text-stone-600
-text-base
-font-bold"
-                  >
-                    5.0
-                  </p>
-                </div>
-              </div>
-              <p
-                className="text-stone-600
-text-base
-font-medium"
-              >
-                Excepteur sint occaecat cupidatat non pident, sunt in culpa qui
-                officia wfe eedeserunt mollit anim id es Excepteur{" "}
-              </p>
-              <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                <div className="flex flex-col items-start gap-1">
-                  <p
-                    className="text-neutral-800
-text-base
-font-semibold"
-                  >
-                    Astro Name
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-sm
-font-normal leading-none"
-                  >
-                    March 2022
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    Thank you for your feedback it was really great speaking to
-                    you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-                text-base
-                font-medium
-                leading-snug"
-                  >
-                    More Text can be added here. Thank you for your feedback it
-                    was really great speaking to you.
-                  </p>
-                  <p
-                    className="text-neutral-500
-text-base
-font-medium
-leading-snug"
-                  >
-                    More Text can be added here.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* <div className="flex items-start mx-auto gap-4 justify-center max-w-[972px] flex-col">
+      <div className="flex items-start mx-auto gap-4 justify-center w-auto xl:max-w-[972px] flex-col">
         <p
           className="text-neutral-800
 text-[26px]
@@ -1052,48 +594,51 @@ font-semibold"
         >
           Similar Astrologers
         </p>
-        <p className="text-right w-full text-xl text-neutral-800 font-semibold leading-[25px]">
+        <Link
+          href="/call-to-astrologers"
+          className="text-right w-full text-md text-neutral-800 font-semibold leading-[25px]"
+        >
           See all
-        </p>
-        <div className="flex gap-[45px] max-w-[972px]  no-scrollbar overflow-x-scroll mx-auto items-center px-[20px]">
-          <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
+        </Link>
+        <div className="flex gap-[45px] md:max-w-[768px] lg:max-w-[972px]  no-scrollbar overflow-x-scroll mx-auto items-center px-[20px]">
+          <div className="md:min-w-[288.46px] min-w-[180px] md:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow md:shadow-lg md:min-h-[400.10px] relative bg-white rounded-lg">
             <Image
               width="200"
               height="200"
-              className="xl:w-72 xl:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
+              className="md:w-72 md:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
               src={AstroImg}
               alt="banner"
             />
-            <div className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute">
-              <div className="xl:w-[116.01px] w-[75px] h-[75px] xl:h-[116.01px] xl:left-[-1.55px]  xl:top-0 absolute bg-zinc-300 rounded-full" />
+            <div className="w-[114.31px] h-[114.31px] md:left-[80px] left-[30%] top-[20%] md:top-[57.17px] absolute">
+              <div className="md:w-[116.01px] w-[75px] h-[75px] md:h-[116.01px] md:left-[-1.55px]  md:top-0 absolute bg-zinc-300 rounded-full" />
               <Image
                 width="100"
                 height="100"
-                className="xl:w-[105.92px] w-[68px] h-[68px] xl:h-[105.92px] left-[4px] top-[4px] xl:left-[4px] xl:top-[5.04px] absolute rounded-full"
+                className="md:w-[105.92px] w-[68px] h-[68px] md:h-[105.92px] left-[4px] top-[4px] md:left-[4px] md:top-[5.04px] absolute rounded-full"
                 src={ProfileImg}
                 alt="god"
               />
 
               <div>
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
               </div>
             </div>
 
             <div>
-              <div className="xl:w-[139.03px] xl:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
-              <p className="w-[121.79px] h-[13.70px] xl:right-0 right-[-10%] top-[-1%] xl:top-[4.12px] absolute text-center text-white text-xs xl:text-lg font-bold  leading-7">
+              <div className="md:w-[139.03px] md:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
+              <p className="w-[121.79px] h-[13.70px] md:right-0 right-[-10%] top-[-1%] md:top-[4.12px] absolute text-center text-white text-xs md:text-lg font-bold  leading-7">
                 Most Choice
               </p>
             </div>
 
-            <div className="absolute xl:gap-2 items-center w-full inline-block top-[50%] xl:top-[45%]">
+            <div className="absolute md:gap-2 items-center w-full inline-block top-[50%] md:top-[45%]">
               <p
                 className="text-neutral-800
           text-center
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 devesh
@@ -1102,11 +647,11 @@ leading-[17.50px]"
                 className="text-neutral-800
           text-center
           mt-[2px]
-          xl:mt-2
+          md:mt-2
 
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 sharma
@@ -1114,7 +659,7 @@ leading-[17.50px]"
             </div>
             <div
               className="w-[100%]  
-        xl:top-[58%]
+        md:top-[58%]
         top-[66%] 
         
          absolute inline-block items-center justify-center"
@@ -1122,79 +667,79 @@ leading-[17.50px]"
               <p
                 className='text-neutral-500 text-center
         
-          xl:text-[15.18px]
+          md:text-[15.18px]
           text-xs
           font-medium
           leading-[15px]
-          xl:font-normal
-          xl:leading-[18.98px]"'
+          md:font-normal
+          md:leading-[18.98px]"'
               >
                 trot
               </p>
             </div>
             <div
               className="w-[100%] 
-        xl:top-[67%]
+        md:top-[67%]
       
         top-[72%] absolute inline-block items-center justify-center"
             >
               <p
                 className="text-neutral-500 
        text-center
-xl:text-[15.18px]
+md:text-[15.18px]
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[18.98px]"
+md:font-semibold
+md:leading-[18.98px]"
               >
                 hindi
               </p>
             </div>
 
-            <div className="flex xl:gap-[55.23px] gap-[33px] left-3 xl:left-[8%] justify-between top-[80%] items-center absolute">
+            <div className="flex md:gap-[55.23px] gap-[33px] left-3 md:left-[8%] justify-between top-[80%] items-center absolute">
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Rating
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Price
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Exp.
               </p>
             </div>
-            <div className="flex items-center absolute left-[6%] top-[87%] xl:top-[85%]">
+            <div className="flex items-center absolute left-[6%] top-[87%] md:top-[85%]">
               <div className="w-fit flex flex-col  gap-0 items-center">
                 <p
                   className="text-neutral-700
-             text-xs
-             xl:text-xl
-             xl:font-semibold
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-semibold
+             md:leading-normal
              font-bold
              leading-[18px]"
                 >
@@ -1202,10 +747,10 @@ xl:leading-[20.88px]"
                 </p>
                 <p
                   className="text-neutral-700
-             text-[10px]
-             xl:text-xl
-             xl:font-normal
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-normal
+             md:leading-normal
              font-bold
              leading-[11px]"
                 >
@@ -1219,8 +764,8 @@ xl:leading-[20.88px]"
 text-sm
 font-semibold
 leading-snug
-xl:text-[21.26px]
-xl:font-medium
+md:text-[21.26px]
+md:font-medium
 "
                 >
                   ₹300/
@@ -1228,9 +773,9 @@ xl:font-medium
                 <p
                   className="text-emerald-500
 text-xs
-xl:text-base
-xl:font-semibold
-xl:leading-[20.88px]
+md:text-base
+md:font-semibold
+md:leading-[20.88px]
 font-normal
 leading-[18px]"
                 >
@@ -1241,10 +786,9 @@ leading-[18px]"
               <div className="w-fit">
                 <p
                   className="text-neutral-700 m-0
-text-xs
-xl:text-xl
-xl:font-semibold
-xl:leading-normal
+                  text-xs
+                  md:text-base
+md:leading-normal
 font-bold
 leading-[12px]"
                 >
@@ -1253,44 +797,44 @@ leading-[12px]"
               </div>
             </div>
           </div>
-          <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
+          <div className="md:min-w-[288.46px] min-w-[180px] md:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow md:shadow-lg md:min-h-[400.10px] relative bg-white rounded-lg">
             <Image
               width="200"
               height="200"
-              className="xl:w-72 xl:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
+              className="md:w-72 md:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
               src={AstroImg}
               alt="banner"
             />
-            <div className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute">
-              <div className="xl:w-[116.01px] w-[75px] h-[75px] xl:h-[116.01px] xl:left-[-1.55px]  xl:top-0 absolute bg-zinc-300 rounded-full" />
+            <div className="w-[114.31px] h-[114.31px] md:left-[80px] left-[30%] top-[20%] md:top-[57.17px] absolute">
+              <div className="md:w-[116.01px] w-[75px] h-[75px] md:h-[116.01px] md:left-[-1.55px]  md:top-0 absolute bg-zinc-300 rounded-full" />
               <Image
                 width="100"
                 height="100"
-                className="xl:w-[105.92px] w-[68px] h-[68px] xl:h-[105.92px] left-[4px] top-[4px] xl:left-[4px] xl:top-[5.04px] absolute rounded-full"
+                className="md:w-[105.92px] w-[68px] h-[68px] md:h-[105.92px] left-[4px] top-[4px] md:left-[4px] md:top-[5.04px] absolute rounded-full"
                 src={ProfileImg}
                 alt="god"
               />
 
               <div>
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
               </div>
             </div>
 
             <div>
-              <div className="xl:w-[139.03px] xl:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
-              <p className="w-[121.79px] h-[13.70px] xl:right-0 right-[-10%] top-[-1%] xl:top-[4.12px] absolute text-center text-white text-xs xl:text-lg font-bold  leading-7">
+              <div className="md:w-[139.03px] md:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
+              <p className="w-[121.79px] h-[13.70px] md:right-0 right-[-10%] top-[-1%] md:top-[4.12px] absolute text-center text-white text-xs md:text-lg font-bold  leading-7">
                 Most Choice
               </p>
             </div>
 
-            <div className="absolute xl:gap-2 items-center w-full inline-block top-[50%] xl:top-[45%]">
+            <div className="absolute md:gap-2 items-center w-full inline-block top-[50%] md:top-[45%]">
               <p
                 className="text-neutral-800
           text-center
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 devesh
@@ -1299,11 +843,11 @@ leading-[17.50px]"
                 className="text-neutral-800
           text-center
           mt-[2px]
-          xl:mt-2
+          md:mt-2
 
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 sharma
@@ -1311,7 +855,7 @@ leading-[17.50px]"
             </div>
             <div
               className="w-[100%]  
-        xl:top-[58%]
+        md:top-[58%]
         top-[66%] 
         
          absolute inline-block items-center justify-center"
@@ -1319,79 +863,79 @@ leading-[17.50px]"
               <p
                 className='text-neutral-500 text-center
         
-          xl:text-[15.18px]
+          md:text-[15.18px]
           text-xs
           font-medium
           leading-[15px]
-          xl:font-normal
-          xl:leading-[18.98px]"'
+          md:font-normal
+          md:leading-[18.98px]"'
               >
                 trot
               </p>
             </div>
             <div
               className="w-[100%] 
-        xl:top-[67%]
+        md:top-[67%]
       
         top-[72%] absolute inline-block items-center justify-center"
             >
               <p
                 className="text-neutral-500 
        text-center
-xl:text-[15.18px]
+md:text-[15.18px]
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[18.98px]"
+md:font-semibold
+md:leading-[18.98px]"
               >
                 hindi
               </p>
             </div>
 
-            <div className="flex xl:gap-[55.23px] gap-[33px] left-3 xl:left-[8%] justify-between top-[80%] items-center absolute">
+            <div className="flex md:gap-[55.23px] gap-[33px] left-3 md:left-[8%] justify-between top-[80%] items-center absolute">
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Rating
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Price
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Exp.
               </p>
             </div>
-            <div className="flex items-center absolute left-[6%] top-[87%] xl:top-[85%]">
+            <div className="flex items-center absolute left-[6%] top-[87%] md:top-[85%]">
               <div className="w-fit flex flex-col  gap-0 items-center">
                 <p
                   className="text-neutral-700
-             text-xs
-             xl:text-xl
-             xl:font-semibold
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-semibold
+             md:leading-normal
              font-bold
              leading-[18px]"
                 >
@@ -1399,10 +943,10 @@ xl:leading-[20.88px]"
                 </p>
                 <p
                   className="text-neutral-700
-             text-[10px]
-             xl:text-xl
-             xl:font-normal
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-normal
+             md:leading-normal
              font-bold
              leading-[11px]"
                 >
@@ -1416,8 +960,8 @@ xl:leading-[20.88px]"
 text-sm
 font-semibold
 leading-snug
-xl:text-[21.26px]
-xl:font-medium
+md:text-[21.26px]
+md:font-medium
 "
                 >
                   ₹300/
@@ -1425,9 +969,9 @@ xl:font-medium
                 <p
                   className="text-emerald-500
 text-xs
-xl:text-base
-xl:font-semibold
-xl:leading-[20.88px]
+md:text-base
+md:font-semibold
+md:leading-[20.88px]
 font-normal
 leading-[18px]"
                 >
@@ -1438,10 +982,9 @@ leading-[18px]"
               <div className="w-fit">
                 <p
                   className="text-neutral-700 m-0
-text-xs
-xl:text-xl
-xl:font-semibold
-xl:leading-normal
+                  text-xs
+                  md:text-base
+md:leading-normal
 font-bold
 leading-[12px]"
                 >
@@ -1450,44 +993,44 @@ leading-[12px]"
               </div>
             </div>
           </div>
-          <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
+          <div className="md:min-w-[288.46px] min-w-[180px] md:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow md:shadow-lg md:min-h-[400.10px] relative bg-white rounded-lg">
             <Image
               width="200"
               height="200"
-              className="xl:w-72 xl:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
+              className="md:w-72 md:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
               src={AstroImg}
               alt="banner"
             />
-            <div className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute">
-              <div className="xl:w-[116.01px] w-[75px] h-[75px] xl:h-[116.01px] xl:left-[-1.55px]  xl:top-0 absolute bg-zinc-300 rounded-full" />
+            <div className="w-[114.31px] h-[114.31px] md:left-[80px] left-[30%] top-[20%] md:top-[57.17px] absolute">
+              <div className="md:w-[116.01px] w-[75px] h-[75px] md:h-[116.01px] md:left-[-1.55px]  md:top-0 absolute bg-zinc-300 rounded-full" />
               <Image
                 width="100"
                 height="100"
-                className="xl:w-[105.92px] w-[68px] h-[68px] xl:h-[105.92px] left-[4px] top-[4px] xl:left-[4px] xl:top-[5.04px] absolute rounded-full"
+                className="md:w-[105.92px] w-[68px] h-[68px] md:h-[105.92px] left-[4px] top-[4px] md:left-[4px] md:top-[5.04px] absolute rounded-full"
                 src={ProfileImg}
                 alt="god"
               />
 
               <div>
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
               </div>
             </div>
 
             <div>
-              <div className="xl:w-[139.03px] xl:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
-              <p className="w-[121.79px] h-[13.70px] xl:right-0 right-[-10%] top-[-1%] xl:top-[4.12px] absolute text-center text-white text-xs xl:text-lg font-bold  leading-7">
+              <div className="md:w-[139.03px] md:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
+              <p className="w-[121.79px] h-[13.70px] md:right-0 right-[-10%] top-[-1%] md:top-[4.12px] absolute text-center text-white text-xs md:text-lg font-bold  leading-7">
                 Most Choice
               </p>
             </div>
 
-            <div className="absolute xl:gap-2 items-center w-full inline-block top-[50%] xl:top-[45%]">
+            <div className="absolute md:gap-2 items-center w-full inline-block top-[50%] md:top-[45%]">
               <p
                 className="text-neutral-800
           text-center
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 devesh
@@ -1496,11 +1039,11 @@ leading-[17.50px]"
                 className="text-neutral-800
           text-center
           mt-[2px]
-          xl:mt-2
+          md:mt-2
 
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 sharma
@@ -1508,7 +1051,7 @@ leading-[17.50px]"
             </div>
             <div
               className="w-[100%]  
-        xl:top-[58%]
+        md:top-[58%]
         top-[66%] 
         
          absolute inline-block items-center justify-center"
@@ -1516,79 +1059,79 @@ leading-[17.50px]"
               <p
                 className='text-neutral-500 text-center
         
-          xl:text-[15.18px]
+          md:text-[15.18px]
           text-xs
           font-medium
           leading-[15px]
-          xl:font-normal
-          xl:leading-[18.98px]"'
+          md:font-normal
+          md:leading-[18.98px]"'
               >
                 trot
               </p>
             </div>
             <div
               className="w-[100%] 
-        xl:top-[67%]
+        md:top-[67%]
       
         top-[72%] absolute inline-block items-center justify-center"
             >
               <p
                 className="text-neutral-500 
        text-center
-xl:text-[15.18px]
+md:text-[15.18px]
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[18.98px]"
+md:font-semibold
+md:leading-[18.98px]"
               >
                 hindi
               </p>
             </div>
 
-            <div className="flex xl:gap-[55.23px] gap-[33px] left-3 xl:left-[8%] justify-between top-[80%] items-center absolute">
+            <div className="flex md:gap-[55.23px] gap-[33px] left-3 md:left-[8%] justify-between top-[80%] items-center absolute">
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Rating
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Price
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Exp.
               </p>
             </div>
-            <div className="flex items-center absolute left-[6%] top-[87%] xl:top-[85%]">
+            <div className="flex items-center absolute left-[6%] top-[87%] md:top-[85%]">
               <div className="w-fit flex flex-col  gap-0 items-center">
                 <p
                   className="text-neutral-700
-             text-xs
-             xl:text-xl
-             xl:font-semibold
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-semibold
+             md:leading-normal
              font-bold
              leading-[18px]"
                 >
@@ -1596,10 +1139,10 @@ xl:leading-[20.88px]"
                 </p>
                 <p
                   className="text-neutral-700
-             text-[10px]
-             xl:text-xl
-             xl:font-normal
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-normal
+             md:leading-normal
              font-bold
              leading-[11px]"
                 >
@@ -1613,8 +1156,8 @@ xl:leading-[20.88px]"
 text-sm
 font-semibold
 leading-snug
-xl:text-[21.26px]
-xl:font-medium
+md:text-[21.26px]
+md:font-medium
 "
                 >
                   ₹300/
@@ -1622,9 +1165,9 @@ xl:font-medium
                 <p
                   className="text-emerald-500
 text-xs
-xl:text-base
-xl:font-semibold
-xl:leading-[20.88px]
+md:text-base
+md:font-semibold
+md:leading-[20.88px]
 font-normal
 leading-[18px]"
                 >
@@ -1635,10 +1178,9 @@ leading-[18px]"
               <div className="w-fit">
                 <p
                   className="text-neutral-700 m-0
-text-xs
-xl:text-xl
-xl:font-semibold
-xl:leading-normal
+                  text-xs
+                  md:text-base
+md:leading-normal
 font-bold
 leading-[12px]"
                 >
@@ -1647,44 +1189,44 @@ leading-[12px]"
               </div>
             </div>
           </div>
-          <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
+          <div className="md:min-w-[288.46px] min-w-[180px] md:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow md:shadow-lg md:min-h-[400.10px] relative bg-white rounded-lg">
             <Image
               width="200"
               height="200"
-              className="xl:w-72 xl:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
+              className="md:w-72 md:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
               src={AstroImg}
               alt="banner"
             />
-            <div className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute">
-              <div className="xl:w-[116.01px] w-[75px] h-[75px] xl:h-[116.01px] xl:left-[-1.55px]  xl:top-0 absolute bg-zinc-300 rounded-full" />
+            <div className="w-[114.31px] h-[114.31px] md:left-[80px] left-[30%] top-[20%] md:top-[57.17px] absolute">
+              <div className="md:w-[116.01px] w-[75px] h-[75px] md:h-[116.01px] md:left-[-1.55px]  md:top-0 absolute bg-zinc-300 rounded-full" />
               <Image
                 width="100"
                 height="100"
-                className="xl:w-[105.92px] w-[68px] h-[68px] xl:h-[105.92px] left-[4px] top-[4px] xl:left-[4px] xl:top-[5.04px] absolute rounded-full"
+                className="md:w-[105.92px] w-[68px] h-[68px] md:h-[105.92px] left-[4px] top-[4px] md:left-[4px] md:top-[5.04px] absolute rounded-full"
                 src={ProfileImg}
                 alt="god"
               />
 
               <div>
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+                <div className="w-[18.54px] h-[18.54px] md:left-[86.51px] left-[45%] top-[-2%] md:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
               </div>
             </div>
 
             <div>
-              <div className="xl:w-[139.03px] xl:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
-              <p className="w-[121.79px] h-[13.70px] xl:right-0 right-[-10%] top-[-1%] xl:top-[4.12px] absolute text-center text-white text-xs xl:text-lg font-bold  leading-7">
+              <div className="md:w-[139.03px] md:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
+              <p className="w-[121.79px] h-[13.70px] md:right-0 right-[-10%] top-[-1%] md:top-[4.12px] absolute text-center text-white text-xs md:text-lg font-bold  leading-7">
                 Most Choice
               </p>
             </div>
 
-            <div className="absolute xl:gap-2 items-center w-full inline-block top-[50%] xl:top-[45%]">
+            <div className="absolute md:gap-2 items-center w-full inline-block top-[50%] md:top-[45%]">
               <p
                 className="text-neutral-800
           text-center
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 devesh
@@ -1693,11 +1235,11 @@ leading-[17.50px]"
                 className="text-neutral-800
           text-center
           mt-[2px]
-          xl:mt-2
+          md:mt-2
 
 text-sm
 font-medium
-xl:text-[21.26px]
+md:text-[21.26px]
 leading-[17.50px]"
               >
                 sharma
@@ -1705,7 +1247,7 @@ leading-[17.50px]"
             </div>
             <div
               className="w-[100%]  
-        xl:top-[58%]
+        md:top-[58%]
         top-[66%] 
         
          absolute inline-block items-center justify-center"
@@ -1713,79 +1255,79 @@ leading-[17.50px]"
               <p
                 className='text-neutral-500 text-center
         
-          xl:text-[15.18px]
+          md:text-[15.18px]
           text-xs
           font-medium
           leading-[15px]
-          xl:font-normal
-          xl:leading-[18.98px]"'
+          md:font-normal
+          md:leading-[18.98px]"'
               >
                 trot
               </p>
             </div>
             <div
               className="w-[100%] 
-        xl:top-[67%]
+        md:top-[67%]
       
         top-[72%] absolute inline-block items-center justify-center"
             >
               <p
                 className="text-neutral-500 
        text-center
-xl:text-[15.18px]
+md:text-[15.18px]
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[18.98px]"
+md:font-semibold
+md:leading-[18.98px]"
               >
                 hindi
               </p>
             </div>
 
-            <div className="flex xl:gap-[55.23px] gap-[33px] left-3 xl:left-[8%] justify-between top-[80%] items-center absolute">
+            <div className="flex md:gap-[55.23px] gap-[33px] left-3 md:left-[8%] justify-between top-[80%] items-center absolute">
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Rating
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Price
               </p>
               <p
                 className="text-neutral-500
-xl:text-base
+md:text-base
 text-xs
 font-normal
 leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
+md:font-semibold
+md:leading-[20.88px]"
               >
                 Exp.
               </p>
             </div>
-            <div className="flex items-center absolute left-[6%] top-[87%] xl:top-[85%]">
+            <div className="flex items-center absolute left-[6%] top-[87%] md:top-[85%]">
               <div className="w-fit flex flex-col  gap-0 items-center">
                 <p
                   className="text-neutral-700
-             text-xs
-             xl:text-xl
-             xl:font-semibold
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-semibold
+             md:leading-normal
              font-bold
              leading-[18px]"
                 >
@@ -1793,10 +1335,10 @@ xl:leading-[20.88px]"
                 </p>
                 <p
                   className="text-neutral-700
-             text-[10px]
-             xl:text-xl
-             xl:font-normal
-             xl:leading-normal
+                  text-xs
+                  md:text-base
+             md:font-normal
+             md:leading-normal
              font-bold
              leading-[11px]"
                 >
@@ -1810,8 +1352,8 @@ xl:leading-[20.88px]"
 text-sm
 font-semibold
 leading-snug
-xl:text-[21.26px]
-xl:font-medium
+md:text-[21.26px]
+md:font-medium
 "
                 >
                   ₹300/
@@ -1819,9 +1361,9 @@ xl:font-medium
                 <p
                   className="text-emerald-500
 text-xs
-xl:text-base
-xl:font-semibold
-xl:leading-[20.88px]
+md:text-base
+md:font-semibold
+md:leading-[20.88px]
 font-normal
 leading-[18px]"
                 >
@@ -1832,207 +1374,9 @@ leading-[18px]"
               <div className="w-fit">
                 <p
                   className="text-neutral-700 m-0
-text-xs
-xl:text-xl
-xl:font-semibold
-xl:leading-normal
-font-bold
-leading-[12px]"
-                >
-                  2 Yrs
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
-            <Image
-              width="200"
-              height="200"
-              className="xl:w-72 xl:h-[145px] w-[180px] h-[94px] rounded-t-[8px]  absolute"
-              src={AstroImg}
-              alt="banner"
-            />
-            <div className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute">
-              <div className="xl:w-[116.01px] w-[75px] h-[75px] xl:h-[116.01px] xl:left-[-1.55px]  xl:top-0 absolute bg-zinc-300 rounded-full" />
-              <Image
-                width="100"
-                height="100"
-                className="xl:w-[105.92px] w-[68px] h-[68px] xl:h-[105.92px] left-[4px] top-[4px] xl:left-[4px] xl:top-[5.04px] absolute rounded-full"
-                src={ProfileImg}
-                alt="god"
-              />
-
-              <div>
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-                <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-              </div>
-            </div>
-
-            <div>
-              <div className="xl:w-[139.03px] xl:h-[32.44px] w-[90px] h-[21px] right-0 top-0 absolute bg-violet-500 bg-opacity-70 rounded-tr-[8px] rounded-bl-[9.27px]" />
-              <p className="w-[121.79px] h-[13.70px] xl:right-0 right-[-10%] top-[-1%] xl:top-[4.12px] absolute text-center text-white text-xs xl:text-lg font-bold  leading-7">
-                Most Choice
-              </p>
-            </div>
-
-            <div className="absolute xl:gap-2 items-center w-full inline-block top-[50%] xl:top-[45%]">
-              <p
-                className="text-neutral-800
-          text-center
-text-sm
-font-medium
-xl:text-[21.26px]
-leading-[17.50px]"
-              >
-                devesh
-              </p>
-              <p
-                className="text-neutral-800
-          text-center
-          mt-[2px]
-          xl:mt-2
-
-text-sm
-font-medium
-xl:text-[21.26px]
-leading-[17.50px]"
-              >
-                sharma
-              </p>
-            </div>
-            <div
-              className="w-[100%]  
-        xl:top-[58%]
-        top-[66%] 
-        
-         absolute inline-block items-center justify-center"
-            >
-              <p
-                className='text-neutral-500 text-center
-        
-          xl:text-[15.18px]
-          text-xs
-          font-medium
-          leading-[15px]
-          xl:font-normal
-          xl:leading-[18.98px]"'
-              >
-                trot
-              </p>
-            </div>
-            <div
-              className="w-[100%] 
-        xl:top-[67%]
-      
-        top-[72%] absolute inline-block items-center justify-center"
-            >
-              <p
-                className="text-neutral-500 
-       text-center
-xl:text-[15.18px]
-text-xs
-font-normal
-leading-[15px]
-xl:font-semibold
-xl:leading-[18.98px]"
-              >
-                hindi
-              </p>
-            </div>
-
-            <div className="flex xl:gap-[55.23px] gap-[33px] left-3 xl:left-[8%] justify-between top-[80%] items-center absolute">
-              <p
-                className="text-neutral-500
-xl:text-base
-text-xs
-font-normal
-leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
-              >
-                Rating
-              </p>
-              <p
-                className="text-neutral-500
-xl:text-base
-text-xs
-font-normal
-leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
-              >
-                Price
-              </p>
-              <p
-                className="text-neutral-500
-xl:text-base
-text-xs
-font-normal
-leading-[15px]
-xl:font-semibold
-xl:leading-[20.88px]"
-              >
-                Exp.
-              </p>
-            </div>
-            <div className="flex items-center absolute left-[6%] top-[87%] xl:top-[85%]">
-              <div className="w-fit flex flex-col  gap-0 items-center">
-                <p
-                  className="text-neutral-700
-             text-xs
-             xl:text-xl
-             xl:font-semibold
-             xl:leading-normal
-             font-bold
-             leading-[18px]"
-                >
-                  200
-                </p>
-                <p
-                  className="text-neutral-700
-             text-[10px]
-             xl:text-xl
-             xl:font-normal
-             xl:leading-normal
-             font-bold
-             leading-[11px]"
-                >
-                  200
-                </p>
-              </div>
-              <div className="w-[30.90px] h-[0px]  rotate-90 border-2 border-zinc-300"></div>
-              <div className=" w-fit flex items-center">
-                <p
-                  className="text-emerald-500
-text-sm
-font-semibold
-leading-snug
-xl:text-[21.26px]
-xl:font-medium
-"
-                >
-                  ₹300/
-                </p>
-                <p
-                  className="text-emerald-500
-text-xs
-xl:text-base
-xl:font-semibold
-xl:leading-[20.88px]
-font-normal
-leading-[18px]"
-                >
-                  min
-                </p>
-              </div>
-              <div className="w-[30.90px] h-[0px]  rotate-90 border-2 border-zinc-300"></div>
-              <div className="w-fit">
-                <p
-                  className="text-neutral-700 m-0
-text-xs
-xl:text-xl
-xl:font-semibold
-xl:leading-normal
+                  text-xs
+                  md:text-base
+md:leading-normal
 font-bold
 leading-[12px]"
                 >
@@ -2042,7 +1386,7 @@ leading-[12px]"
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

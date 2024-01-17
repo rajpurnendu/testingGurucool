@@ -1,4 +1,5 @@
-import { G_GET_ALL_CONSULT_ASTROLOGERS, G_GET_BLOGS, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_HOMEPAGE_ASTROLOGERS } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS } from "./apilinks";
+
 // import { setCookie } from 'cookies-next';
 
 
@@ -187,5 +188,80 @@ export async function getUserAllConsultations(loginToken:string,uid:number,consu
     }
   } catch (error) {
       throw new Error('Failed to fetch Consultations History data.');
+  }
+}
+export async function Get_Single_Astrologer(params:string) {
+  try {
+    const response = await fetch(
+      Get_SINGLE_ASTRO(params),
+      { next: { revalidate: 4 }}
+    );
+    if (response.ok) {
+      const data = await response.json(); 
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+    throw new Error('Failed to fetch Single astrologer data.');
+  }
+}
+
+export async function getAllWalletPackages(loginToken:string,couponCode?:string){
+  try {
+    const response = await fetch(
+      GET_ALL_PACKAGES_WALLET(couponCode),{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${loginToken}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    if(response.ok){
+      const data=await response.json();
+      // console.log('====================================');
+      // console.log(data);
+      // console.log('====================================');
+      return data;
+    }
+    else {
+      // console.log('====================================');
+      // console.log(response);
+      // console.log('====================================');
+
+    throw new Error('Failed to fetch All Wallet Packages data.');
+
+  }
+}catch(error){
+  throw new Error('Failed to fetch data.');
+}}
+
+
+export async function Get_ASTROLOGER_FEEDBACK(gid:number) {
+  try {
+    const response = await fetch(
+      GET_ASTRO_FEEDBACK(gid),
+      { next: { revalidate: 4 }}
+    );
+    if (response.ok) {
+      const data = await response.json(); 
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+    throw new Error('Failed to fetch  astrologer feedback data.');
   }
 }
