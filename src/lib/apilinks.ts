@@ -4,20 +4,19 @@ export const V2_BASE_URL:string = "https://prod.gurucool.life/api/v2/";
 export const TESTING_URL:string="https://test.gurucool.life/api/v5/"
 const BLOG_API_URL = "https://prod.gurucool.life/api/v1/blogs";
 
+export const G_GET_BLOGS = (page: number, perPage: number): string =>
+  `${BASE_URL}blogs/getAllBlogs?page=${page}&perPage=${perPage}`;
 
-export const G_GET_BLOGS=(page:number,perPage:number):string=>(`${BASE_URL}blogs/getAllBlogs?page=${page}&perPage=${perPage}`);
+export const G_GET_SINGLE_BLOGS = (queryParams: string): string =>
+  `${BLOG_API_URL}/getBlogs?title=${queryParams}`;
 
-export const G_GET_SINGLE_BLOGS=(queryParams:string):string=>(`${BLOG_API_URL}/getBlogs?title=${queryParams}`)
+export const P_SEND_LOGIN_OTP = `${BASE_URL}user/sendOTP`;
 
-export const P_SEND_LOGIN_OTP =`${BASE_URL}user/sendOTP`;
-
-export const P_VERIFY_LOGIN_OTP =`${BASE_URL}user/verifyOTP`;
+export const P_VERIFY_LOGIN_OTP = `${BASE_URL}user/verifyOTP`;
 
 export const G_GET_USER_PROFILE = BASE_URL + "user/getProfile";
 
-export const REGISTER_NEW_USER=`${BASE_URL}user/register`;
-
-
+export const REGISTER_NEW_USER = `${BASE_URL}user/register`;
 
 export const GET_HOMEPAGE_ASTROLOGERS = (queryParams:string):string => {
     if(queryParams==="All"){
@@ -28,13 +27,24 @@ export const GET_HOMEPAGE_ASTROLOGERS = (queryParams:string):string => {
     }
 }
 
-export const G_GET_ALL_CONSULT_ASTROLOGERS = BASE_URL + `guru/astrologersDetails`;
+export const G_GET_ALL_CONSULT_ASTROLOGERS =
+  BASE_URL + `guru/astrologersDetails`;
 
-export const P_PUT_USER_DETAILS = (firstName:string, lastName:string, gender:string, email:string|undefined) =>
+export const P_PUT_USER_DETAILS = (
+  firstName: string,
+  lastName: string,
+  gender: string,
+  email: string | undefined
+) =>
   `${BASE_URL}user/editProfile?firstName=${firstName}&lastName=${lastName}&gender=${gender}&email=${email}`;
 
+export const GET_ALL_FOLLOWING_ASTROLOGERS = BASE_URL + "user/getUserFollowing";
 
-export const GET_ALL_FOLLOWING_ASTROLOGERS=BASE_URL+"user/getUserFollowing";
+export const GET_ALL_WEB_STORIES =
+  "https://test.gurucool.life/api/v1/user/getAllWebStories";
+
+export const GET_SINGLE_WEB_STORY = (queryParams: string): string =>
+  `https://test.gurucool.life/api/v1/user/getSingleWebStories?title=${queryParams}`;
 
 export const GET_ALL_CONSULTATIONS_DETAILS=(uid:number,consultationType:string)=>{
     if(consultationType===""){
@@ -52,4 +62,8 @@ export const Get_SINGLE_ASTRO = (userName:string) =>   BASE_URL5+`guru/getSingle
 export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages${couponCode?"?couponCode="+couponCode:""}`;
 
 
-export const GET_ASTRO_FEEDBACK =(gid:Number)=>`${BASE_URL}guru/getFeedbackForAstroProfile?gid=${gid}`
+export const GET_ASTRO_FEEDBACK =(gid:Number)=>`${BASE_URL}guru/getFeedbackForAstroProfile?gid=${gid}`;
+
+export const GET_PAYMENT_DETAILS=(amount:string,couponCode?:string,removeCoupon?:boolean)=>`${TESTING_URL}payments/getPaymentsDetailPage?amount=${amount}${couponCode?"&couponCode="+couponCode:""}${removeCoupon?"&removeCoupon="+removeCoupon:""}`;
+// https://test.gurucool.life/api/v5/payments/getPaymentsDetailPage?amount={}&couponCode={}
+//https://test.gurucool.life/api/v5/payments/getPaymentsDetailPage?amount=800&couponCode=GURU-MY852F&removeCoupon=true

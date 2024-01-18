@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Balkrishna from "../../../public/assets/Balkrishna.jpg";
@@ -8,27 +8,73 @@ import { BsFillStarFill } from "react-icons/bs";
 import { FaBriefcase } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 import Spec from "../../../public/assets/Spec.svg";
+import useFilterStore from "@/store/filterStore";
 
 const ConsultCard = ({ data }: any) => {
+  const [astroData, setAstroData] = useState([]);
+  const { responseData, setResponseData } = useFilterStore();
+  console.log(responseData?.guru?.docs.length);
+  // if (responseData?.guru?.docs.length) {
+  //   setAstroData(responseData?.guru?.docs);
+  // } else {
+  //   setAstroData(data);
+  // }
+
+  useEffect(() => {
+    if (responseData?.guru?.docs.length) {
+      setAstroData(responseData?.guru?.docs);
+    } else {
+      setAstroData(data); // Make sure 'data' is defined or imported
+    }
+  }, [responseData]);
+  console.log(astroData);
+
   const [number, setNumber] = useState(10);
   function formatValue(value: number) {
     const formattedValue = (value / 1000).toFixed(1);
     return `${formattedValue}K`;
   }
-  const decreseNumber = () => {
-    if (number >= 20) setNumber(number - 10);
-  };
-  const increseNumber = () => {
-    if (number <= data.length - 10 && data.length - number >= 10) {
-      setNumber(number + 10);
-    } else {
-      setNumber(data.length);
+  // const decreseNumber = () => {
+  //   if (number > 10) setNumber(number - (astroData.length - 10));
+  // };
+  // const increseNumber = () => {
+  //   if (number <= astroData.length - 10 && astroData.length - number >= 10) {
+  //     setNumber(number + 10);
+  //   } else {
+  //     setNumber(astroData.length);
+  //   }
+  // };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const increment = () => {
+    // Ensure not going beyond the array's length
+    if (currentIndex + 12 < astroData.length) {
+      setCurrentIndex(currentIndex + 12);
     }
   };
+
+  const decrement = () => {
+    // Ensure not going below 0
+    if (currentIndex - 12 >= 0) {
+      setCurrentIndex(currentIndex - 12);
+    }
+  };
+
+  // Determine the slice of the array to show
+  const displayedData = astroData.slice(0, currentIndex + 12);
+
+  function capitalizeFirstLetter(str: string) {
+    // converting first letter to uppercase
+    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+
+    return capitalized;
+  }
+
   return (
     <div>
       <div className="flex flex-wrap gap-[15px] md:gap-[20px] mb-5 justify-center mt-[56px]">
-        {data.slice(0, number).map((datas: any, index: number) => (
+        {displayedData.map((datas: any, index: number) => (
           <div
             key={datas?._id}
             className="w-full h-[9.125rem] rounded-[0.25rem] flex items-center justify-center border border-gray-300 md:w-[48%] lg:w-[32%] hover:border-violet-600 hover:shadow-lg transition delay-200 duration-200 ease-in-out cursor-pointer"
@@ -73,7 +119,7 @@ const ConsultCard = ({ data }: any) => {
               <div className="flex items-center gap-[0.3rem]">
                 <BsFillStarFill className="w-[8px] text-[#965efb] md:w-[0.75rem]" />
                 <p className="text-[0.75rem] font-medium text-#202020 mb-0 leading-tight">
-                  {datas.rating.toFixed(1)}
+                  {datas.rating}
                 </p>
               </div>
             </div>
@@ -124,16 +170,44 @@ const ConsultCard = ({ data }: any) => {
 
               <div className="flex items-center justify-end w-full border-t-[0.0625rem] border-dashed border-gray-300 gap-[1.94rem] pr-[2.5rem]">
                 <div>
-                  <p className="text-[0.875rem] font-semibold text-green-500 mb-0">
+                  {/* <p className="text-[0.875rem] font-semibold text-green-500 mb-0">
                     Free
-                  </p>
-                  <p className="text-[0.75rem] font-semibold text-red-600 mb-0 line-through">
-                    ₹{datas.fee}/
+                  </p> */}
+                  <p className="text-[0.875rem] font-bold text-green-500 mb-0">
+                    {"₹" + datas?.firstOfferPrice?.national?.fee + "/Min"}
                   </p>
                 </div>
-                <button className="flex w-[5.375rem] h-[2rem] py-2 px-3 my-1.5 justify-center items-center rounded-[0.25rem] gap-[0.5rem] cursor-pointer font-medium text-white bg-green-500 border-[1px solid #3A3938] hover:scale-105 transition delay-200 duration-200 ease-in-out">
-                  <IoCall className="w-[14px] md:w-[16px] text-white" />
-                  Call
+                <button
+                  className={`flex w-[5.375rem] h-[2rem] py-2 px-3 my-1.5 justify-center items-center rounded-[0.25rem] gap-[0.5rem] ${
+                    datas?.callAvailability === "online"
+                      ? "cursor-pointer"
+                      : "cursor-no-drop"
+                  }  font-medium ${
+                    datas?.callAvailability === "online"
+                      ? " text-white"
+                      : datas?.callAvailability === "busy"
+                      ? "text-red-500"
+                      : "text-[#707070]"
+                  } ${
+                    datas?.callAvailability === "online"
+                      ? "bg-green-500"
+                      : "bg-white"
+                  } bg-green-500 ${
+                    datas?.callAvailability === "online"
+                      ? "border-none"
+                      : "border border-[#3A3938]"
+                  }  hover:scale-105 transition delay-200 duration-200 ease-in-out`}
+                >
+                  <IoCall
+                    className={`w-[14px] md:w-[16px] ${
+                      datas?.callAvailability === "online"
+                        ? "text-white"
+                        : "text-[#707070]"
+                    } `}
+                  />
+                  {datas?.callAvailability === "online"
+                    ? "Call"
+                    : capitalizeFirstLetter(datas?.callAvailability)}
                 </button>
               </div>
             </div>
@@ -141,17 +215,17 @@ const ConsultCard = ({ data }: any) => {
         ))}
       </div>
       <div className="flex mx-auto items-center mb-5 mt-10  gap-20 justify-center">
-        {number >= 20 ? (
+        {currentIndex !== 0 ? (
           <button
-            onClick={decreseNumber}
+            onClick={decrement}
             className="w-fit bg-[#965EFB] rounded-lg text-white p-2"
           >
             See Less
           </button>
         ) : null}
-        {number < data.length ? (
+        {!(currentIndex + 12 >= astroData.length) ? (
           <button
-            onClick={increseNumber}
+            onClick={increment}
             className="w-fit bg-[#965EFB] rounded-lg text-white p-2"
           >
             See More

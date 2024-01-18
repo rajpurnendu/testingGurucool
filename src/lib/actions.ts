@@ -49,7 +49,7 @@ export async function verifyOtp(requestData: {phone: string, userOTP: string }):
 
     const result = await response.json();
     // console.log(result);
-    setCookie('loginToken', result?.token, { cookies, secure: true, httpOnly: true, sameSite: 'strict',maxAge: 60*60*24 });
+    setCookie('loginToken', result?.token, { cookies, secure: true, httpOnly: true, sameSite: 'strict',maxAge: 60*60*24*15 });
     setCookie('phone', requestData.phone, { cookies});
     return result;
   } catch (error) {

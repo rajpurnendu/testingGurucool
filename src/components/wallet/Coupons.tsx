@@ -5,6 +5,7 @@ import couponIcon from "../../../public/images/wallet/couponicon.svg";
 import Image from "next/image";
 import Discounticon from "../../../public/images/wallet/Frame 427319095.svg";
 import background from "../../../public/images/wallet/rectangle-34624880.svg";
+import Iconapplycoupon from "../../../public/images/wallet/discount-solid-svgrepo-com-2.svg";
 
 const Coupons = () => {
   const [selectedtab, setSelectedtab] = useState("Available");
@@ -69,10 +70,10 @@ const Coupons = () => {
         </div>
       </div>
       {/* Coupons Section  */}
-      <div className="mt-[20px] w-[95%] m-auto">
+      <div className="mt-[20px] w-[95%] m-auto flex flex-col gap-2">
         {/* 1  */}
-        <div className="flex border border-red-500">
-          <div className="h-[100px] bg-cover relative border w-[15%]">
+        <div className="flex">
+          <div className="h-[100px] bg-cover relative w-[15%]">
             <Image
               src={Discounticon}
               height={50}
@@ -81,7 +82,7 @@ const Coupons = () => {
               className="h-[95px] w-[100%]"
             />
           </div>
-          <div className="h-[100px] bg-cover relative border w-[85%]">
+          <div className="h-[100px] bg-cover relative w-[85%]">
             <Image
               src={background}
               alt="Background Image"
@@ -90,9 +91,152 @@ const Coupons = () => {
               className="h-[100px] w-[100%]"
               objectFit="cover"
             />
-            <div className="absolute top-2 left-5 flex flex-col justify-between">
+            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
               <p className=" text-[14px] font-semibold">For ₹200 and above</p>
-              <div>hh</div>
+              <div className="flex justify-between items-center">
+                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
+                  60% Off{" "}
+                  <Image
+                    src={Iconapplycoupon}
+                    height={22}
+                    width={22}
+                    alt="Discount Icon"
+                    className="ml-1"
+                  />
+                </p>
+                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
+                  Apply
+                </button>
+              </div>
+              <p className="text-[12px] font-normal">
+                Valid up to 12th dec 2024
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* 2  */}
+        <div className="flex">
+          <div className="h-[100px] bg-cover relative w-[15%]">
+            <Image
+              src={Discounticon}
+              height={50}
+              width={50}
+              alt="Discount Icon"
+              className="h-[95px] w-[100%]"
+            />
+          </div>
+          <div className="h-[100px] bg-cover relative w-[85%]">
+            <Image
+              src={background}
+              alt="Background Image"
+              width={300}
+              height={100}
+              className="h-[100px] w-[100%]"
+              objectFit="cover"
+            />
+            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
+              <p className=" text-[14px] font-semibold">For ₹200 and above</p>
+              <div className="flex justify-between items-center">
+                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
+                  60% Off{" "}
+                  <Image
+                    src={Iconapplycoupon}
+                    height={22}
+                    width={22}
+                    alt="Discount Icon"
+                    className="ml-1"
+                  />
+                </p>
+                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
+                  Apply
+                </button>
+              </div>
+              <p className="text-[12px] font-normal">
+                Valid up to 12th dec 2024
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* 3  */}
+        <div className="flex">
+          <div className="h-[100px] bg-cover relative w-[15%]">
+            <Image
+              src={Discounticon}
+              height={50}
+              width={50}
+              alt="Discount Icon"
+              className="h-[95px] w-[100%]"
+            />
+          </div>
+          <div className="h-[100px] bg-cover relative w-[85%]">
+            <Image
+              src={background}
+              alt="Background Image"
+              width={300}
+              height={100}
+              className="h-[100px] w-[100%]"
+              objectFit="cover"
+            />
+            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
+              <p className=" text-[14px] font-semibold">For ₹200 and above</p>
+              <div className="flex justify-between items-center">
+                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
+                  60% Off{" "}
+                  <Image
+                    src={Iconapplycoupon}
+                    height={22}
+                    width={22}
+                    alt="Discount Icon"
+                    className="ml-1"
+                  />
+                </p>
+                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
+                  Apply
+                </button>
+              </div>
+              <p className="text-[12px] font-normal">
+                Valid up to 12th dec 2024
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* 4  */}
+        <div className="flex">
+          <div className="h-[100px] bg-cover relative w-[15%]">
+            <Image
+              src={Discounticon}
+              height={50}
+              width={50}
+              alt="Discount Icon"
+              className="h-[95px] w-[100%]"
+            />
+          </div>
+          <div className="h-[100px] bg-cover relative w-[85%]">
+            <Image
+              src={background}
+              alt="Background Image"
+              width={300}
+              height={100}
+              className="h-[100px] w-[100%]"
+              objectFit="cover"
+            />
+            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
+              <p className=" text-[14px] font-semibold">For ₹200 and above</p>
+              <div className="flex justify-between items-center">
+                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
+                  60% Off{" "}
+                  <Image
+                    src={Iconapplycoupon}
+                    height={22}
+                    width={22}
+                    alt="Discount Icon"
+                    className="ml-1"
+                  />
+                </p>
+                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
+                  Apply
+                </button>
+              </div>
               <p className="text-[12px] font-normal">
                 Valid up to 12th dec 2024
               </p>
