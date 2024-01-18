@@ -1,4 +1,4 @@
-import { G_GET_ALL_CONSULT_ASTROLOGERS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER } from "./apilinks";
 
 // import { setCookie } from 'cookies-next';
 
@@ -11,7 +11,7 @@ export async function getAllblogs(page:number,perPage:number):Promise<any | unde
       if (response.ok) {
         const data = await response.json(); 
         // console.log(data);
-           
+
         // setCookie('loginToken', 'kkkkkkkkk');
         return data.blogs.docs;
       } else {
@@ -29,7 +29,7 @@ export async function getAllblogs(page:number,perPage:number):Promise<any | unde
 
 export async function getSingleBlog(query:string):Promise<any | undefined> {
   // console.log(query);
-  
+
     try {
       const response = await fetch(
         G_GET_SINGLE_BLOGS(query), { next: { revalidate: 0 } }
@@ -37,7 +37,7 @@ export async function getSingleBlog(query:string):Promise<any | undefined> {
       if (response.ok) {
         const data = await response.json(); 
         // console.log(data);
-           
+
         // setCookie('loginToken', 'kkkkkkkkk');
         return data;
       } else {
@@ -108,7 +108,7 @@ export async function GET_Spec_Astrologer (query:string):Promise<any | undefined
 
 
 // export async function getAllConsultAstrologers() {
-  
+
 //     try {
 //       const response = await fetch(
 //         G_GET_ALL_CONSULT_ASTROLOGERS(), { next: { revalidate: 0 } }
@@ -116,7 +116,7 @@ export async function GET_Spec_Astrologer (query:string):Promise<any | undefined
 //       if (response.ok) {
 //         const data = await response.json(); 
 //         // console.log(data);
-           
+
 //         // setCookie('loginToken', 'kkkkkkkkk');
 //         return data;
 //       } else {
@@ -266,6 +266,28 @@ export async function Get_ASTROLOGER_FEEDBACK(gid:number) {
   }
 }
 
+export async function Get_SIMILAR_ASTROLOGER(gid:number) {
+  try {
+    const response = await fetch(
+      GET_SIMILAR_ASTRO(gid),
+      { next: { revalidate: 4 }}
+    );
+    if (response.ok) {
+      const data = await response.json(); 
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+    throw new Error('Failed to fetch similar astrologer data.');
+  }
+}
+
 export async function getPaymentdetails(loginToken:string,amount:string,couponCode?:string,removeCoupon?:boolean){
   try {
     const response = await fetch(
@@ -297,6 +319,14 @@ export async function getPaymentdetails(loginToken:string,amount:string,couponCo
   throw new Error('Failed to fetch data.');
 }}
 
+/**
+ * The function `convertToIstDateTime` takes an ISO datetime string and converts it to Indian Standard
+ * Time (IST) format.
+ * @param {string|undefined} isoDateTime - The `isoDateTime` parameter is a string representing a date
+ * and time in ISO 8601 format.
+ * @returns The function `convertToIstDateTime` returns a formatted string representation of the input
+ * ISO date and time in IST (Indian Standard Time) timezone.
+ */
 export const convertToIstDateTime = (isoDateTime:string|undefined) => {
   if (!isoDateTime) {
     return null;
@@ -319,3 +349,27 @@ export const convertToIstDateTime = (isoDateTime:string|undefined) => {
   const formattedDate = inputDate.toLocaleString('en-US', dateOptions);
   return `${formattedTime} ${formattedDate} `;
 };
+
+export async function getAllCoupons(loginToken:string,amount?:string|number){
+  try {
+    const response = await fetch(
+      GET_ALL_COUPONS_USER(amount),{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${loginToken}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    if(response.ok){
+      const data=await response.json();
+      return data;
+    }
+    else {
+    throw new Error('Failed to fetch All Wallet Packages data.');
+
+  }
+}catch(error){
+  throw new Error('Failed to fetch data.');
+}}

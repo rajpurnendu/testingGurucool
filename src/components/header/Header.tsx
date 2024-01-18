@@ -25,7 +25,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const ToggelOpen = useCallback(() => {
     setOpen(!open);
   }, [open]);
-  
+
   const toggelDrop = useCallback(() => {
     setDrop(!drop);
   }, [drop]);
@@ -35,7 +35,6 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
       if (loginToken) {
         let data = await getUserprofile(loginToken);
 
-    
         setWalletbal(data?.wallet_balance);
         setUserDetails(data.user);
       }
@@ -239,7 +238,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                   <Link href="/my-profile" onClick={toggelDrop}>
                     My Profile
                   </Link>
-                  <Link href="wallet" onClick={toggelDrop}>
+                  <Link href="/wallet/pricelist" onClick={toggelDrop}>
                     Wallet
                   </Link>
                   <button

@@ -52,8 +52,12 @@ export const Get_SINGLE_ASTRO = (userName:string) =>   BASE_URL5+`guru/getSingle
 export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages${couponCode?"?couponCode="+couponCode:""}`;
 
 
-export const GET_ASTRO_FEEDBACK =(gid:Number)=>`${BASE_URL}guru/getFeedbackForAstroProfile?gid=${gid}`;
+export const GET_ASTRO_FEEDBACK =(gid:Number)=>`${BASE_URL}guru/getFeedbackForAstroProfile?gid=${gid}`
+export const GET_SIMILAR_ASTRO =(gid:Number)=>`${BASE_URL}guru/recommendedAstrologers?gid=${gid}`
+
+;
 
 export const GET_PAYMENT_DETAILS=(amount:string,couponCode?:string,removeCoupon?:boolean)=>`${TESTING_URL}payments/getPaymentsDetailPage?amount=${amount}${couponCode?"&couponCode="+couponCode:""}${removeCoupon?"&removeCoupon="+removeCoupon:""}`;
-// https://test.gurucool.life/api/v5/payments/getPaymentsDetailPage?amount={}&couponCode={}
-//https://test.gurucool.life/api/v5/payments/getPaymentsDetailPage?amount=800&couponCode=GURU-MY852F&removeCoupon=true
+//https://test.gurucool.life/api/v1/admin/getCoupons
+
+export const GET_ALL_COUPONS_USER=(forAmounts?:number|string)=>`https://test.gurucool.life/api/v1/admin/getCoupons${forAmounts?"?forAmounts="+forAmounts:""}`;
