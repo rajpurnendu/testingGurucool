@@ -145,8 +145,9 @@ const Walletpackages = ({
                   className={clsx(
                     "w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg md:w-[179px] md:h-[171px]",
                     {
-                      "bg-[#965efbb2]": packagew?.highlight,
-                      "bg-white": !packagew?.highlight,
+                      "bg-[#965efbb2]": packagew?.active && packagew?.highlight,
+                      "bg-white": packagew?.active && !packagew?.highlight,
+                      "bg-[#BFCDDB]": !packagew?.active,
                     }
                   )}
                   style={{
@@ -207,8 +208,9 @@ const Walletpackages = ({
                   className={clsx(
                     "w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg md:w-[179px] md:h-[171px]",
                     {
-                      "bg-[#965efbb2]": packagew?.highlight,
-                      "bg-white": !packagew?.highlight,
+                      "bg-[#965efbb2]": packagew?.active && packagew?.highlight,
+                      "bg-white": packagew?.active && !packagew?.highlight,
+                      "bg-[#BFCDDB]": !packagew?.active,
                     }
                   )}
                   style={{
