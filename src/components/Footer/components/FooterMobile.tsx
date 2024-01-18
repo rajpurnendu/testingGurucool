@@ -16,7 +16,7 @@ import Link from "next/link";
 const FooterMobile = () => {
   const [expand, setExpand] = useState(false);
   return (
-    <div className="main-tool-bar h-auto w-[100%] bg-[#965efb] m-auto flex justify-center items-center md:hidden">
+    <div className="main-tool-bar h-auto w-[100%] bg-[#965efb] m-auto hidden justify-center items-center md:hidden">
       <div className="h-[90%] w-[85%]">
         <Image src={Logo} alt="Gurucool Logo" className="m-auto mt-[15px]" />
         <p className="text-[white] text-center">

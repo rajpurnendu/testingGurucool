@@ -5,6 +5,7 @@ import threedot from "../../../public/images/wallet/more.svg";
 import walletIcon from "../.../../../../public/images/wallet/solar-wallet-outline.svg";
 import { getAllWalletPackages, getUserprofile } from "@/lib/data";
 import clsx from "clsx";
+import Link from "next/link";
 
 const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
   const [walletBal, setWalletbal] = useState<number>(0);
@@ -43,87 +44,157 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
       className="max-w-6xl mx-auto px-4 md:px-0 box-border"
       style={{ marginTop: "80px", marginBottom: "50px" }}
     >
-      {/* Wallet Ballance  */}
-      <div className="w-[95%] h-[12vh] m-auto bg-[#965efbb2] rounded-3xl md:w-[597px] md:h-[176px] flex justify-between">
-        {/* 1  */}
-        <div className="p-4 flex flex-col justify-between h-[100%] w-[50%] md:w-[70%] md:justify-evenly md:pl-8">
-          <p className="w-[100%] text-white text-[14px] font-medium md:text-[34px]">
-            Available Balance
-          </p>
-          <p className="w-[100%] text-white text-[22px] font-semibold md:text-[34px]">
-            ₹ {walletBal}
-          </p>
+      <div className=" md:w-[80%] md:m-auto">
+        {/* Wallet Ballance  */}
+        <div className="w-[95%] h-[12vh] m-auto bg-[#965efbb2] rounded-3xl md:w-[597px] md:h-[176px] flex justify-between">
+          {/* 1  */}
+          <div className="p-4 flex flex-col justify-between h-[100%] w-[50%] md:w-[70%] md:justify-evenly md:pl-8">
+            <p className="w-[100%] text-white text-[14px] font-medium md:text-[34px]">
+              Available Balance
+            </p>
+            <p className="w-[100%] text-white text-[22px] font-semibold md:text-[34px]">
+              ₹ {walletBal}
+            </p>
+          </div>
+          {/* 2 */}
+          <div className="px-4 flex flex-col justify-center items-end h-[100%] w-[50%]">
+            <Image
+              src={threedot}
+              height={40}
+              width={40}
+              alt="Threedoticon"
+              className="md:w-[48px] md:h-[48px]"
+            />
+            <Image
+              src={walletIcon}
+              height={40}
+              width={40}
+              alt="WalletIcon"
+              className="md:w-[78px] md:h-[78px]"
+            />
+          </div>
         </div>
-        {/* 2 */}
-        <div className="px-4 flex flex-col justify-center items-end h-[100%] w-[50%]">
-          <Image
-            src={threedot}
-            height={40}
-            width={40}
-            alt="Threedoticon"
-            className="md:w-[48px] md:h-[48px]"
-          />
-          <Image
-            src={walletIcon}
-            height={40}
-            width={40}
-            alt="WalletIcon"
-            className="md:w-[78px] md:h-[78px]"
-          />
+        {/* Note  */}
+        <p className="w-[95%] m-auto text-center text-[12px] font-medium text-gray-500 mt-4 mb-8 md:text-[20px] md:font-normal">
+          <strong>NOTE:</strong>Minimum wallet balance 5 minute required to
+          start chat please recharge your wallet
+        </p>
+        {/* One Time Offer  */}
+        <div className="w-[95%] m-auto">
+          <h4 className="text-[18px] font-semibold mb-2 md:text-center md:mb-3">
+            {packages?.[0]?.[0]}
+          </h4>
+          <div
+            className="w-[100%] h-[110px] rounded-xl flex items-center justify-evenly md:h-[209px]"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
+              boxShadow:
+                "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
+            }}
+          >
+            {packages[0]?.slice(1).map((packagew: any, index: number) => (
+              <Link
+                href={`/wallet/paymentdetails?pmt=${packagew?.amount}`}
+                key={index}
+              >
+                <div
+                  key={index}
+                  className={clsx(
+                    "w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg md:w-[179px] md:h-[171px]",
+                    {
+                      "bg-[#965efbb2]": packagew?.highlight,
+                      "bg-white": !packagew?.highlight,
+                    }
+                  )}
+                  style={{
+                    boxShadow:
+                      "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.20)",
+                  }}
+                >
+                  <p
+                    className={clsx("text-[14px] md:text-[18px]", {
+                      "text-white": packagew?.highlight,
+                    })}
+                  >
+                    {packagew?.currency}
+                    {packagew?.amount}
+                  </p>
+                  <p
+                    className={clsx("text-[14px] md:text-[18px]", {
+                      "bg-white p-1 rounded": packagew?.highlight,
+                    })}
+                  >
+                    {packagew?.highlight}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+        {/* Regular Offers  */}
+        <div className="w-[95%] m-auto mt-6">
+          <h4 className="text-[18px] font-semibold mb-2">
+            {packages?.[1]?.[0]}
+          </h4>
+          <div
+            className="w-[100%] h-[220px] rounded-xl flex items-center justify-evenly flex-wrap md:h-auto md:gap-[0.5rem] md:py-4"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
+              boxShadow:
+                "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
+            }}
+          >
+            {packages[1]?.slice(1).map((packagew: any, index: number) => (
+              <Link
+                href={`/wallet/paymentdetails?pmt=${packagew?.amount}`}
+                key={index}
+              >
+                <div
+                  key={index}
+                  className={clsx(
+                    "w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg md:w-[179px] md:h-[171px]",
+                    {
+                      "bg-[#965efbb2]": packagew?.highlight,
+                      "bg-white": !packagew?.highlight,
+                    }
+                  )}
+                  style={{
+                    boxShadow:
+                      "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.20)",
+                  }}
+                >
+                  <p
+                    className={clsx("text-[14px] md:text-[18px]", {
+                      "text-white": packagew?.highlight,
+                    })}
+                  >
+                    {packagew?.currency}
+                    {packagew?.amount}
+                  </p>
+                  <p
+                    className={clsx("text-[14px] md:text-[18px]", {
+                      "bg-white p-1 rounded": packagew?.highlight,
+                    })}
+                  >
+                    {packagew?.highlight}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
-      {/* Note  */}
-      <p className="w-[95%] m-auto text-center text-[12px] font-medium text-gray-500 mt-4 mb-8 md:text-[20px] md:font-normal">
-        <strong>NOTE:</strong>Minimum wallet balance 5 minute required to start
-        chat please recharge your wallet
-      </p>
-      {/* One Time Offer  */}
-      <div className="w-[95%] m-auto">
-        <h4 className="text-[18px] font-semibold mb-2 md:text-center md:mb-3">
-          {packages?.[0]?.[0]}
-        </h4>
-        <div
-          className="w-[100%] h-[110px] rounded-xl flex items-center justify-evenly md:h-[209px]"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
-            boxShadow:
-              "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
-          }}
-        >
-          {packages[0]?.slice(1).map((packagew: any, index: number) => (
-            <div
-              key={index}
-              className={clsx(
-                "w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg md:w-[179px] md:h-[171px]",
-                {
-                  "bg-[#965efbb2]": packagew?.highlight,
-                  "bg-white": !packagew?.highlight,
-                }
-              )}
-              style={{
-                boxShadow:
-                  "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.20)",
-              }}
-            >
-              <p
-                className={clsx("text-[14px] md:text-[18px]", {
-                  "text-white": packagew?.highlight,
-                })}
-              >
-                {packagew?.currency}
-                {packagew?.amount}
-              </p>
-              <p
-                className={clsx("text-[14px] md:text-[18px]", {
-                  "bg-white p-1 rounded": packagew?.highlight,
-                })}
-              >
-                {packagew?.highlight}
-              </p>
-            </div>
-          ))}
-          {/* <div
+    </div>
+  );
+};
+
+export default Walletpackages;
+
+//One Time Offer
+{
+  /* <div
             className="w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg bg-white"
             style={{
               boxShadow:
@@ -152,54 +223,12 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
           >
             <p className="text-[14px]">₹ 800</p>
             <p className="text-[14px]">Get 200</p>
-          </div> */}
-        </div>
-      </div>
-      {/* Regular Offers  */}
-      <div className="w-[95%] m-auto mt-6">
-        <h4 className="text-[18px] font-semibold mb-2">{packages?.[1]?.[0]}</h4>
-        <div
-          className="w-[100%] h-[220px] rounded-xl flex items-center justify-evenly flex-wrap md:h-auto md:gap-[0.5rem] md:py-4"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
-            boxShadow:
-              "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
-          }}
-        >
-          {packages[1]?.slice(1).map((packagew: any, index: number) => (
-            <div
-              key={index}
-              className={clsx(
-                "w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg md:w-[179px] md:h-[171px]",
-                {
-                  "bg-[#965efbb2]": packagew?.highlight,
-                  "bg-white": !packagew?.highlight,
-                }
-              )}
-              style={{
-                boxShadow:
-                  "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.20)",
-              }}
-            >
-              <p
-                className={clsx("text-[14px] md:text-[18px]", {
-                  "text-white": packagew?.highlight,
-                })}
-              >
-                {packagew?.currency}
-                {packagew?.amount}
-              </p>
-              <p
-                className={clsx("text-[14px] md:text-[18px]", {
-                  "bg-white p-1 rounded": packagew?.highlight,
-                })}
-              >
-                {packagew?.highlight}
-              </p>
-            </div>
-          ))}
-          {/* <div
+          </div> */
+}
+
+// Regular Offer
+{
+  /* <div
             className="w-[100px] h-[91px] p-3 flex flex-col justify-center items-center gap-[3px] border-[1.25px] border-solid border-[#965efbb2] rounded-lg bg-white md:w-[179px] md:h-[171px]"
             style={{
               boxShadow:
@@ -252,11 +281,5 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
             }}
           >
             <p className="text-[14px]">₹ 100</p>
-          </div> */}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Walletpackages;
+          </div> */
+}

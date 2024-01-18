@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa"; // Assuming you have react-icons 
 import Gurucool_Logo from "../../../public/assets/GurucoolNewWebLogo.svg";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { BasicModal } from "../login/BasicModal";
@@ -22,12 +22,13 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [walletbal, setWalletbal] = useState(0);
   const [drop, setDrop] = useState(false);
 
-  function ToggelOpen() {
+  const ToggelOpen = useCallback(() => {
     setOpen(!open);
-  }
-  function toggelDrop() {
+  }, [open]);
+  
+  const toggelDrop = useCallback(() => {
     setDrop(!drop);
-  }
+  }, [drop]);
 
   useEffect(() => {
     const userProfile = async () => {
@@ -119,7 +120,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                     `py-1.5 px-4 rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
                       "md:border-2 border-white border-b-2 text-[14px] lg:text-[16px]":
-                        pathname === `/call-to-astrologers`,
+                        pathname?.includes(`/call-to-astrologers`),
                     }
                   )}
                   href="/call-to-astrologers"
