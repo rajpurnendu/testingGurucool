@@ -3,11 +3,21 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import threedot from "../../../public/images/wallet/more.svg";
 import walletIcon from "../.../../../../public/images/wallet/solar-wallet-outline.svg";
+import Iconapplycoupon from "../../../public/images/wallet/discount-solid-svgrepo-com-2.svg";
 import { getAllWalletPackages, getUserprofile } from "@/lib/data";
 import clsx from "clsx";
 import Link from "next/link";
 
-const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
+const Walletpackages = ({
+  loginToken,
+  coupon,
+}: {
+  loginToken: string | undefined;
+  coupon: string | undefined;
+}) => {
+  console.log("====================================");
+  console.log(coupon);
+  console.log("====================================");
   const [walletBal, setWalletbal] = useState<number>(0);
 
   const [packages, setPackages] = useState<any>([]);
@@ -27,7 +37,7 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
   useEffect(() => {
     if (loginToken) {
       const getAllPackages = async () => {
-        const allPackages = await getAllWalletPackages(loginToken);
+        const allPackages = await getAllWalletPackages(loginToken, coupon);
         console.log("====================================");
         console.log(allPackages);
         console.log("====================================");
@@ -35,7 +45,7 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
       };
       getAllPackages();
     }
-  }, [loginToken]);
+  }, [loginToken, coupon]);
 
   console.log(packages);
 
@@ -79,6 +89,29 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
           <strong>NOTE:</strong>Minimum wallet balance 5 minute required to
           start chat please recharge your wallet
         </p>
+        {/* All Coupons Section  */}
+        <div
+          className="w-full h-[50px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center mb-4 md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl"
+          style={{ marginBottom: "20px" }}
+        >
+          <div className="flex items-center gap-[16px] md:gap-[39px]">
+            <Image
+              src={Iconapplycoupon}
+              height={30}
+              width={30}
+              alt="See All Coupon"
+              className=" md:h-[59px] md:w-[59px]"
+            />
+            <p className="text-[14px] font-medium md:text-[22px] md:font-semibold">
+              Apply Coupons
+            </p>
+          </div>
+          <Link href={`/wallet/coupons`}>
+            <button className="border-[#965efbb2] py-[6px] px-2 flex justify-center items-center border-[0.5px] rounded text-[#965efbb2] text-[12px] font-normal md:py-2 md:px-4 md:text-[20px] md:font-semibold md:text-[#965EFB] md:border md:rounded-[8px]">
+              See All
+            </button>
+          </Link>
+        </div>
         {/* One Time Offer  */}
         <div className="w-[95%] m-auto">
           <h4 className="text-[18px] font-semibold mb-2 md:text-center md:mb-3">
@@ -95,8 +128,17 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
           >
             {packages[0]?.slice(1).map((packagew: any, index: number) => (
               <Link
-                href={`/wallet/paymentdetails?pmt=${packagew?.amount}`}
+                href={
+                  packagew.active
+                    ? coupon
+                      ? `/wallet/paymentdetails?pmt=${packagew?.amount}&coupon=${coupon}`
+                      : `/wallet/paymentdetails?pmt=${packagew?.amount}`
+                    : ""
+                }
                 key={index}
+                className={!packagew?.active ? "pointer-events-none" : ""}
+                aria-disabled={!packagew?.active}
+                tabIndex={!packagew?.active ? -1 : undefined}
               >
                 <div
                   key={index}
@@ -148,8 +190,17 @@ const Walletpackages = ({ loginToken }: { loginToken: string | undefined }) => {
           >
             {packages[1]?.slice(1).map((packagew: any, index: number) => (
               <Link
-                href={`/wallet/paymentdetails?pmt=${packagew?.amount}`}
+                href={
+                  packagew.active
+                    ? coupon
+                      ? `/wallet/paymentdetails?pmt=${packagew?.amount}&coupon=${coupon}`
+                      : `/wallet/paymentdetails?pmt=${packagew?.amount}`
+                    : ""
+                }
                 key={index}
+                className={!packagew?.active ? "pointer-events-none" : ""}
+                aria-disabled={!packagew?.active}
+                tabIndex={!packagew?.active ? -1 : undefined}
               >
                 <div
                   key={index}
