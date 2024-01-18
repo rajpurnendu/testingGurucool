@@ -1,8 +1,8 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
-import '@mantine/core/styles.css';
+import "@mantine/core/styles.css";
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -40,13 +40,13 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
         <link rel="icon" href="./favicon.ico" />
-        <script async src="https://cdn.ampproject.org/v0.js"></script>
+        {/* <script async src="https://cdn.ampproject.org/v0.js"></script> */}
         {/* <script
           async
           custom-element="amp-story-player"
           src="https://cdn.ampproject.org/v0/amp-story-player-0.1.js"
         ></script> */}
-        <script
+        {/* <script
           async
           custom-element="amp-video"
           src="https://cdn.ampproject.org/v0/amp-video-0.1.js"
@@ -55,15 +55,12 @@ export default function RootLayout({
           async
           custom-element="amp-story"
           src="https://cdn.ampproject.org/v0/amp-story-1.0.js"
-        ></script>
+        ></script> */}
         <ColorSchemeScript />
       </head>
       <body className={inter.className}>
         <Header loginToken={loginToken?.value} />
-        <MantineProvider>
-
-        {children}
-        </MantineProvider>
+        <MantineProvider>{children}</MantineProvider>
         <Mainfooter />
       </body>
     </html>
