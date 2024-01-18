@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import couponIcon from "../../../public/images/wallet/couponicon.svg";
 import Image from "next/image";
 import Discounticon from "../../../public/images/wallet/Frame 427319095.svg";
+import Cashbackicon from "../../../public/images/wallet/Cashbackcoupon.svg";
 import background from "../../../public/images/wallet/rectangle-34624880.svg";
 import Iconapplycoupon from "../../../public/images/wallet/discount-solid-svgrepo-com-2.svg";
 
@@ -73,16 +74,16 @@ const Coupons = () => {
       <div className="mt-[20px] w-[95%] m-auto flex flex-col gap-2">
         {/* 1  */}
         <div className="flex">
-          <div className="h-[100px] bg-cover relative w-[15%]">
+          <div className="h-[100%] bg-cover w-[15%] border">
             <Image
-              src={Discounticon}
+              src={Cashbackicon}
               height={50}
               width={50}
               alt="Discount Icon"
-              className="h-[95px] w-[100%]"
+              className="h-[70%] w-[100%]"
             />
           </div>
-          <div className="h-[100px] bg-cover relative w-[85%]">
+          <div className="h-[100px] bg-cover relative w-[85%] border">
             <Image
               src={background}
               alt="Background Image"

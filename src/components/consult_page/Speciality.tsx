@@ -19,14 +19,6 @@ const Speciality = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
- const colorMapping: {[key: string]: string} = {
-    "/call-to-astrologers/Love": "text-red-500",
-    "/call-to-astrologers/Business": "text-blue-500",
-    // Add other routes and their corresponding colors here
-};
-
-// const colorClass: string = colorMapping[pathname] || "";
-
   const Specialization = [
     {
       id: 1,
@@ -55,14 +47,11 @@ const Speciality = () => {
       id: 2,
       name: (
         <p
-
-      
           className={`text-[14px] md:text-[20px] font-semibold ${
             pathname === "/call-to-astrologers/Marriage"
               ? "text-[#34ebd8]"
               : "text-gray-600"
           }`}
-
         >
           Marriage
         </p>
@@ -197,12 +186,9 @@ const Speciality = () => {
     },
   ];
 
-  
-
-
   return (
     <>
-      <div  className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 lg:sticky lg:top-[5px] pb-2 bg-white z-10">
+      <div className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 sticky top-[60px] bg-white z-10">
         <h6 className="mb-[10px] md:mb-[24px] text-[20px] sm:text-[20px] md:text-[26px] font-medium text-[#3D3D3D] text-left md:block">
           Specialities
         </h6>
