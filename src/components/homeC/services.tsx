@@ -20,7 +20,7 @@ const Services = () => {
         <h1 className="text-center xl:text-[2.125rem] text-base font-[500] xl:mb-[12px]">
           Services
         </h1>
-        <p className="text-center  text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-{400]">
+        <p className="text-center xl:leading-6  text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-{400]">
           We provide all astrology-based services here at Gurucool, whether
           astrological consultations, gods and devotion, or blogs.
         </p>
@@ -28,7 +28,7 @@ const Services = () => {
 
       <div className="flex mx-auto pl-1 xl:pl-0 md:pl-0 justify-center xl:px-0 md:px-[0px]">
         <div
-          className="md:min-w-[220px] xl:min-w-[562px]   min-w-[100px]  px-[11.52px] xl:px-[65px] xl:py-[50px] py-[30px] bg-black bg-opacity-20 md:rounded-xl xl:rounded-xl rounded-[3.5px] gap-[15px] justify-center items-end xl:gap-[85px] flex flex-col bg-bottom xl:bg-center bg-cover md:bg-center"
+          className="md:min-w-[220px] xl:w-[562px]   w-[100px]  px-[11.52px] xl:px-[65px] xl:py-[50px] py-[30px] bg-black bg-opacity-20 md:rounded-xl xl:rounded-xl rounded-[3.5px] gap-[15px] justify-center items-end xl:gap-[85px] flex flex-col bg-bottom xl:bg-center bg-cover md:bg-center"
           style={{
             backgroundImage: `url(${cards[0].img.src})`,
             backgroundBlendMode: "multiply",
@@ -71,9 +71,9 @@ const Services = () => {
               );
             })}
           </div>
-          <div className="ml-[0.87rem]">
+          <div className="xl:ml-[0.87rem] ml-[8px]">
             <div
-              className="w-[217px] h-[46px] md:w-[500px] bg-blend-hue  md:h-[100px] xl:w-[576px] xl:h-[170px] xl:px-[3rem] xl:py-[45px] py-[16px] px-[16px] bg-black bg-opacity-20 rounded-[3.5px]  md:rounded-[10px]  xl:rounded-[10px] flex-col justify-start items-start gap-2.5 inline-flex bg-top md:bg-[length:600px_180px] bg-[length:220px_60px] xl:bg-[length:600px_260px] cursor-pointer"
+              className="w-[220px] h-[46px] md:w-[500px] bg-blend-hue  md:h-[100px] xl:w-[576px] xl:h-[170px] xl:px-[3rem] xl:py-[45px] py-[16px] px-[16px] bg-black bg-opacity-20 rounded-[3.5px]  md:rounded-[10px]  xl:rounded-[10px] flex-col justify-start items-start gap-2.5 inline-flex bg-top md:bg-[length:600px_180px] bg-[length:220px_60px] xl:bg-[length:600px_260px] cursor-pointer"
               style={{
                 backgroundImage: `url(${cards[cards.length - 1].img.src})`,
                 backgroundBlendMode: "multiply",

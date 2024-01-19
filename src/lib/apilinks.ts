@@ -61,3 +61,10 @@ export const GET_PAYMENT_DETAILS=(amount:string,couponCode?:string,removeCoupon?
 //https://test.gurucool.life/api/v1/admin/getCoupons
 
 export const GET_ALL_COUPONS_USER=(forAmounts?:number|string)=>`https://test.gurucool.life/api/v1/admin/getCoupons${forAmounts?"?forAmounts="+forAmounts:""}`;
+//https://test.gurucool.life/api/v1/admin/userandExpireCoupons
+
+export const GET_ALL_EXPIRED_COUPONS_USER=()=>`https://test.gurucool.life/api/v1/admin/userandExpireCoupons`;
+
+
+export const PUTFOLLOW_ASTRO = ()=>`${BASE_URL}user/followGuru`
+export const PUTUNFOLLOW_ASTRO = ()=>`${BASE_URL}user/unfollowGuru`
