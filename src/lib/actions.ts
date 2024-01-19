@@ -152,7 +152,7 @@ export async function updateUser(
 
       // Fetch checkout details from the server
       const checkoutResponse = await fetch(
-        "https://test.gurucool.life/api/v1/payments/checkout?latestVersion=0.1.8.18",
+        "https://test.gurucool.life/api/v1/payments/checkout",
         {
           method: "POST",
           headers: {

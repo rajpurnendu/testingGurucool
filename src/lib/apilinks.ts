@@ -1,7 +1,7 @@
 export const BASE_URL:string = "https://prod.gurucool.life/api/v1/";
 export const BASE_URL5:string = "https://prod.gurucool.life/api/v5/";
 export const V2_BASE_URL:string = "https://prod.gurucool.life/api/v2/";
-export const TESTING_URL:string="https://test.gurucool.life/api/v5/"
+export const TESTING_URL:string="https://test.gurucool.life/api/v1/"
 const BLOG_API_URL = "https://prod.gurucool.life/api/v1/blogs";
 
 
