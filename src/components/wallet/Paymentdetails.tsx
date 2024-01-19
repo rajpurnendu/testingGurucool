@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Iconapplycoupon from "../../../public/images/wallet/discount-solid-svgrepo-com-2.svg";
 import Removeiocn from "../../../public/images/wallet/clarity-remove-line.svg";
 import Cashbackicon from "../../../public/images/wallet/cashback.svg";
@@ -8,9 +8,16 @@ import UpiIcon from "../../../public/images/wallet/upi-icon-1.svg";
 import Walleticon from "../../../public/images/wallet/wallet-1.png";
 import AtmcardIcon from "../../../public/images/wallet/atm-card-1.svg";
 import Loading from "../../../public/images/wallet/Pulse-1s-200px.svg";
+import logo from "../../../public/favicon-32x32.png";
 import Image from "next/image";
-import { convertToIstDateTime, getPaymentdetails } from "@/lib/data";
+import {
+  convertToIstDateTime,
+  getPaymentdetails,
+  getUserprofile,
+} from "@/lib/data";
 import Link from "next/link";
+import useRazorpay, { RazorpayOptions } from "react-razorpay";
+import { razorpayCheckoutHandler } from "@/lib/actions";
 
 const Paymentdetailscomponent = ({
   searchParams,
@@ -19,12 +26,14 @@ const Paymentdetailscomponent = ({
   searchParams?: { pmt?: string; coupon?: string };
   loginToken: string | undefined;
 }) => {
+  const [userDetails, setUserdetails] = useState<any>();
   // console.log(searchParams);
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<any[]>();
   const [amount, setAmount] = useState<string | undefined>();
   const [coupon, setCoupon] = useState<string | undefined>();
   const [paymentMethod, setPaymentMethod] = useState<string>("upi");
+  const [Razorpay] = useRazorpay();
   useEffect(() => {
     if (loginToken && amount) {
       const payementData = async () => {
@@ -35,6 +44,18 @@ const Paymentdetailscomponent = ({
       payementData();
     }
   }, [loginToken, amount, coupon]);
+  useEffect(() => {
+    if (loginToken) {
+      const getUserDetails = async () => {
+        const data = await getUserprofile(loginToken);
+        // console.log("====================================");
+        // console.log(data);
+        // console.log("====================================");
+        setUserdetails(data?.user);
+      };
+      getUserDetails();
+    }
+  }, [loginToken]);
 
   useEffect(() => {
     setAmount(searchParams?.pmt);
@@ -54,6 +75,182 @@ const Paymentdetailscomponent = ({
     // console.log(e.target.value);
     setPaymentMethod(e.target.value);
   };
+
+  // const handlePayment = async (
+  //   loginToken: string,
+  //   amount: string | number,
+  //   gst: string | number,
+  //   totalAmount: string | number,
+  //   couponCode: string,
+  //   couponType: string
+  // ) => {
+  //   const data = await razorpayCheckoutHandler(
+  //     loginToken,
+  //     amount,
+  //     gst,
+  //     totalAmount,
+  //     couponCode,
+  //     couponType
+  //   );
+
+  //   console.log("====================================");
+  //   console.log(data);
+  //   console.log("====================================");
+  // };
+
+  // const razorpayCheckoutHandler = async (
+  //   loginToken: string,
+  //   amount: string | number,
+  //   gst: string | number,
+  //   totalAmount: string | number,
+  //   couponCode: string,
+  //   couponType: string,
+  //   email: string,
+  //   phone: string | number,
+  //   userName: string
+  // ) => {
+  //   try {
+  //     // Fetch key from the server
+  //     const keyResponse = await fetch(
+  //       "https://prod.gurucool.life/api/v1/payments/key"
+  //     );
+  //     const { key } = await keyResponse.json();
+
+  //     // Fetch checkout details from the server
+  //     const checkoutResponse = await fetch(
+  //       "https://prod.gurucool.life/api/v1/payments/checkout",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${loginToken}`,
+  //         },
+  //         body: JSON.stringify({
+  //           amount: amount,
+  //           gst: gst,
+  //           offerPrice: totalAmount,
+  //           couponCode: couponCode,
+  //           couponType: couponType,
+  //         }),
+  //       }
+  //     );
+  //     const { checkout } = await checkoutResponse.json();
+
+  //     const options = {
+  //       description: "Recharge Wallet",
+  //       // image: { logo },
+  //       currency: "INR",
+  //       key: key,
+  //       amount: checkout.amount,
+  //       name: "Gurucool.life",
+  //       order_id: checkout.orderId,
+  //       callback_url:
+  //         "https://prod.gurucool.life/api/v1/payments/payment-verification",
+  //       prefill: {
+  //         email: email,
+  //         contact: phone,
+  //         name: userName,
+  //       },
+  //       notes: {
+  //         address: "Razorpay Corporate Office",
+  //       },
+  //       theme: { color: "#53a20e" },
+  //       method: {
+  //         netbanking: false,
+  //         card: false,
+  //         wallet: false,
+  //         upi: true,
+  //       },
+  //     };
+
+  //     // Create Razorpay instance and open checkout
+  //     const razor = new window.Razorpay(options);
+  //     razor.open();
+  //   } catch (error) {}
+  // };
+
+  // console.log("====================================");
+  // console.log(userDetails);
+  // console.log("====================================");
+
+  const handlePayment = useCallback(
+    async (
+      loginToken: string,
+      amount: string | number,
+      gst: string | number,
+      totalAmount: string | number,
+      couponCode: string,
+      couponType: string
+    ) => {
+      const data = await razorpayCheckoutHandler(
+        loginToken,
+        amount,
+        gst,
+        totalAmount,
+        couponCode,
+        couponType
+      );
+
+      const options: RazorpayOptions = {
+        key: data?.key,
+        amount: data?.checkout?.amount,
+        currency: "INR",
+        name: "Gurucool Life",
+        description: "Test Transaction",
+        // image: { logo },
+        callback_url:
+          "https://prod.gurucool.life/api/v1/payments/payment-verification",
+        order_id: data?.checkout?.orderId,
+        handler: (res) => {
+          console.log(res);
+        },
+        prefill: {
+          name: userDetails?.firstName + " " + userDetails?.lastName,
+          email: userDetails?.email ? userDetails?.email : "",
+          contact: userDetails?.phone,
+          // method: "card" | "netbanking" | "wallet" | "emi" | "upi",
+          method:
+            paymentMethod === "netbanking"
+              ? "netbanking"
+              : paymentMethod === "upi"
+              ? "upi"
+              : paymentMethod === "wallet"
+              ? "wallet"
+              : paymentMethod === "card"
+              ? "card"
+              : "emi",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#965efb",
+          // backdrop_color: "red",
+        },
+        // modal: {
+        //   // backdropclose?: boolean;
+        //   // escape?: boolean;
+        //   // handleback?: boolean;
+        //   // confirm_close?: boolean;
+        //   // ondismiss?: () => void;
+        //   animation: true,
+        // },
+      };
+
+      const rzpay = new Razorpay(options);
+      rzpay.on("payment.failed", function (response: any) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+      rzpay.open();
+    },
+    [Razorpay, paymentMethod, userDetails]
+  );
 
   return (
     <>
@@ -309,7 +506,21 @@ const Paymentdetailscomponent = ({
             {/* Pay Now Button  */}
             <div className="flex justify-center">
               {data?.[2]?.razorPay && (
-                <button className="w-full p-[10px] rounded-lg bg-[#965efbb2] text-white text-[16px] font-semibold md:w-[320px] md:h-[54px]">
+                <button
+                  className="w-full p-[10px] rounded-lg bg-[#965efbb2] text-white text-[16px] font-semibold md:w-[320px] md:h-[54px]"
+                  onClick={() => {
+                    if (loginToken) {
+                      handlePayment(
+                        loginToken,
+                        data?.[1]?.amount,
+                        data?.[1]?.gst,
+                        data?.[1]?.totalAmount,
+                        data?.[0]?.couponCode,
+                        data?.[0]?.couponType
+                      );
+                    }
+                  }}
+                >
                   Proceed To Pay
                 </button>
               )}
