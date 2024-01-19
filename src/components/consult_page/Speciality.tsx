@@ -209,7 +209,7 @@ const Speciality = () => {
 
         <div className="w-full flex lg:justify-between items-center md:gap-7 lg:gap-0">
           <div
-            className="w-[88%] md:w-[90%] lg:w-[94%] flex justify-between items-center gap-5 md:gap-7 lg:gap-0 overflow-x-auto  no-scrollbar lg:overflow-x-hidden"
+            className="w-[88%] md:w-[90%] lg:w-[94%] flex justify-between items-center gap-5 md:gap-7 lg:gap-0 overflow-x-auto  no-scrollbar lg:overflow-x-hidden pr-2 md:pr-0"
             style={{}}
           >
             {/* 8d66d4 */}

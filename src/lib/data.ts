@@ -244,11 +244,13 @@ export async function getAllWalletPackages(loginToken:string,couponCode?:string)
 }}
 
 
-export async function Get_ASTROLOGER_FEEDBACK(gid:number) {
+export async function Get_ASTROLOGER_FEEDBACK(gid:number,sort?:string,userId?:string|undefined) {
   try {
     const response = await fetch(
-      GET_ASTRO_FEEDBACK(gid),
-      { next: { revalidate: 4 }}
+      GET_ASTRO_FEEDBACK(gid,sort,userId),
+      
+        
+        { next: { revalidate: 4 },}
     );
     if (response.ok) {
       const data = await response.json(); 
