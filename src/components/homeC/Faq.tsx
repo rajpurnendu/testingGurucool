@@ -7,20 +7,23 @@ import { accordian } from "./arraytext";
 const Faq = ({ searchParams }: { searchParams: any }) => {
   const filtername = searchParams.key || "";
   return (
-    <div className="w-auto xl:w-[72rem] mx-auto xl:my-[2rem] ">
+    <div className="w-auto xl:w-[72rem] mx-auto xl:my-[2rem] px-5 ">
       <h1 className="text-center xl:mb-[12px] mb-[4px] text-lg xl:text-[22px] font-semibold xl:leading-7">{`FAQ'S`}</h1>
       <Image
         src={line}
         className="w-[38px] h-[2.06px] xl:w-[139.40px] xl:h-[6.82px] mx-auto xl:mx-auto mb-[15px] xl:m-[12px]"
         alt="line"
       />
-      <p className="text-center xl:text-xl text-base font-semibold mb-[6.8px]">
-        We are here to help you, with most frequent question asked by our users.
-      </p>
+      <div className="">
+        <p className="text-center xl:text-xl text-base font-semibold mb-[6.8px]">
+          We are here to help you, with most frequent question asked by our
+          users.
+        </p>
+      </div>
       {accordian.map((data, index) => (
         <div
           key={data.id}
-          className="mb-[6px] md:w-[700px] w-[320px] mx-auto xl:w-[72rem] px-[30px] py-5 bg-white rounded-[25px] border-2  shadow-lg"
+          className="mb-[6px]  md:w-[700px] w-full mx-auto xl:w-[72rem] px-[30px] py-5 bg-white rounded-[25px] border-2  shadow-lg"
         >
           <div className=" w-full items-center justify-between inline-flex">
             <p className="text-neutral-700 md:text-base w-[180px] md:w-[100%] xl:w-auto xl:text-lg text-[12px] font-semibold">

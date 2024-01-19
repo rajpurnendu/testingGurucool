@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { setCookie, deleteCookie, hasCookie, getCookie, getCookies } from 'cookies-next';
-import { P_PUT_USER_DETAILS, P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER } from './apilinks';
+import { PUTFOLLOW_ASTRO, PUTUNFOLLOW_ASTRO, P_PUT_USER_DETAILS, P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER } from './apilinks';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
  // setCookie('test', 'purnendu.....', { cookies });
@@ -135,7 +135,60 @@ export async function updateUser(
 
 }
 
-  export const razorpayCheckoutHandler = async (
+export async function FollowAstro(
+  loginToken:string,
+ guruid:string
+) {
+  try {
+    const response=await fetch(PUTFOLLOW_ASTRO(),{
+      method:'PUT',
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+        'Content-Type': 'application/json',
+      },body: JSON.stringify({
+        guruId:guruid,
+      }),
+      cache:'no-store'
+    })
+
+    if(!response.ok){
+      throw new Error("Network response was not ok!!");
+    }
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+  }
+  revalidatePath('/astrologer/');
+  revalidatePath('/my-profile');
+
+}
+
+export async function UnFollowAstro(
+  loginToken:string,
+ guruid:string
+) {
+  try {
+    const response=await fetch(PUTUNFOLLOW_ASTRO(),{
+      method:'PUT',
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+        'Content-Type': 'application/json',
+      },body: JSON.stringify({
+        guruId:guruid,
+      }),
+      cache:'no-store'
+    })
+
+    if(!response.ok){
+      throw new Error("Network response was not ok!!");
+    }
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+  }
+  revalidatePath('/astrologer/');
+  revalidatePath('/my-profile');
+}
+
+export const razorpayCheckoutHandler = async (
     loginToken: string,
     amount: string | number,
     gst: string | number,
@@ -179,7 +232,7 @@ export async function updateUser(
       console.error("There was a problem with the fetch operation:", error);
       return undefined
     }
-  };
+};
 
 
 

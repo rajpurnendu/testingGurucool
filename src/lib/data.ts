@@ -1,4 +1,4 @@
-import { G_GET_ALL_CONSULT_ASTROLOGERS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER } from "./apilinks";
 
 // import { setCookie } from 'cookies-next';
 
@@ -354,6 +354,32 @@ export async function getAllCoupons(loginToken:string,amount?:string|number){
   try {
     const response = await fetch(
       GET_ALL_COUPONS_USER(amount),{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${loginToken}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    if(response.ok){
+      const data=await response.json();
+      return data;
+    }
+    else {
+    throw new Error('Failed to fetch All Wallet Packages data.');
+
+  }
+}catch(error){
+  throw new Error('Failed to fetch data.');
+}}
+
+//GET_ALL_EXPIRED_COUPONS_USER
+
+export async function getAllExpiredCoupons(loginToken:string){
+  try {
+    const response = await fetch(
+      GET_ALL_EXPIRED_COUPONS_USER(),{
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${loginToken}`,

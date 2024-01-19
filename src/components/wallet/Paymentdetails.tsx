@@ -197,7 +197,7 @@ const Paymentdetailscomponent = ({
         currency: "INR",
         name: "Gurucool Life",
         description: "Test Transaction",
-        // image: { logo },
+        // image:  logo ,
         callback_url:
           "https://prod.gurucool.life/api/v1/payments/payment-verification",
         order_id: data?.checkout?.orderId,
