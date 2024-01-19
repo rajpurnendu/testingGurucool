@@ -135,7 +135,51 @@ export async function updateUser(
 
 }
 
+  export const razorpayCheckoutHandler = async (
+    loginToken: string,
+    amount: string | number,
+    gst: string | number,
+    totalAmount: string | number,
+    couponCode: string,
+    couponType: string
+  ) => {
+    try {
+      // Fetch key from the server
+      const keyResponse = await fetch(
+        "https://test.gurucool.life/api/v1/payments/key"
+      );
+      const { key } = await keyResponse.json();
 
+      // Fetch checkout details from the server
+      const checkoutResponse = await fetch(
+        "https://test.gurucool.life/api/v1/payments/checkout?latestVersion=0.1.8.18",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${loginToken}`,
+          },
+          body: JSON.stringify({
+            amount: amount,
+            gst: gst,
+            offerPrice: totalAmount,
+            couponCode: couponCode,
+            couponType: couponType,
+          }),
+          cache: 'no-store'
+        }
+      );
+      // console.log('====================================');
+      // console.log(checkoutResponse);
+      // console.log('====================================');
+      const  data  = await checkoutResponse.json();
+
+      return {checkout:data?.checkout,key:key};
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      return undefined
+    }
+  };
 
 
 
