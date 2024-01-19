@@ -63,7 +63,7 @@ const Walletpackages = ({
               Available Balance
             </p>
             <p className="w-[100%] text-white text-[22px] font-semibold md:text-[34px]">
-              ₹ {walletBal}
+              ₹ {Math.floor(walletBal)}
             </p>
           </div>
           {/* 2 */}

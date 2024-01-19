@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "public/assets/icons/icons.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "public/assets/icons/icons.tsx", "src/components/ReusableModal/ReusableModal.jsx", "src/components/ReusableModal/UseModal.jsx"],
   "exclude": ["node_modules"]
 }

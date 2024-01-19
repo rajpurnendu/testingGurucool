@@ -118,7 +118,7 @@ const SideBar = ({
   //   };
   // }, [drawerOpen]);
 
-  useEffect(() => {}, [mainData]);
+  // useEffect(() => {}, [mainData]);
   // const handleApplyFunction = () => {
   //   // Create an object with selected filters
   //   const updatedData = {
@@ -134,39 +134,39 @@ const SideBar = ({
   //   onClose();
   // };
   // https://prod.gurucool.life/api/v1/guru/astrologersDetails
-  const handleApplyFilter = async () => {
-    // const params = getApiParams();
-    // const selectedSpecialityFilters = selectedSpecialities.join(',');
-    // const selectedLanguageFilters = selectedLanguages.join(',');
-    // console.log(selectedLanguageFilters, selectedSpecialityFilters);
-    // try {
-    //   // Assuming GET_Spec_Astrologer is an async function
-    //   const data = await GET_Spec_Astrologer("");
-    //   // Handle the API response here
-    //   console.log(data);
-    // } catch (error) {
-    //   // Handle errors here
-    //   console.error(error);
-    // }
-    // try {
-    //   const response = await fetch(GET_HOMEPAGE_ASTROLOGERS(""), {
-    //     next: { revalidate: 4 },
-    //   });
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     return data;
-    //   } else {
-    //     console.error(
-    //       "Error fetching data:",
-    //       response.status,
-    //       response.statusText
-    //     );
-    //     return undefined;
-    //   }
-    // } catch (error) {
-    //   throw new Error("Failed to fetch Single blog data.");
-    // }
-  };
+  // const handleApplyFilter = async () => {
+  //   const params = getApiParams();
+  //   const selectedSpecialityFilters = selectedSpecialities.join(',');
+  //   const selectedLanguageFilters = selectedLanguages.join(',');
+  //   console.log(selectedLanguageFilters, selectedSpecialityFilters);
+  //   try {
+  //     // Assuming GET_Spec_Astrologer is an async function
+  //     const data = await GET_Spec_Astrologer("");
+  //     // Handle the API response here
+  //     console.log(data);
+  //   } catch (error) {
+  //     // Handle errors here
+  //     console.error(error);
+  //   }
+  //   try {
+  //     const response = await fetch(GET_HOMEPAGE_ASTROLOGERS(""), {
+  //       next: { revalidate: 4 },
+  //     });
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       return data;
+  //     } else {
+  //       console.error(
+  //         "Error fetching data:",
+  //         response.status,
+  //         response.statusText
+  //       );
+  //       return undefined;
+  //     }
+  //   } catch (error) {
+  //     throw new Error("Failed to fetch Single blog data.");
+  //   }
+  // };
 
   const isChecked = (value: string) => value === checked;
   const isPrice = (value: string) => value === price;

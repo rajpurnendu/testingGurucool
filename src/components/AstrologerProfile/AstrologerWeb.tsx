@@ -1,12 +1,10 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import { Get_ASTROLOGER_FEEDBACK } from "@/lib/data";
 import call2 from "../../../public/assets/AstrologerProfileIcons/call2.svg";
 import checkicon from "../../../public/assets/AstrologerProfileIcons/check.png";
-import ProfileImg from "../../../public/assets/AstrologerProfileIcons/profileImg.webp";
-import AstroImg from "../../../public/assets/AstrologerProfileIcons/astroImg.webp";
 import star from "../../../public/assets/AstrologerProfileIcons/Star.webp";
 import language from "../../../public/assets/AstrologerProfileIcons/Language.webp";
 import clock from "../../../public/assets/AstrologerProfileIcons/time.webp";
@@ -25,10 +23,10 @@ import star3 from "../../../public/assets/AstrologerProfileIcons/start3.webp";
 import Link from "next/link";
 import AstroCard from "../homeC/astroCard";
 import { FollowAstro, UnFollowAstro } from "@/lib/actions";
-import { getUserprofile } from "@/lib/data";
 
 const AstrologerWeb = ({
   data,
+  useraProfileId,
   feedback,
   loginToken,
   similar,
@@ -36,9 +34,32 @@ const AstrologerWeb = ({
 }: any) => {
   const [descLength, setdescLength] = useState(200);
   const [imgLength, setimgLength] = useState(4);
+  const [Sort, setSort] = useState("recent");
+  const [feedbackData, setFeedbackdata] = useState<any>();
   const toggleDescription = () => {
     setdescLength(data.description.length);
   };
+
+  const handleFeedback = async (
+    id: number,
+    sort: string,
+    userId: string | undefined
+  ) => {
+   
+    const feedbackAstro = await Get_ASTROLOGER_FEEDBACK(id, sort, userId);
+    setFeedbackdata(feedbackAstro.feedback);
+  };
+
+  useEffect(() => {
+    if (Sort == "recent") {
+      handleFeedback(data.gid, "recent", useraProfileId);
+    } else {
+      handleFeedback(data.gid, "mostPopular", useraProfileId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Sort]);
+
+ 
 
   const Specialities: any = {
     Love: { img: heart, desc: "Relationship" },
@@ -97,18 +118,24 @@ font-semibold"
             <Image src={star} className="w-[31px] h-[31px]" alt="alt" />
             <Image src={star} className="w-[31px] h-[31px]" alt="alt" />
           </div>
-          {loginToken && !isFollowing ? (
-            <div
-              onClick={() => FollowAstro(loginToken, data.user.guru)}
-              className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
-            >
-              Follow
-            </div>
+          {loginToken ? (
+            !isFollowing ? (
+              <div
+                onClick={() => FollowAstro(loginToken, data.user.guru)}
+                className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
+              >
+                Follow
+              </div>
+            ) : (
+              <div
+                onClick={() => UnFollowAstro(loginToken, data.user.guru)}
+                className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-red-500 rounded-md"
+              >
+                UnFollow
+              </div>
+            )
           ) : (
-            <div
-              onClick={() => UnFollowAstro(loginToken, data.user.guru)}
-              className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-red-500 rounded-md"
-            >
+            <div className="cursor-pointer invisible hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-red-500 rounded-md">
               UnFollow
             </div>
           )}
@@ -469,36 +496,58 @@ font-semibold"
 text-[26px]
 font-bold"
                 >
-                  {data.rating.toFixed(1)}
+                  {data.rating}
                 </h3>
                 <p
                   className="text-zinc-500
 text-base
 font-medium"
                 >
-                  {feedback.total} Review
+                  {feedbackData?.total} Review
                 </p>
               </div>
 
               <div className="flex gap-2">
-                <div className="w-[79px] h-[30px] px-4 py-1.5 rounded-md border border-neutral-500 justify-center items-center gap-2.5 inline-flex">
-                  <div className="text-neutral-500 text-sm font-medium leading-[17.50px]">
+                <div
+                  onClick={() => setSort("recent")}
+                  className={`cursor-pointer w-fit h-[30px] px-4 py-1.5 rounded-md border ${
+                    Sort == "recent"
+                      ? "bg-emerald-500"
+                      : "bg-white border border-netural-500"
+                  } justify-center items-center gap-2.5 inline-flex`}
+                >
+                  <div
+                    className={`${
+                      Sort == "recent" ? "text-white" : "text-neutral-500"
+                    } text-sm font-medium leading-[17.50px]`}
+                  >
                     Recent
                   </div>
                 </div>
-                <div className="w-[121px] h-[30px] px-4 py-1.5 bg-emerald-500 rounded-md justify-center items-center gap-2.5 inline-flex">
-                  <div className="text-white text-sm font-medium  leading-[17.50px]">
+                <div
+                  onClick={() => setSort("mostPopular")}
+                  className={`cursor-pointer w-fit h-[30px] px-4 py-1.5 ${
+                    Sort == "mostPopular"
+                      ? "bg-emerald-500"
+                      : "bg-white border border-netural-500"
+                  } rounded-md justify-center items-center gap-2.5 inline-flex`}
+                >
+                  <div
+                    className={`${
+                      Sort == "mostPopular" ? "text-white" : "text-neutral-500"
+                    } text-sm font-medium  leading-[17.50px]`}
+                  >
                     Most Popular
                   </div>
                 </div>
               </div>
             </div>
-            {feedback.docs.map((datas: any) => (
+            {feedbackData?.docs?.map((datas: any) => (
               <div
                 key={datas._id}
-                className="flex flex-col gap-4 border-b border-gray-200 pb-4"
+                className="flex flex-col w-full gap-4 border-b border-gray-200 pb-4"
               >
-                <div className="w-full items-start justify-between flex gap-[358px]">
+                <div className="w-full items-start justify-between inline-flex">
                   <div className="flex gap-4 items-start">
                     <div className="flex items-center justify-center bg-black overflow-hidden rounded-full w-[60px] h-[60px]">
                       <p className="text-white">
@@ -548,53 +597,37 @@ font-medium"
                 >
                   {datas.goodFeedback || datas.badFeedback}
                 </p>
-                <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
-                  <div className="flex flex-col items-start gap-1">
-                    <p
-                      className="text-neutral-800
+                {datas.astrologerReply ? (
+                  <div className="p-1.5 bg-zinc-300 bg-opacity-20 rounded-md flex flex-col justify-start items-start gap-3">
+                    <div className="flex flex-col items-start gap-1">
+                      <p
+                        className="text-neutral-800
   text-base
   font-semibold"
-                    >
-                      {`${data.user.firstName} 
+                      >
+                        {`${data.user.firstName} 
               ${data.user.lastName}`}
-                    </p>
-                    <p
-                      className="text-neutral-500
+                      </p>
+                      <p
+                        className="text-neutral-500
   text-sm
   font-normal leading-none"
-                    >
-                      {formatDateString(datas.createdAt)}
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className="text-neutral-500
+                      >
+                        {formatDateString(datas.updatedAt)}
+                      </p>
+                    </div>
+                    <div>
+                      <p
+                        className="text-neutral-500
                   text-base
                   font-medium
                   leading-snug"
-                    >
-                      Thank you for your feedback it was really great speaking
-                      to you.
-                    </p>
-                    <p
-                      className="text-neutral-500
-                  text-base
-                  font-medium
-                  leading-snug"
-                    >
-                      More Text can be added here. Thank you for your feedback
-                      it was really great speaking to you.
-                    </p>
-                    <p
-                      className="text-neutral-500
-  text-base
-  font-medium
-  leading-snug"
-                    >
-                      More Text can be added here.{" "}
-                    </p>
+                      >
+                        {datas.astrologerReply}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             ))}
           </div>

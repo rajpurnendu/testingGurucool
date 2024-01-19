@@ -7,8 +7,12 @@ import Mostchoice from "../../../public/assets/Mostchoice.svg";
 import { BsFillStarFill } from "react-icons/bs";
 import { FaBriefcase } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
+
 import Spec from "../../../public/assets/Spec.svg";
 import useFilterStore from "@/store/filterStore";
+import Modal from "../ReusableModal/ReusableModal";
+import ConsultationModalContent from "./ConsultationModalContent";
+import InsufficientBalanceContent from "./InsufficientBalanceContent";
 
 const ConsultCard = ({ data }: any) => {
   const [astroData, setAstroData] = useState([]);
@@ -26,6 +30,7 @@ const ConsultCard = ({ data }: any) => {
     } else {
       setAstroData(data); // Make sure 'data' is defined or imported
     }
+    // eslint-disable-next-line
   }, [responseData]);
   console.log(astroData);
 
@@ -71,8 +76,34 @@ const ConsultCard = ({ data }: any) => {
     return capitalized;
   }
 
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
+  const isMobile = window.innerWidth < 768;
+
   return (
     <div>
+      <Modal
+        size={isMobile ? "xs" : "lg"}
+        show={showModal}
+        onClose={closeModal}
+      >
+        <div className="w-full flex flex-col items-center gap-4 ">
+         <ConsultationModalContent/>
+         {/* <InsufficientBalanceContent/> */}
+          <div className="flex justify-center gap-4">
+            <button className="w-[5.5rem] flex justify-center gap-[0.21rem] py-[0.33rem] px-[0.46rem] rounded bg-[#26C884] text-white text-[0.75rem] font-semibold leading-tight ">
+              Recharge
+            </button>
+            <button className="w-[5.5rem] flex justify-center gap-[0.21rem] py-[0.33rem] px-[0.46rem] rounded bg-[#26C884] text-white text-[0.75rem] font-semibold leading-tight " onClick={closeModal}>
+              Call
+              <IoCall className="text-[0.8rem] text-white "/>
+            </button>
+          </div>
+        </div>
+      </Modal>
       <div className="flex flex-wrap gap-[15px] md:gap-[20px] mb-5 justify-center mt-[56px]">
         {displayedData.map((datas: any, index: number) => (
           <div
@@ -197,6 +228,7 @@ const ConsultCard = ({ data }: any) => {
                       ? "border-none"
                       : "border border-[#3A3938]"
                   }  hover:scale-105 transition delay-200 duration-200 ease-in-out`}
+                  onClick={openModal}
                 >
                   <IoCall
                     className={`w-[14px] md:w-[16px] ${

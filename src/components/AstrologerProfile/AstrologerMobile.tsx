@@ -1,8 +1,8 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 import mostchoice from "../../../public/assets/AstrologerProfileIcons/mostchoice.png";
-import bg from "../../../public/assets/AstrologerProfileIcons/bg.png";
+import bg from "../../../public/assets/AstrologerProfileIcons/astroImg.webp";
 import ProfileImg from "../../../public/assets/AstrologerProfileIcons/profileImg.webp";
 import AstroImg from "../../../public/assets/AstrologerProfileIcons/bg.png";
 import star from "../../../public/assets/AstrologerProfileIcons/Star.webp";
@@ -23,9 +23,20 @@ import star3 from "../../../public/assets/AstrologerProfileIcons/start3.webp";
 import { profile } from "console";
 import Link from "next/link";
 import AstroCard from "../homeC/astroCard";
+import { FollowAstro, UnFollowAstro } from "@/lib/actions";
+import { Get_ASTROLOGER_FEEDBACK } from "@/lib/data";
 
-const AstrologerMobile = ({ data, feedback, loginToken, similar }: any) => {
+const AstrologerMobile = ({
+  data,
+  feedback,
+  useraProfileId,
+  loginToken,
+  similar,
+  isFollowing,
+}: any) => {
   const [descLength, setdescLength] = useState(200);
+  const [Sort, setSort] = useState("recent");
+  const [feedbackData, setFeedbackdata] = useState<any>();
   const [imgLength, setimgLength] = useState(4);
   const toggleDescription = () => {
     setdescLength(data.description.length);
@@ -42,6 +53,29 @@ const AstrologerMobile = ({ data, feedback, loginToken, similar }: any) => {
       <Image key={i} className="w-[14px] h-[14px]" alt="alt" src={star4} />
     );
   }
+
+  const handleFeedback = async (
+    id: number,
+    sort: string,
+    userId: string | undefined
+  ) => {
+    console.log(id, sort, userId);
+    const feedbackAstro = await Get_ASTROLOGER_FEEDBACK(id, sort, userId);
+    setFeedbackdata(feedbackAstro.feedback);
+  };
+
+  useEffect(() => {
+    if (Sort == "recent") {
+      handleFeedback(data.gid, "recent", useraProfileId);
+      console.log("i am recent" + Sort);
+      console.log(feedbackData);
+    } else {
+      handleFeedback(data.gid, "mostPopular", useraProfileId);
+      console.log("i am most" + Sort);
+      console.log(feedbackData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Sort]);
 
   function formatDateString(dateString: string) {
     const date = new Date(dateString);
@@ -87,10 +121,17 @@ const AstrologerMobile = ({ data, feedback, loginToken, similar }: any) => {
               alt="profile"
             />
           </div>
-          <div className="absolute  top-[75%]  left-[23%] md:left-[13%]">
-            <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-            <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
-          </div>
+          {data.callAvailability === "online" ? (
+            <div className="absolute  top-[75%]  left-[23%] md:left-[13%]">
+              <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+              <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
+            </div>
+          ) : (
+            <div className="absolute  top-[75%]  left-[23%] md:left-[13%]">
+              <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  animate-ping shadow-lg shadow-black absolute bg-red-500 rounded-full" />
+              <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  shadow-lg shadow-black absolute bg-red-500 rounded-full" />
+            </div>
+          )}
         </div>
 
         <div className="w-full px-5 h-fit">
@@ -144,32 +185,67 @@ font-medium leading-none"
                 />
               )}
               {loginToken ? (
-                <div className="w-[125px] h-[26px] justify-start items-center inline-flex">
-                  <div className="w-[42px] h-[18px] relative">
-                    <Image
-                      className="w-[18px] h-[18px] left-[15%] top-0 absolute rounded-full border border-white"
-                      src={ProfileImg}
-                      alt="img"
-                    />
+                !isFollowing ? (
+                  <div className="w-[125px] h-[26px] justify-start items-center inline-flex">
+                    <div className="w-[42px] h-[18px] relative">
+                      <Image
+                        className="w-[18px] h-[18px] left-[15%] top-0 absolute rounded-full border border-white"
+                        src={ProfileImg}
+                        alt="img"
+                      />
 
-                    <Image
-                      className="w-[18px] h-[18px] left-[40%] top-0 absolute rounded-full border border-white"
-                      src={ProfileImg}
-                      alt="img"
-                    />
+                      <Image
+                        className="w-[18px] h-[18px] left-[40%] top-0 absolute rounded-full border border-white"
+                        src={ProfileImg}
+                        alt="img"
+                      />
 
-                    <Image
-                      className="w-[18px] h-[18px] left-[65%] top-0 absolute rounded-full border border-white"
-                      src={ProfileImg}
-                      alt="img"
-                    />
-                  </div>
-                  <div className="h-[26px] px-3 py-1 bg-violet-500 relative rounded-lg justify-center items-center gap-3 flex">
-                    <div className="text-white text-sm font-medium leading-[17.50px]">
-                      Follow
+                      <Image
+                        className="w-[18px] h-[18px] left-[65%] top-0 absolute rounded-full border border-white"
+                        src={ProfileImg}
+                        alt="img"
+                      />
+                    </div>
+                    <div
+                      onClick={() => FollowAstro(loginToken, data.user.guru)}
+                      className=" h-[26px] px-3 py-1 bg-violet-500 relative rounded-lg justify-center items-center gap-3 flex"
+                    >
+                      <div className="text-white text-sm font-medium leading-[17.50px]">
+                        Follow
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="w-[125px] h-[26px] justify-start items-center inline-flex">
+                    <div className="w-[42px] h-[18px] relative">
+                      <Image
+                        className="w-[18px] h-[18px] left-[15%] top-0 absolute rounded-full border border-white"
+                        src={AstroImg}
+                        alt="img"
+                      />
+
+                      <Image
+                        className="w-[18px] h-[18px] left-[40%] top-0 absolute rounded-full border border-white"
+                        src={ProfileImg}
+                        alt="img"
+                      />
+
+                      <Image
+                        className="w-[18px] h-[18px] left-[65%] top-0 absolute rounded-full border border-white"
+                        src={bg}
+                        alt="img"
+                      />
+                    </div>
+                    <div
+                      onClick={() => UnFollowAstro(loginToken, data.user.guru)}
+                      className="h-[26px] px-3 py-1 bg-red-500 relative rounded-lg justify-center items-center gap-3 flex"
+                    >
+                      <div className="text-white text-sm font-medium leading-[17.50px]">
+                        Unfollow
+                      </div>
+                    </div>
+                  </div>
+                )
               ) : (
                 <div className="w-[125px] invisible h-[26px] justify-start items-center inline-flex">
                   <div className="w-[42px] h-[18px] relative">
@@ -447,14 +523,38 @@ font-semibold"
                   Review
                 </p>
                 <div className="flex gap-[11px]">
-                  <div className="w-[109px] h-[27px] px-4 py-1.5 bg-emerald-500 rounded-md justify-center items-center gap-2.5 inline-flex">
-                    <p className="text-white text-xs font-semibold leading-[15px]">
+                  <div
+                    onClick={() => setSort("mostPopular")}
+                    className={`w-fit h-fit px-4 py-1.5 ${
+                      Sort == "mostPopular"
+                        ? "bg-emerald-500"
+                        : "bg-white border-netural-500 border"
+                    } rounded-md justify-center  items-center gap-2.5 inline-flex`}
+                  >
+                    <p
+                      className={`${
+                        Sort == "mostPopular"
+                          ? "text-white"
+                          : "text-neutral-500"
+                      } text-xs font-semibold leading-[15px]`}
+                    >
                       Most Popular
                     </p>
                   </div>
 
-                  <div className="w-[73px] h-[27px] px-4 py-1.5 rounded-md border border-neutral-500 justify-center items-center gap-2.5 inline-flex">
-                    <p className="text-neutral-500 text-xs font-semibold  leading-[15px]">
+                  <div
+                    onClick={() => setSort("recent")}
+                    className={`${
+                      Sort == "recent"
+                        ? "bg-emerald-500"
+                        : "bg-white border-netural-500 border"
+                    } w-fit h-fit px-4 py-1.5 rounded-md border border-neutral-500 justify-center items-center gap-2.5 inline-flex`}
+                  >
+                    <p
+                      className={`${
+                        Sort == "recent" ? "text-white" : "text-neutral-500"
+                      } text-xs font-semibold  leading-[15px]`}
+                    >
                       Recent
                     </p>
                   </div>
@@ -462,14 +562,17 @@ font-semibold"
               </div>
             </div>
             <div className="h-[332px] flex flex-col gap-5 overflow-y-scroll no-scrollbar">
-              {feedback.docs.map((data: any) => (
-                <div key={data._id} className="flex gap-2 flex-col items-start">
+              {feedbackData?.docs.map((datas: any) => (
+                <div
+                  key={datas._id}
+                  className="flex gap-2 flex-col items-start"
+                >
                   <div className="flex w-full items-start justify-between">
                     <div className="flex items-start gap-2">
                       <div className="flex items-center justify-center bg-black overflow-hidden rounded-full w-10 h-10">
                         <p className="text-white">
-                          {data.firstName.slice(0, 1)}
-                          {data.lastName.slice(0, 1)}
+                          {datas.firstName.slice(0, 1)}
+                          {datas.lastName.slice(0, 1)}
                         </p>
                       </div>
 
@@ -480,7 +583,7 @@ font-semibold"
   font-medium
   leading-[17.50px]"
                         >
-                          {`${data.firstName} ${data.lastName}`}
+                          {`${datas.firstName} ${datas.lastName}`}
                         </p>
                         <p
                           className="text-neutral-500
@@ -489,7 +592,7 @@ font-semibold"
   leading-[15px]
   "
                         >
-                          {formatDateString(data.createdAt)}
+                          {formatDateString(datas.createdAt)}
                         </p>
                       </div>
                     </div>
@@ -501,7 +604,7 @@ font-semibold"
   text-sm
   font-semibold"
                       >
-                        {data.rating}.0
+                        {datas.rating}.0
                       </p>
                     </div>
                   </div>
@@ -511,123 +614,43 @@ font-semibold"
   font-medium
   leading-[15px]"
                   >
-                    {data.goodFeedback || data.badFeedback}
+                    {datas.goodFeedback || datas.badFeedback}
                   </p>
-                  <div className="border-b border-zinc-300">
-                    <div className="ml-[43px] mb-2  px-1 py-2 flex flex-col bg-zinc-300 bg-opacity-20 rounded-md justify-start items-start gap-2">
-                      <div className="flex gap-1 flex-col items-start">
-                        <p
-                          className="text-neutral-800
+                  {datas.astrologerReply ? (
+                    <div className="border-b border-zinc-300">
+                      <div className="ml-[43px] mb-2  px-1 py-2 flex flex-col bg-zinc-300 bg-opacity-20 rounded-md justify-start items-start gap-2">
+                        <div className="flex gap-1 flex-col items-start">
+                          <p
+                            className="text-neutral-800
   text-sm
   font-medium
   leading-[17.50px]"
-                        >
-                          Astro Name
-                        </p>
-                        <p
-                          className="text-neutral-500
+                          >
+                            {`${data.user.firstName} 
+              ${data.user.lastName}`}
+                          </p>
+                          <p
+                            className="text-neutral-500
   text-xs
   font-normal
   leading-[15px]"
-                        >
-                          March 2022
-                        </p>
-                      </div>
-                      <p
-                        className="text-neutral-500
+                          >
+                            {formatDateString(datas.updatedAt)}
+                          </p>
+                        </div>
+                        <p
+                          className="text-neutral-500
   text-xs
   font-medium
   leading-[15px]"
-                      >
-                        Thank you for your feedback it was really great speaking
-                        to you.More Text can be added here.
-                      </p>
+                        >
+                          {datas.astrologerReply}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  ) : null}
                 </div>
               ))}
-
-              {/* <div className="flex gap-2 flex-col items-start">
-                <div className="flex w-full items-start justify-between">
-                  <div className="flex items-start gap-2">
-                    <Image
-                      className="w-10 h-10 rounded-full"
-                      src={ProfileImg}
-                      alt="user"
-                    />
-                    <div className="flex flex-col gap-1.5 items-start">
-                      <p
-                        className="text-neutral-800
-text-sm
-font-medium
-leading-[17.50px]"
-                      >
-                        Name of User
-                      </p>
-                      <p
-                        className="text-neutral-500
-text-xs
-font-normal
-leading-[15px]
-"
-                      >
-                        March 2022
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-[6px]">
-                    <Image src={star4} className="w-4 h-4" alt="start" />
-
-                    <p
-                      className="text-neutral-700
-text-sm
-font-semibold"
-                    >
-                      5
-                    </p>
-                  </div>
-                </div>
-                <p
-                  className="text-neutral-500
-text-xs
-font-medium
-leading-[15px]"
-                >
-                  Excepteur sint occaecat cupidatat non pident, sunt in culpa
-                  qui officia deserunt mollit anim id es Excepteur
-                </p>
-                <div className="border-b border-zinc-300">
-                  <div className="ml-[43px] mb-2  px-1 py-2 flex flex-col bg-zinc-300 bg-opacity-20 rounded-md justify-start items-start gap-2">
-                    <div className="flex gap-1 flex-col items-start">
-                      <p
-                        className="text-neutral-800
-text-sm
-font-medium
-leading-[17.50px]"
-                      >
-                        Astro Name
-                      </p>
-                      <p
-                        className="text-neutral-500
-text-xs
-font-normal
-leading-[15px]"
-                      >
-                        March 2022
-                      </p>
-                    </div>
-                    <p
-                      className="text-neutral-500
-text-xs
-font-medium
-leading-[15px]"
-                    >
-                      Thank you for your feedback it was really great speaking
-                      to you.More Text can be added here.
-                    </p>
-                  </div>
-                </div>
-              </div> */}
             </div>
             <p
               className="text-center block w-full text-violet-500
@@ -702,13 +725,69 @@ leading-[15px] text-right"
           ))}
         </div>
         <div>
-          <div className="w-full h-[60px] fixed bottom-0 bg-emerald-500 rounded">
-            <div></div>
-
-            <div className="">
-              <p>Call Now</p>
+          {data.callAvailability === "online" ? (
+            <div className="w-[95%] flex justify-between items-center px-[18px] py-[9.5px] h-[60px] fixed bottom-2 left-2 mx-auto bg-emerald-500 rounded hover:shadow-lg">
+              <div className="gap-5 flex items-center">
+                <Image src={call} className="w-[25px] h-[25px]" alt="call" />
+                <p
+                  className="text-white
+text-base
+font-semibold"
+                >
+                  Call Now
+                </p>
+              </div>
+              <div className="flex items-center flex-col">
+                <p
+                  className="text-white
+               text-base
+               font-semibold"
+                >
+                  ₹ 24/min
+                </p>
+                <p
+                  className="text-white
+             text-xs
+             font-medium
+             line-through
+             leading-[15px]"
+                >
+                  ₹ 24/min
+                </p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="w-[95%] cursor-not-allowed flex justify-between items-center px-[18px] py-[9.5px] h-[60px] fixed bottom-2 left-2 mx-auto bg-zinc-300 rounded hover:shadow-lg">
+              <div className="gap-5 flex items-center">
+                <Image src={call} className="w-[25px] h-[25px]" alt="call" />
+                <p
+                  className="text-white
+text-base
+font-semibold"
+                >
+                  Call Now
+                </p>
+              </div>
+              <div className="flex items-center flex-col">
+                <p
+                  className="text-white
+                text-base
+                font-semibold"
+                >
+                  ₹ 24/min
+                </p>
+                <p
+                  className="text-white
+              text-xs
+              font-medium
+              line-through
+              leading-[15px]"
+                >
+                  ₹ 24/min
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

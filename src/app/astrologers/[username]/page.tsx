@@ -27,12 +27,15 @@ const page = async ({ params }: { params: { username: string } }) => {
       <AstrologerWeb
         isFollowing={isFollowing}
         data={data.guru}
+        useraProfileId={datafollow?.user?._id}
         loginToken={loginToken?.value}
         feedback={FeedbackData1?.feedback}
         similar={SimilarAstroData1}
       />
       <AstrologerMobile
+        isFollowing={isFollowing}
         data={data.guru}
+        useraProfileId={datafollow?.user?._id}
         loginToken={loginToken?.value}
         feedback={FeedbackData1?.feedback}
         similar={SimilarAstroData1}

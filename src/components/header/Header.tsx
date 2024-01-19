@@ -16,7 +16,7 @@ import TopBar from "../TopBar/TopBar";
 const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [menuState, setMenuState] = useState("menu");
   const pathname = usePathname();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [userDetails, setUserDetails] = useState<any>();
   const [login, setLogin] = useState(false);
   const [walletbal, setWalletbal] = useState(0);

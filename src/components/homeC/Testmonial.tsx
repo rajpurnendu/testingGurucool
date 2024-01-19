@@ -1,6 +1,7 @@
 import ReusableCard2 from "./reusableCard2";
 import Image from "next/image";
-import { card3 } from "./arraytext";
+
+import { TestmonialData, card3 } from "./arraytext";
 
 const Testmonial = () => {
   return (
@@ -15,10 +16,9 @@ const Testmonial = () => {
         </p>
       </div>
       <div className="card px-5 py-2 xl:py-0  mb-[32px] xl:mb-[3.75rem] no-scrollbar flex m-auto flex-row items-center xl:justify-center xl:gap-[2rem] gap-[0.5rem] xl:overflow-visible md:overflow-y-visible overflow-x-scroll">
-        <ReusableCard2 />
-        <ReusableCard2 />
-        <ReusableCard2 />
-        <ReusableCard2 />
+        {TestmonialData.map((data, index) => (
+          <ReusableCard2 key={index} data={data} />
+        ))}
       </div>
       <div className="bg-[#F7F5FF] xl:py-[12px] xl:px-[20px] py-[3px] px-[12px]">
         <div className="flex mx-auto items-center justify-center xl:gap-[59px] gap-[6.8px] ">

@@ -52,7 +52,7 @@ export const Get_SINGLE_ASTRO = (userName:string) =>   BASE_URL5+`guru/getSingle
 export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages${couponCode?"?couponCode="+couponCode:""}`;
 
 
-export const GET_ASTRO_FEEDBACK =(gid:Number)=>`${BASE_URL}guru/getFeedbackForAstroProfile?gid=${gid}`
+export const GET_ASTRO_FEEDBACK =(gid:Number,sort?:string,userId?:string|undefined)=>`${BASE_URL}guru/getFeedbackForAstroProfileApp?gid=${gid} ${sort?"&sort="+sort:""} ${userId?"&userId="+userId:""}`
 export const GET_SIMILAR_ASTRO =(gid:Number)=>`${BASE_URL}guru/recommendedAstrologers?gid=${gid}`
 
 ;

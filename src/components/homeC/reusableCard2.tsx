@@ -1,15 +1,13 @@
+"use client";
 import Image from "next/image";
-import userImg from "@/../public/assets/userImg.webp";
-import quote from "@/../public/assets/quote1.webp";
-import quote2 from "@/../public/assets/quote2.webp";
-import star from "@/../public/assets/star.webp";
+import { useState } from "react";
 
-const ReusableCard2 = () => {
+const ReusableCard2 = ({ data }: any) => {
+  const [descLength, setDescLength] = useState();
   return (
     <div className="relative rounded-xl xl:rounded-lg shadow xl:shadow-lg  xl:min-w-[281px] min-w-[247px] p-[1rem]">
       <div className="flex flex-col items-center xl:gap-[0.81rem] gap-[23px]">
         <div className="flex flex-row w-full justify-end items-end">
-          {/* <Image priority={true} src={quote} alt="quote" /> */}
           <svg
             className=" left-[5%] absolute xl:w-[1.03rem] h-auto w-[16px]   xl:h-[0.95rem]"
             width="18"
@@ -41,11 +39,8 @@ const ReusableCard2 = () => {
           </p>
         </div>
         <div className="px-2">
-          <p className="xl:text-[1.125rem] text-xs font-normal leading-[1.25rem]">
-            As a satisfied customer i would like to reccoment gurucool to
-            everyone out there you get very genuine and fair astrologer on the
-            site plus the astrolgers are very supportive and they always there
-            to help me pf
+          <p className="xl:text-[1rem] text-justify text-xs font-normal leading-[1.2rem]">
+            {`${data.desc.slice(0, 220)}...`}
           </p>
           <p className="text-[#965EFB] font-semibold text-xs leading-[25px] xl:text-[1.125rem]">
             View More
@@ -58,7 +53,7 @@ const ReusableCard2 = () => {
               width="100"
               height="100"
               className="w-[63.04px] h-[63.04px] rounded-full border border-violet-500 border-opacity-70"
-              src={userImg}
+              src={data.img}
               alt="user"
             />
             <div className="flex flex-row gap-[1px]">
@@ -134,11 +129,11 @@ const ReusableCard2 = () => {
               </svg>
             </div>
             <p className="text-neutral-700 xl:font-semibold font-normal xl:text-base leading-[15px] xl:leading-[17.44px]">
-              Savannah Nguyen
+              {data.name}
             </p>
             <div className="flex justify-between">
               <p className="xl:text-sm text-xs leading-[15px] xl:leading-none text-neutral-500 font-normal">
-                New Delhi
+                {data.city}
               </p>
               <svg
                 className="absolute right-4 xl:w-[1.03rem] w-[16px] h-[15px]  xl:h-[0.95rem]"
