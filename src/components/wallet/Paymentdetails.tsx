@@ -33,6 +33,7 @@ const Paymentdetailscomponent = ({
   const [amount, setAmount] = useState<string | undefined>();
   const [coupon, setCoupon] = useState<string | undefined>();
   const [paymentMethod, setPaymentMethod] = useState<string>("upi");
+  const [firstUser, setFirstUser] = useState<boolean>(false);
   const [Razorpay] = useRazorpay();
   useEffect(() => {
     if (loginToken && amount) {
@@ -48,10 +49,12 @@ const Paymentdetailscomponent = ({
     if (loginToken) {
       const getUserDetails = async () => {
         const data = await getUserprofile(loginToken);
-        // console.log("====================================");
-        // console.log(data);
-        // console.log("====================================");
         setUserdetails(data?.user);
+        setFirstUser(
+          data?.userDetails.totalRecharge === 0 &&
+            data?.userDetails?.offers?.firstConsultaionUsed
+        );
+        // console.log(data);
       };
       getUserDetails();
     }
@@ -76,103 +79,6 @@ const Paymentdetailscomponent = ({
     setPaymentMethod(e.target.value);
   };
 
-  // const handlePayment = async (
-  //   loginToken: string,
-  //   amount: string | number,
-  //   gst: string | number,
-  //   totalAmount: string | number,
-  //   couponCode: string,
-  //   couponType: string
-  // ) => {
-  //   const data = await razorpayCheckoutHandler(
-  //     loginToken,
-  //     amount,
-  //     gst,
-  //     totalAmount,
-  //     couponCode,
-  //     couponType
-  //   );
-
-  //   console.log("====================================");
-  //   console.log(data);
-  //   console.log("====================================");
-  // };
-
-  // const razorpayCheckoutHandler = async (
-  //   loginToken: string,
-  //   amount: string | number,
-  //   gst: string | number,
-  //   totalAmount: string | number,
-  //   couponCode: string,
-  //   couponType: string,
-  //   email: string,
-  //   phone: string | number,
-  //   userName: string
-  // ) => {
-  //   try {
-  //     // Fetch key from the server
-  //     const keyResponse = await fetch(
-  //       "https://prod.gurucool.life/api/v1/payments/key"
-  //     );
-  //     const { key } = await keyResponse.json();
-
-  //     // Fetch checkout details from the server
-  //     const checkoutResponse = await fetch(
-  //       "https://prod.gurucool.life/api/v1/payments/checkout",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${loginToken}`,
-  //         },
-  //         body: JSON.stringify({
-  //           amount: amount,
-  //           gst: gst,
-  //           offerPrice: totalAmount,
-  //           couponCode: couponCode,
-  //           couponType: couponType,
-  //         }),
-  //       }
-  //     );
-  //     const { checkout } = await checkoutResponse.json();
-
-  //     const options = {
-  //       description: "Recharge Wallet",
-  //       // image: { logo },
-  //       currency: "INR",
-  //       key: key,
-  //       amount: checkout.amount,
-  //       name: "Gurucool.life",
-  //       order_id: checkout.orderId,
-  //       callback_url:
-  //         "https://prod.gurucool.life/api/v1/payments/payment-verification",
-  //       prefill: {
-  //         email: email,
-  //         contact: phone,
-  //         name: userName,
-  //       },
-  //       notes: {
-  //         address: "Razorpay Corporate Office",
-  //       },
-  //       theme: { color: "#53a20e" },
-  //       method: {
-  //         netbanking: false,
-  //         card: false,
-  //         wallet: false,
-  //         upi: true,
-  //       },
-  //     };
-
-  //     // Create Razorpay instance and open checkout
-  //     const razor = new window.Razorpay(options);
-  //     razor.open();
-  //   } catch (error) {}
-  // };
-
-  // console.log("====================================");
-  // console.log(userDetails);
-  // console.log("====================================");
-
   const handlePayment = useCallback(
     async (
       loginToken: string,
@@ -184,12 +90,15 @@ const Paymentdetailscomponent = ({
     ) => {
       const data = await razorpayCheckoutHandler(
         loginToken,
-        amount,
+        amount == 1 && firstUser ? 100 : amount,
         gst,
         totalAmount,
         couponCode,
         couponType
       );
+      // console.log("====================================");
+      // console.log(data);
+      // console.log("====================================");
 
       const options: RazorpayOptions = {
         key: data?.key,
@@ -197,13 +106,11 @@ const Paymentdetailscomponent = ({
         currency: "INR",
         name: "Gurucool Life",
         description: "Test Transaction",
-        // image:  logo ,
+        // image:
+        //   "https://gurucool.life/static/media/GurucoolNewWebLogo.7044d1e41f0ae5cc0426c727085ab32d.svg",
         callback_url:
-          "https://prod.gurucool.life/api/v1/payments/payment-verification",
+          "https://test.gurucool.life/api/v1/payments/payment-verification",
         order_id: data?.checkout?.orderId,
-        handler: (res) => {
-          console.log(res);
-        },
         prefill: {
           name: userDetails?.firstName + " " + userDetails?.lastName,
           email: userDetails?.email ? userDetails?.email : "",
@@ -238,18 +145,18 @@ const Paymentdetailscomponent = ({
       };
 
       const rzpay = new Razorpay(options);
-      rzpay.on("payment.failed", function (response: any) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-      });
+      // rzpay.on("payment.failed", function (response: any) {
+      //   alert(response.error.code);
+      //   alert(response.error.description);
+      //   alert(response.error.source);
+      //   alert(response.error.step);
+      //   alert(response.error.reason);
+      //   alert(response.error.metadata.order_id);
+      //   alert(response.error.metadata.payment_id);
+      // });
       rzpay.open();
     },
-    [Razorpay, paymentMethod, userDetails]
+    [Razorpay, paymentMethod, userDetails, firstUser]
   );
 
   return (
