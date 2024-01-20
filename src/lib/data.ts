@@ -220,7 +220,8 @@ export async function getAllWalletPackages(loginToken:string,couponCode?:string)
         headers: {
           'Authorization': `Bearer ${loginToken}`,
           'Content-Type': 'application/json',
-        }
+        },
+         next: { revalidate: 0 }
       }
     );
 

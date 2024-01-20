@@ -49,7 +49,7 @@ export const GET_ALL_CONSULTATIONS_DETAILS=(uid:number,consultationType:string)=
 export const Get_SINGLE_ASTRO = (userName:string) =>   BASE_URL5+`guru/getSingleGuru?userName=${userName}`;
 
 
-export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages${couponCode?"?couponCode="+couponCode:""}`;
+export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages?mode=website${couponCode?"?couponCode="+couponCode:""}`;
 
 
 export const GET_ASTRO_FEEDBACK =(gid:Number,sort?:string,userId?:string|undefined)=>`${BASE_URL}guru/getFeedbackForAstroProfileApp?gid=${gid} ${sort?"&sort="+sort:""} ${userId?"&userId="+userId:""}`

@@ -110,35 +110,45 @@ const Walletpackages = ({
           </Link>
         </div>
         {/* One Time Offer  */}
-        <div className="w-[45%] m-auto md:mt-[48px]">
-          <h4 className="text-[18px] font-semibold mb-2 text-center md:mb-3">
-            One Time Offer
-          </h4>
-          <div
-            className="w-[100%] h-auto rounded-xl flex items-center justify-evenly md:h-[209px] py-[8.65px]"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
-              boxShadow:
-                "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
-            }}
-          >
-            <div className="h-[78px] w-[128px] rounded-[7.3px] border md:w-[279px] md:h-[171px] md:border-[2.3px] border-[#965efbb2] md:rounded-[26px] bg-[#965efbb2]">
-              <div className="w-full h-[35%] rounded-t-[7.3px] text-[12px] md:rounded-t-[26px] bg-[#8143f4b2] text-white flex justify-center items-center font-semibold md:text-[20px]">
-                Special Offer
-              </div>
-              <div className="w-full h-[65%] rounded-b-[7.3px] md:rounded-b-[26px] flex flex-col justify-center items-center">
-                <div className="text-white text-[12px] font-medium md:font-semibold md:text-[20px]">
-                  ₹1
+        {packages?.[2] && (
+          <div className="w-[45%] m-auto md:mt-[48px]">
+            <h4 className="text-[18px] font-semibold mb-2 text-center md:mb-3">
+              {packages?.[2]?.[0]}
+            </h4>
+            <div
+              className="w-[100%] h-auto rounded-xl flex items-center justify-evenly md:h-[209px] py-[8.65px]"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
+                boxShadow:
+                  "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
+              }}
+            >
+              <Link
+                href={
+                  packages?.[2]?.[1]?.active
+                    ? `/wallet/paymentdetails?pmt=${packages?.[2]?.[1]?.amount}`
+                    : ""
+                }
+              >
+                <div className="h-[78px] w-[128px] rounded-[7.3px] border md:w-[279px] md:h-[171px] md:border-[2.3px] border-[#965efbb2] md:rounded-[26px] bg-[#965efbb2]">
+                  <div className="w-full h-[35%] rounded-t-[7.3px] text-[12px] md:rounded-t-[26px] bg-[#8143f4b2] text-white flex justify-center items-center font-semibold md:text-[20px]">
+                    Special Offer
+                  </div>
+                  <div className="w-full h-[65%] rounded-b-[7.3px] md:rounded-b-[26px] flex flex-col justify-center items-center">
+                    <div className="text-white text-[12px] font-medium md:font-semibold md:text-[20px]">
+                      {packages?.[2]?.[1]?.currency}
+                      {packages?.[2]?.[1]?.amount}
+                    </div>
+                    <div className="w-[57px] h-[21px] md:w-[81px] md:h-[33px] bg-[#965efbb2] rounded-[3px] text-[12px] md:rounded-md md:text-[18px] font-normal text-white flex justify-center items-center">
+                      {packages?.[2]?.[1]?.highlight}
+                    </div>
+                  </div>
                 </div>
-                <div className="w-[57px] h-[21px] md:w-[81px] md:h-[33px] bg-[#965efbb2] rounded-[3px] text-[12px] md:rounded-md md:text-[18px] font-normal text-white flex justify-center items-center">
-                  Get ₹99
-                </div>
-              </div>
+              </Link>
             </div>
           </div>
-        </div>
-
+        )}
         {/* Most Used Offer  */}
         <div className="w-[95%] m-auto mt-[24px] md:mt-[48px]">
           <h4 className="text-[18px] font-semibold mb-2 md:text-center md:mb-3">

@@ -199,7 +199,7 @@ export const razorpayCheckoutHandler = async (
     try {
       // Fetch key from the server
       const keyResponse = await fetch(
-        "https://test.gurucool.life/api/v1/payments/key"
+        "https://prod.gurucool.life/api/v1/payments/key"
       );
       const { key } = await keyResponse.json();
 
