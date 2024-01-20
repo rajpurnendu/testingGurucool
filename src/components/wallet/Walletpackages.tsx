@@ -15,9 +15,9 @@ const Walletpackages = ({
   loginToken: string | undefined;
   coupon: string | undefined;
 }) => {
-  console.log("====================================");
-  console.log(coupon);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log(coupon);
+  // console.log("====================================");
   const [walletBal, setWalletbal] = useState<number>(0);
 
   const [packages, setPackages] = useState<any>([]);
@@ -38,9 +38,9 @@ const Walletpackages = ({
     if (loginToken) {
       const getAllPackages = async () => {
         const allPackages = await getAllWalletPackages(loginToken, coupon);
-        console.log("====================================");
-        console.log(allPackages);
-        console.log("====================================");
+        // console.log("====================================");
+        // console.log(allPackages);
+        // console.log("====================================");
         setPackages(allPackages?.package1);
       };
       getAllPackages();
@@ -54,7 +54,7 @@ const Walletpackages = ({
       className="max-w-6xl mx-auto px-4 md:px-0 box-border"
       style={{ marginTop: "80px", marginBottom: "50px" }}
     >
-      <div className=" md:w-[80%] md:m-auto">
+      <div className="md:w-[79%] md:m-auto md:pt-[24px]">
         {/* Wallet Ballance  */}
         <div className="w-[95%] h-[12vh] m-auto bg-[#965efbb2] rounded-3xl md:w-[597px] md:h-[176px] flex justify-between">
           {/* 1  */}
@@ -90,10 +90,7 @@ const Walletpackages = ({
           start chat please recharge your wallet
         </p>
         {/* All Coupons Section  */}
-        <div
-          className="w-full h-[50px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center mb-4 md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl"
-          style={{ marginBottom: "20px" }}
-        >
+        <div className="w-full h-[50px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center mb-4 md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl md:w-[80%] md:mt-[48px]">
           <div className="flex items-center gap-[16px] md:gap-[39px]">
             <Image
               src={Iconapplycoupon}
@@ -113,12 +110,42 @@ const Walletpackages = ({
           </Link>
         </div>
         {/* One Time Offer  */}
-        <div className="w-[95%] m-auto">
+        <div className="w-[45%] m-auto md:mt-[48px]">
+          <h4 className="text-[18px] font-semibold mb-2 text-center md:mb-3">
+            One Time Offer
+          </h4>
+          <div
+            className="w-[100%] h-auto rounded-xl flex items-center justify-evenly md:h-[209px] py-[8.65px]"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
+              boxShadow:
+                "0px 0px 2px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.14)",
+            }}
+          >
+            <div className="h-[78px] w-[128px] rounded-[7.3px] border md:w-[279px] md:h-[171px] md:border-[2.3px] border-[#965efbb2] md:rounded-[26px] bg-[#965efbb2]">
+              <div className="w-full h-[35%] rounded-t-[7.3px] text-[12px] md:rounded-t-[26px] bg-[#8143f4b2] text-white flex justify-center items-center font-semibold md:text-[20px]">
+                Special Offer
+              </div>
+              <div className="w-full h-[65%] rounded-b-[7.3px] md:rounded-b-[26px] flex flex-col justify-center items-center">
+                <div className="text-white text-[12px] font-medium md:font-semibold md:text-[20px]">
+                  ₹1
+                </div>
+                <div className="w-[57px] h-[21px] md:w-[81px] md:h-[33px] bg-[#965efbb2] rounded-[3px] text-[12px] md:rounded-md md:text-[18px] font-normal text-white flex justify-center items-center">
+                  Get ₹99
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Most Used Offer  */}
+        <div className="w-[95%] m-auto mt-[24px] md:mt-[48px]">
           <h4 className="text-[18px] font-semibold mb-2 md:text-center md:mb-3">
             {packages?.[0]?.[0]}
           </h4>
           <div
-            className="w-[100%] h-[110px] rounded-xl flex items-center justify-evenly md:h-[209px]"
+            className="w-[100%] h-[110px] rounded-xl flex items-center justify-center gap-x-3 gap-y-3 md:gap-x-6 md:gap-y-6 md:h-[209px]"
             style={{
               background:
                 "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
@@ -176,12 +203,12 @@ const Walletpackages = ({
           </div>
         </div>
         {/* Regular Offers  */}
-        <div className="w-[95%] m-auto mt-6">
-          <h4 className="text-[18px] font-semibold mb-2">
+        <div className="w-[95%] m-auto mt-6 md:mt-[48px]">
+          <h4 className="text-[18px] font-semibold mb-2 md:text-center">
             {packages?.[1]?.[0]}
           </h4>
           <div
-            className="w-[100%] h-[220px] rounded-xl flex items-center justify-evenly flex-wrap md:h-auto md:gap-[0.5rem] md:py-4"
+            className="w-[100%] h-auto py-3 rounded-xl flex items-center justify-center flex-wrap gap-x-3 gap-y-3 md:h-auto md:gap-x-6 md:py-4 md:gap-y-6"
             style={{
               background:
                 "linear-gradient(180deg, rgba(150, 94, 251, 0.05) 0%, rgba(150, 94, 251, 0.02) 100%)",
