@@ -52,7 +52,7 @@ const Paymentdetailscomponent = ({
         setUserdetails(data?.user);
         setFirstUser(
           data?.userDetails.totalRecharge === 0 &&
-            data?.userDetails?.offers?.firstConsultaionUsed
+            !data?.userDetails?.offers?.firstConsultaionUsed
         );
         // console.log(data);
       };
