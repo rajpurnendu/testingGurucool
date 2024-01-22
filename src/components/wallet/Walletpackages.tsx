@@ -19,6 +19,7 @@ const Walletpackages = ({
   // console.log(coupon);
   // console.log("====================================");
   const [walletBal, setWalletbal] = useState<number>(0);
+  const [firstUser, setFirstUser] = useState<boolean>(false);
 
   const [packages, setPackages] = useState<any>([]);
 
@@ -28,6 +29,11 @@ const Walletpackages = ({
       const getUserDetails = async () => {
         const userDetails = await getUserprofile(loginToken);
         setWalletbal(userDetails.wallet_balance);
+        setFirstUser(
+          userDetails?.userDetails.totalRecharge === 0 &&
+            !userDetails?.userDetails?.offers?.firstConsultaionUsed
+        );
+        console.log(userDetails);
       };
       getUserDetails();
     }
@@ -39,7 +45,8 @@ const Walletpackages = ({
       const getAllPackages = async () => {
         const allPackages = await getAllWalletPackages(loginToken, coupon);
         // console.log("====================================");
-        // console.log(allPackages);
+        // console.log("All---", allPackages);
+        // console.log("Coupon---", coupon);
         // console.log("====================================");
         setPackages(allPackages?.package1);
       };
@@ -47,7 +54,7 @@ const Walletpackages = ({
     }
   }, [loginToken, coupon]);
 
-  console.log(packages);
+  // console.log(packages);
 
   return (
     <div
@@ -110,7 +117,7 @@ const Walletpackages = ({
           </Link>
         </div>
         {/* One Time Offer  */}
-        {packages?.[2] && (
+        {packages?.[2] && firstUser && (
           <div className="w-[45%] m-auto md:mt-[48px]">
             <h4 className="text-[18px] font-semibold mb-2 text-center md:mb-3">
               {packages?.[2]?.[0]}

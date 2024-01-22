@@ -1,10 +1,11 @@
-import { getAllblogs } from "@/lib/data";
+import { getAllblogs, getAllTrendingblogs } from "@/lib/data";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import Blogcard from "@/components/blogs/Blogcard";
+import BlogCards from "@/components/blogs/BlogCards";
 import Pagination from "@/components/ui/pagination";
+import TrendingBogCard from "@/components/blogs/TrendingBogCard";
 
 const Blogmain = async ({
   params,
@@ -15,7 +16,7 @@ const Blogmain = async ({
 }) => {
   //Get All Blogs from this Action
   const data = await getAllblogs(1, 50);
-
+  const data1 = await getAllTrendingblogs();
   // Published Blogs will be show in the browser which filter out all
   const publishedBlog = Array.isArray(data)
     ? data.filter((item: any) => item.isPublished)
@@ -62,45 +63,109 @@ const Blogmain = async ({
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
       <div
-        className="max-w-6xl mx-auto px-4 md:px-0 box-border"
+        className="max-w-6xl gap-5 mb-5 overflow-hidden mx-auto px-4 flex flex-col md:flex-row  md:px-0 box-border"
         style={{ marginTop: "80px" }}
       >
-        <div>
-          {/* Filter Section  */}
-          <div className="flex flex-wrap overflow-auto items-center justify-center mt-47 mb-42 gap-12 scrollbar-hidden md:overflow-visible md:justify-center md:gap-y-1.5 md:gap-x-3">
-            {Categories.slice(0, 12).map((text, index) => {
-              return (
+        {/* <div> */}
+        {/* Filter Section  */}
+        <div className=" flex md:flex-col h-fit md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
+          <h4
+            className="text-neutral-800
+text-[22px]
+hidden
+md:block
+font-semibold
+leading-7"
+          >
+            Category Topics
+          </h4>
+          {Categories.slice(0, 12).map((text, index) => {
+            return (
+              <div
+                key={index}
+                className="w-[207px] mx-1 flex items-center justify-start mb md:border-b-2 py-3"
+              >
                 <Link
-                  key={index}
+                  scroll={false}
                   href={index === 0 ? "/blogs" : `/blogs/category/${text}`}
                 >
-                  <button
+                  <p
                     className={clsx(
-                      "inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight transition-all duration-200 px-16 min-w-24 h-8 w-auto rounded-full border-2 border-solid border-purple-500 font-semibold text-xs hover:bg-purple-400 hover:text-white",
+                      "flex appearance-none items-center justify-center md:justify-start select-none relative whitespace-nowrap align-middle rounded-full border md:border-none leading-tight transition-all duration-200 px-2 md:px-4 min-w-24 h-8 w-auto  font-semibold text-xs hover:bg-purple-400 hover:text-white",
                       {
                         "bg-purple-500 text-white": filtername === text,
                       }
                     )}
                   >
                     {text}
-                  </button>
+                  </p>
                 </Link>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
+        </div>
 
-          {/* Blog Card UI */}
-          <div className="flex flex-wrap gap-0.5 items-center justify-center md:gap-3.5 mt-[36px]">
+        {/* Blog Card UI */}
+        <div className="flex flex-col gap-5 items-start overflow-hidden justify-start">
+          <h4
+            className="text-neutral-800
+text-[26px]
+font-semibold"
+          >
+            Trending Blogs
+          </h4>
+          <div className="w-full">
+            <div className="flex items-start px-1 pb-1  w-[100%] gap-4 overflow-x-scroll no-scrollbar">
+              {data1
+                // .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
+                .map((blog: any, index: number) => (
+                  <TrendingBogCard key={index} blog={blog} />
+                ))}
+            </div>
+          </div>
+          <h4
+            className="text-neutral-800
+text-[26px]
+font-semibold"
+          >
+            Related Blog
+          </h4>
+          <div className="flex flex-wrap gap-x-[0px] xl:gap-x-[97px] gap-y-[40px] w-fit justify-center items-start">
             {filteredData
               .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
               .map((blog: any, index) => (
-                <Blogcard key={index} blog={blog} />
+                <BlogCards key={index} blog={blog} />
               ))}
           </div>
         </div>
-        <div className="flex justify-center mt-7 mb-10">
-          <Pagination totalPages={totalPages} />
-        </div>
+
+        {/* </div> */}
+      </div>
+      <div className="flex justify-center mt-7 mb-10">
+        <Pagination totalPages={totalPages} />
+      </div>
+      <div className="px-[20px] pb-[20px] max-w-[72rem] mx-auto">
+        <p className="text-center text-lg font-semibold leading-snug mb-6">
+          ASTROLOGY BLOGS
+        </p>
+        <p className="text-center font-semibold md:text-lg  text-base mb-8">
+          Trending Topics and News About Astrology
+        </p>
+        <p className="text-justify  font-medium leading-[17.50px] text-sm mb-1">
+          {` At Gurucool, we offer a wide range of astrology services to provide you
+        with insightful guidance and help you navigate through life's
+        challenges. Our expert astrologers, who are considered the best in
+        India, are dedicated to delivering accurate and reliable online
+        astrology predictions. With a deep understanding of planetary
+        configurations and constellations, our astrologers analyze the influence
+        of celestial bodies on various aspects of human life. Astrology, an
+        ancient science and spiritual discipline, delves into the intricate
+        connection between planetary movements and human behavior. Our esteemed
+        gurus at Gurucool have honed their skills to offer you profound insights
+        into your life's journey. Through their mastery of studying planetary
+        movements and the subtle energies surrounding individuals, they can
+        unravel the secrets of your aura and reveal your hidden potentials.`}
+        </p>
       </div>
     </Suspense>
   );
