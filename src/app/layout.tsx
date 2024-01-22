@@ -5,6 +5,7 @@ import Mainfooter from "@/components/Footer/Mainfooter";
 import Header from "@/components/header/Header";
 import { cookies } from "next/headers";
 import Head from "next/head";
+import Supportchat from "@/components/Supporchat/Supportchat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Header loginToken={loginToken?.value} />
+        <Supportchat loginToken={loginToken?.value} />
         {children}
         <Mainfooter />
       </body>

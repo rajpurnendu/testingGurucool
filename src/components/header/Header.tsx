@@ -176,7 +176,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                 </svg>
 
                 <p className="text-[14px] lg:text-[16px] font-medium text-white">
-                  ₹{walletbal.toFixed(1)}
+                  ₹{Math.round(walletbal)}
                 </p>
               </div>
             </Link>

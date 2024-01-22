@@ -1,4 +1,4 @@
-import { G_GET_ALL_CONSULT_ASTROLOGERS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS,G_GET_Trending_BLOGS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER } from "./apilinks";
 
 // import { setCookie } from 'cookies-next';
 
@@ -24,6 +24,29 @@ export async function getAllblogs(page:number,perPage:number):Promise<any | unde
       }
     } catch (error) {
         throw new Error('Failed to fetch Main blog data.');
+    }
+}
+export async function getAllTrendingblogs():Promise<any | undefined> {
+    try {
+      const response = await fetch(
+        G_GET_Trending_BLOGS(), { next: { revalidate: 3600*24 } }
+      );
+      if (response.ok) {
+        const data = await response.json(); 
+        // console.log(data);
+
+        // setCookie('loginToken', 'kkkkkkkkk');
+        return data.blogs.docs;
+      } else {
+        console.error(
+          "Error fetching data:",
+          response.status,
+          response.statusText
+        );
+        return undefined;
+      }
+    } catch (error) {
+        throw new Error('Failed to fetch trending blog data.');
     }
 }
 
@@ -221,7 +244,7 @@ export async function getAllWalletPackages(loginToken:string,couponCode?:string)
           'Authorization': `Bearer ${loginToken}`,
           'Content-Type': 'application/json',
         },
-         next: { revalidate: 0 }
+        cache: 'no-store'
       }
     );
 

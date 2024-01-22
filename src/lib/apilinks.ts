@@ -2,10 +2,12 @@ export const BASE_URL:string = "https://prod.gurucool.life/api/v1/";
 export const BASE_URL5:string = "https://prod.gurucool.life/api/v5/";
 export const V2_BASE_URL:string = "https://prod.gurucool.life/api/v2/";
 export const TESTING_URL:string="https://test.gurucool.life/api/v1/"
+export const V2_TESTING_URL:string="https://test.gurucool.life/api/v2/"
 const BLOG_API_URL = "https://prod.gurucool.life/api/v1/blogs";
 
 
 export const G_GET_BLOGS=(page:number,perPage:number):string=>(`${BASE_URL}blogs/getAllBlogs?page=${page}&perPage=${perPage}`);
+export const G_GET_Trending_BLOGS=():string=>(`${BASE_URL}blogs/getAllBlogs?trending=true`);
 
 export const G_GET_SINGLE_BLOGS=(queryParams:string):string=>(`${BLOG_API_URL}/getBlogs?title=${queryParams}`)
 
@@ -46,10 +48,10 @@ export const GET_ALL_CONSULTATIONS_DETAILS=(uid:number,consultationType:string)=
 }
 
 
-export const Get_SINGLE_ASTRO = (userName:string) =>   BASE_URL5+`guru/getSingleGuru?userName=${userName}`;
+export const Get_SINGLE_ASTRO = (userName:string) =>  `${V2_TESTING_URL}guru/getSingleGuru?userName=${userName}`;
 
 
-export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages?mode=website${couponCode?"?couponCode="+couponCode:""}`;
+export const GET_ALL_PACKAGES_WALLET=(couponCode?:string)=>`${TESTING_URL}payments/getPackages?mode=website${couponCode?"&couponCode="+couponCode:""}`;
 
 
 export const GET_ASTRO_FEEDBACK =(gid:Number,sort?:string,userId?:string|undefined)=>`${BASE_URL}guru/getFeedbackForAstroProfileApp?gid=${gid} ${sort?"&sort="+sort:""} ${userId?"&userId="+userId:""}`

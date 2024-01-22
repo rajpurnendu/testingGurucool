@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "public/assets/icons/icons.tsx", "src/components/ReusableModal/ReusableModal.jsx", "src/components/ReusableModal/UseModal.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "public/assets/icons/icons.tsx", "src/components/ReusableModal/ReusableModal.jsx", "src/components/ReusableModal/UseModal.jsx", "src/components/Supporchat/Supportchat.jsx","src/components/Supporchat/Supporchat.jsx"],
   "exclude": ["node_modules"]
 }
