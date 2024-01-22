@@ -5,7 +5,7 @@ import { useState } from "react";
 const ReusableCard2 = ({ data }: any) => {
   const [descLength, setDescLength] = useState();
   return (
-    <div className="relative rounded-xl xl:rounded-lg shadow xl:shadow-lg  xl:min-w-[281px] min-w-[247px] p-[1rem]">
+    <div className="relative rounded-xl xl:rounded-lg shadow xl:shadow  xl:min-w-[281px] min-w-[247px] p-[1rem]">
       <div className="flex flex-col items-center xl:gap-[0.81rem] gap-[23px]">
         <div className="flex flex-row w-full justify-end items-end">
           <svg
@@ -50,8 +50,8 @@ const ReusableCard2 = ({ data }: any) => {
           <div className="flex flex-col items-center gap-[0.25rem] justify-center">
             <Image
               priority={true}
-              width="100"
-              height="100"
+              width="200"
+              height="200"
               className="w-[63.04px] h-[63.04px] rounded-full border border-violet-500 border-opacity-70"
               src={data.img}
               alt="user"

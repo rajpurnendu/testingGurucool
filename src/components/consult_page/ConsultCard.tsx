@@ -13,8 +13,21 @@ import useFilterStore from "@/store/filterStore";
 import Modal from "../ReusableModal/ReusableModal";
 import ConsultationModalContent from "./ConsultationModalContent";
 import InsufficientBalanceContent from "./InsufficientBalanceContent";
+import { getUserprofile } from "@/lib/data";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import { redirect } from "next/navigation";
 
-const ConsultCard = ({ data }: any) => {
+const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
+  console.log(loginToken);
+  type UserDetails = {
+    consultationCount?: number;
+    wallet?: number;
+    // Add other properties as needed
+  };
+  const [userDetails, setUserDetails] = useState<UserDetails>();
+  const [insufficientBalance, setInsufficientBalance] = useState(false);
+  // const [callAvailability, setCallAvailability] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [astroData, setAstroData] = useState([]);
   const { responseData, setResponseData } = useFilterStore();
   console.log(responseData?.guru?.docs.length);
@@ -32,7 +45,7 @@ const ConsultCard = ({ data }: any) => {
     }
     // eslint-disable-next-line
   }, [responseData]);
-  console.log(astroData);
+  // console.log(astroData);
 
   const [number, setNumber] = useState(10);
   function formatValue(value: number) {
@@ -68,6 +81,7 @@ const ConsultCard = ({ data }: any) => {
 
   // Determine the slice of the array to show
   const displayedData = astroData.slice(0, currentIndex + 12);
+  // console.log(displayedData);
 
   function capitalizeFirstLetter(str: string) {
     // converting first letter to uppercase
@@ -83,6 +97,191 @@ const ConsultCard = ({ data }: any) => {
 
   const isMobile = window.innerWidth < 768;
 
+  const {
+    astroDetails,
+    setAstroDetails,
+    setMinCallDuration,
+    minimumCallDuration,
+    setCallPurchasedId,
+    callAvailability,
+    setCallAvailability,
+  } = useFilterStore();
+
+  useEffect(() => {
+    const userProfile = async () => {
+      if (loginToken) {
+        let data = await getUserprofile(loginToken);
+        setUserDetails(data.userDetails);
+        console.log(data);
+      }
+    };
+
+    userProfile();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(userDetails);
+
+  const [callBtnClicked, setCallBtnClicked] = useState(false);
+  const callClickedHandler = (guruToken: string) => {
+    // userProfile();
+    localStorage.setItem("guruToken", guruToken);
+    fetch(
+      `https://prod.gurucool.life/api/v1/guru/getSingleGuru?guruId=${guruToken}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAstroDetails(data.guru);
+        setCallBtnClicked(true);
+        // onOpen();
+        openModal();
+      })
+      .catch((error) => {
+        // Handle error here
+        console.error("Error fetching data:", error);
+      });
+  };
+  console.log(astroDetails);
+
+  const fee = getPrice(userDetails, astroDetails);
+  console.log(fee);
+  function getPrice(userDetails: any, astroDetails: any) {
+    if (userDetails?.consultationCount === 0) {
+      return astroDetails?.firstOfferPrice?.national?.fee;
+    } else {
+      return astroDetails?.fee;
+    }
+  }
+  const userWalletBalance:any = userDetails && userDetails?.wallet;
+  // console.log(userWalletBalance);
+  const minCallDuration = Math.floor(userWalletBalance / fee);
+  console.log(typeof minCallDuration);
+
+  useEffect(() => {
+    if (fee > 0) {
+      if (userWalletBalance >= fee * 5) {
+        setInsufficientBalance(false);
+        setMinCallDuration(minCallDuration);
+        // // //console.log("minCallDuration",minCallDuration);
+      } else {
+        setInsufficientBalance(true);
+      }
+    } else {
+      setInsufficientBalance(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [astroDetails, userDetails]);
+
+  // const guruToken: string | null = localStorage.getItem("guruToken");
+  const guruToken: string = localStorage.getItem("guruToken") || "";
+  useEffect(() => {
+    // console.log("fetchastrologerdata")
+    const fetchDataforAstrologer = async () => {
+      try {
+        const response = await fetch(
+          G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
+        );
+
+        if (response.ok) {
+          const responseData = await response.json();
+          // console.log(responseData)
+          setCallAvailability(responseData?.guru?.callAvailability);
+        } else {
+          Error("Request failed");
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchDataforAstrologer();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const startConsultationHandler = (e: any) => {
+    e.preventDefault();
+    const startConsultationUrlV1 =
+      "https://prod.gurucool.life/api/v3/consultations/initiateCall";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    };
+    const requestData = {
+      astrologerID: astroDetails.user._id,
+      minutes: minCallDuration,
+    };
+    console.log("Consultation Started......");
+
+    const startConsultation = async () => {
+      //console.log(requestData);
+      try {
+        const response = await fetch(startConsultationUrlV1, {
+          method: "POST",
+          headers: {
+            ...config.headers,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        });
+        // //console.log(response);
+        if (response.status === 200) {
+          console.log("Suc......................");
+          const responseData = await response.json();
+          localStorage.setItem("purchaseId", responseData.purchaseId);
+
+          setCallPurchasedId(responseData.purchaseId);
+          // navigate("/callconsultationstarted");
+          redirect("/callconsultationstarted");
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+      } catch (error: any) {
+        setErrorMsg(error.message);
+        //console.log(error);
+      }
+    };
+    startConsultation();
+  };
+
+  useEffect(() => {
+    const fetchDataforAstrologer = async () => {
+      try {
+        const response = await fetch(
+          G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
+        );
+
+        if (response.ok) {
+          const responseData = await response.json();
+          //console.log("ResponseData", responseData);
+          setCallAvailability(responseData?.guru?.callAvailability);
+        } else {
+          throw new Error("Request failed");
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    /* The above code is setting up an interval that will execute the functions `fetchData()` and
+   `fetchDataforAstrologer()` every 5 seconds. */
+    const interval = setInterval(() => {
+      // fetchData();
+      fetchDataforAstrologer();
+    }, 5000);
+
+    // fetchData();
+    fetchDataforAstrologer();
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(callAvailability);
+
   return (
     <div>
       <Modal
@@ -90,16 +289,76 @@ const ConsultCard = ({ data }: any) => {
         show={showModal}
         onClose={closeModal}
       >
-        <div className="w-full flex flex-col items-center gap-4 ">
-         <ConsultationModalContent/>
-         {/* <InsufficientBalanceContent/> */}
+        <div className="w-full flex flex-col items-center gap-4 md:gap-8 ">
+          <ConsultationModalContent
+            astroDetails={astroDetails}
+            fee={fee}
+            minCallDuration={minCallDuration}
+            userWalletBalance={userWalletBalance}
+          />
+          {/* <InsufficientBalanceContent/> */}
           <div className="flex justify-center gap-4">
-            <button className="w-[5.5rem] flex justify-center gap-[0.21rem] py-[0.33rem] px-[0.46rem] rounded bg-[#26C884] text-white text-[0.75rem] font-semibold leading-tight ">
+            <button className="w-[5.5rem] md:w-[13.375rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-4 px-[0.46rem] md:px-[1.38rem] rounded md:rounded-xl bg-[#26C884] text-white text-[0.75rem] md:text-[1.625rem] font-semibold leading-tight ">
               Recharge
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                // width="40"
+                // height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                className="w-[0.83rem] md:w-[2.5rem] md:h-[2.5rem] h-[0.83rem]"
+              >
+                <path
+                  d="M25 13.75H37.5V11.25C37.5 9.5924 36.8415 8.00269 35.6694 6.83058C34.4973 5.65848 32.9076 5 31.25 5H8.75C7.0924 5 5.50269 5.65848 4.33058 6.83058C3.15848 8.00269 2.5 9.5924 2.5 11.25V28.75C2.5 30.4076 3.15848 31.9973 4.33058 33.1694C5.50269 34.3415 7.0924 35 8.75 35H31.25C32.9076 35 34.4973 34.3415 35.6694 33.1694C36.8415 31.9973 37.5 30.4076 37.5 28.75V26.25H25C23.3424 26.25 21.7527 25.5915 20.5806 24.4194C19.4085 23.2473 18.75 21.6576 18.75 20C18.75 18.3424 19.4085 16.7527 20.5806 15.5806C21.7527 14.4085 23.3424 13.75 25 13.75ZM25 16.25C24.0054 16.25 23.0516 16.6451 22.3483 17.3483C21.6451 18.0516 21.25 19.0054 21.25 20C21.25 20.9946 21.6451 21.9484 22.3483 22.6517C23.0516 23.3549 24.0054 23.75 25 23.75H37.5V16.25H25ZM25 22.5C24.5055 22.5 24.0222 22.3534 23.6111 22.0787C23.2 21.804 22.8795 21.4135 22.6903 20.9567C22.5011 20.4999 22.4516 19.9972 22.548 19.5123C22.6445 19.0273 22.8826 18.5819 23.2322 18.2322C23.5819 17.8826 24.0273 17.6445 24.5123 17.548C24.9972 17.4516 25.4999 17.5011 25.9567 17.6903C26.4135 17.8795 26.804 18.2 27.0787 18.6111C27.3534 19.0222 27.5 19.5055 27.5 20C27.5 20.663 27.2366 21.2989 26.7678 21.7678C26.2989 22.2366 25.663 22.5 25 22.5Z"
+                  fill="#FEFEFE"
+                />
+                <path
+                  d="M37.4998 11.25V13.75H33.7498C33.4154 12.0331 32.8433 10.3713 32.0498 8.8125C31.3656 7.46927 30.5265 6.21071 29.5498 5.0625H31.2498C32.8966 5.06242 34.4769 5.71231 35.6473 6.87093C36.8176 8.02955 37.4833 9.60325 37.4998 11.25Z"
+                  fill="#FEFEFE"
+                />
+                <path
+                  d="M34.0874 16.25H37.4999V23.75H33.0374C33.8861 21.3455 34.2432 18.7951 34.0874 16.25Z"
+                  fill="#FEFEFE"
+                />
+                <path
+                  d="M31.9374 26.25H37.4999V28.75C37.4999 30.4076 36.8414 31.9973 35.6693 33.1694C34.4972 34.3415 32.9075 35 31.2499 35H22.3374C22.7999 34.8125 23.2624 34.6 23.7124 34.375C27.237 32.5944 30.1138 29.7525 31.9374 26.25Z"
+                  fill="#FEFEFE"
+                />
+              </svg>
             </button>
-            <button className="w-[5.5rem] flex justify-center gap-[0.21rem] py-[0.33rem] px-[0.46rem] rounded bg-[#26C884] text-white text-[0.75rem] font-semibold leading-tight " onClick={closeModal}>
-              Call
-              <IoCall className="text-[0.8rem] text-white "/>
+            <button
+              className={`w-[5.5rem] md:w-[13.375rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-4 px-[0.46rem] md:px-[1.38rem] rounded md:rounded-xl  ${
+                astroDetails?.callAvailability === "online"
+                  ? "bg-[#26C884]"
+                  : "bg-white"
+              } ${
+                astroDetails?.callAvailability === "online"
+                  ? "border-none"
+                  : "border border-[#3A3938]"
+              } ${
+                astroDetails?.callAvailability === "online"
+                  ? " text-white"
+                  : astroDetails?.callAvailability === "busy"
+                  ? "text-red-500"
+                  : "text-[#707070]"
+              } text-[0.75rem] md:text-[1.625rem] font-semibold leading-tight`}
+              // onClick={closeModal}
+              onClick={(e) => {
+                if (callAvailability === "online") {
+                  startConsultationHandler(e);
+                }
+              }}
+            >
+              {callAvailability === "online" && "Call"}
+              {callAvailability === "busy" && "Busy"}
+              {callAvailability === "offline" && "Offline"}
+              <IoCall className={`text-[0.8rem] md:text-[2.5rem] ${
+                astroDetails?.callAvailability === "online"
+                  ? " text-white"
+                  : astroDetails?.callAvailability === "busy"
+                  ? "text-red-500"
+                  : "text-[#707070]"
+              } `} />
             </button>
           </div>
         </div>
@@ -113,7 +372,7 @@ const ConsultCard = ({ data }: any) => {
             {/* left section of card */}
             <div className="flex flex-col items-center justify-center w-[35%] h-[100%] border-r-[0.0625rem] border-dashed border-gray-300 bg-[#965efb0d] relative">
               <Link href={`/astrologers/${datas.userName}`}>
-                <div className="block w-[4.01rem] h-[4.01rem] border-[1.07px] border-solid border-green-500 mb-[0.67rem] rounded-full">
+                <div className="block  w-[4.01rem] h-[4.01rem] border-[1px] border-solid border-green-500 mb-[0.67rem] rounded-full">
                   <Image
                     src={datas?.user?.avatar?.url}
                     alt="balkrishnaji"
@@ -160,8 +419,7 @@ const ConsultCard = ({ data }: any) => {
               <div className="flex flex-col items-baseline justify-start w-full h-[5.31rem] pl-[0.5rem] pt-[0.25rem]">
                 <Link href={`/blogs`}>
                   <h5 className="text-[0.875rem] font-semibold text-black mb-[0.25rem] text-left">
-                    {datas?.user.firstName}
-                    {datas?.user.lastName}
+                    {` ${datas?.user.firstName} ${datas?.user.lastName}`}
                   </h5>
                 </Link>
                 <div className="flex items-center gap-[0.5rem] mb-[0.25rem]">
@@ -228,7 +486,11 @@ const ConsultCard = ({ data }: any) => {
                       ? "border-none"
                       : "border border-[#3A3938]"
                   }  hover:scale-105 transition delay-200 duration-200 ease-in-out`}
-                  onClick={openModal}
+                  onClick={() => {
+                    if (datas?.callAvailability === "online") {
+                      callClickedHandler(datas?.user?.guru);
+                    }
+                  }}
                 >
                   <IoCall
                     className={`w-[14px] md:w-[16px] ${

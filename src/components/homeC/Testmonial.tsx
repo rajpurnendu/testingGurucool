@@ -7,10 +7,10 @@ const Testmonial = () => {
   return (
     <div className="xl:w-[72rem] w-auto m-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="px-[20px]">
-        <h1 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[12px]">
+        <h1 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
           Testimonials
         </h1>
-        <p className="text-center text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-normal">
+        <p className="text-center text-sm xl:text-xl xl:mb-[1.87rem] mb-[1rem] font-normal">
           People have shown high trust in us, which can be seen in their
           testimonials which they have shared
         </p>
@@ -51,12 +51,12 @@ const Cards = ({
   desc: string;
 }) => {
   return (
-    <div className="flex min-w-[108px] md:w-[343px] flex-col gap-[16px] relative shadow bg-white  xl:rounded-[18px]  rounded-[4.83px] xl:w-[343px] border border-violet-500 border-opacity-70 items-start p-[4.3px] xl:p-[16px]">
+    <div className="flex min-w-[108px] md:w-[343px] flex-col gap-[12px] relative shadow bg-white  xl:rounded-[18px]  rounded-[4.83px] xl:w-[343px] border border-violet-500 border-opacity-70 items-start p-[4.3px]  xl:p-[16px]">
       <div>
-        <h3 className="font-semibold text-violet-500 text-[10px] md:text-[20px] xl:text-[26px]">
+        <h3 className="font-semibold  text-violet-500 text-[10px] md:text-[20px] xl:text-[26px]">
           {text1}
         </h3>
-        <h3 className="font-semibold text-neutral-800 text-[10px] md:text-[20px] xl:text-[26px]">
+        <h3 className="font-semibold leading-none text-neutral-800 text-[10px] md:text-[20px] xl:text-[26px]">
           {text2}
         </h3>
       </div>

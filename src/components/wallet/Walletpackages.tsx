@@ -33,7 +33,7 @@ const Walletpackages = ({
           userDetails?.userDetails.totalRecharge === 0 &&
             !userDetails?.userDetails?.offers?.firstConsultaionUsed
         );
-        console.log(userDetails);
+        // console.log(userDetails);
       };
       getUserDetails();
     }

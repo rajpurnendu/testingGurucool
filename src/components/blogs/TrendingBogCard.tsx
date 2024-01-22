@@ -7,7 +7,7 @@ const TrendingBogCard = ({ blog }: any) => {
     <div className="items-start rounded-[13.97px] shadow  max-w-[376px] flex flex-col p-[13.36px] gap-[11.18px] justify-start">
       <div className=" overflow-hidden w-full">
         <Image
-          className="w-full h-[165px] object-cover"
+          className="h-[155px] w-[350px] object-cover"
           width={500}
           height={500}
           src={blog?.titleImage?.url}
@@ -18,6 +18,7 @@ const TrendingBogCard = ({ blog }: any) => {
       <p
         className="text-neutral-800
 text-base
+leading-none
 font-semibold"
       >
         {blog?.title?.slice(0, 25)}...

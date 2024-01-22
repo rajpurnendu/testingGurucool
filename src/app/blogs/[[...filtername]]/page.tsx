@@ -68,7 +68,7 @@ const Blogmain = async ({
       >
         {/* <div> */}
         {/* Filter Section  */}
-        <div className=" flex md:flex-col h-fit md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
+        <div className="  flex md:flex-col h-fit md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
           <h4
             className="text-neutral-800
 text-[22px]
@@ -151,7 +151,7 @@ font-semibold"
         <p className="text-center font-semibold md:text-lg  text-base mb-8">
           Trending Topics and News About Astrology
         </p>
-        <p className="text-justify  font-medium leading-[17.50px] text-sm mb-1">
+        <p className="text-center  font-medium leading-[17.50px] md:text-base text-sm mb-1">
           {` At Gurucool, we offer a wide range of astrology services to provide you
         with insightful guidance and help you navigate through life's
         challenges. Our expert astrologers, who are considered the best in

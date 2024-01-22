@@ -36,7 +36,7 @@ const TopRated_astrologer = async ({
   return (
     <div className="xl:w-[72rem] w-auto mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="p-[20px]">
-        <h1 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[12px]">
+        <h1 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
           Top-rated astrologers
         </h1>
         <p className="text-center text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-normal">
@@ -74,7 +74,7 @@ const TopRated_astrologer = async ({
 
       <div className="w-auto flex items-end justify-end pr-[19px] xl:pr-0 mb-[12px]">
         <Link href={"/call-to-astrologers"}>
-          <p className="w-[66.39px] flex justify-end text-right text-black text-xs xl:text-xl font-medium xl:font-semibold">
+          <p className="w-[66.39px] flex underline hover:text-blue-500 justify-end text-right text-black text-xs xl:text-xl font-medium xl:font-semibold">
             See all
           </p>
         </Link>

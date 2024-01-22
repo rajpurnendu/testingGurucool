@@ -17,7 +17,7 @@ const Services = () => {
   return (
     <div className=" w-auto xl:w-[72rem] mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="px-[20px]">
-        <h1 className="text-center xl:text-[2.125rem] text-base font-[500] xl:mb-[12px]">
+        <h1 className="text-center xl:text-[2.125rem] text-base font-[500] xl:mb-[20px]">
           Services
         </h1>
         <p className="text-center xl:leading-6  text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-{400]">

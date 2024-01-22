@@ -31,7 +31,7 @@ font-semibold xl:mb-[1.88rem] mb-[10px]"
       </p>
       <div className="w-[341px] xl:w-[72rem] mx-auto md:w-[100%]">
         <p
-          className="text-center text-neutral-700
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-2 mb-1
 leading-snug"
@@ -41,7 +41,7 @@ leading-snug"
 `}
         </p>
         <p
-          className="text-center text-neutral-700
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-2 mb-1
 leading-snug"
@@ -49,7 +49,7 @@ leading-snug"
           {`If you're wondering, "Where can I find the best astrologers near me?" GuruCool has a team of highly skilled astrologers who are dedicated to assisting you. Whether you prefer to talk to an astrologer face-to-face or have an online consultation, we have the perfect solution for you.`}
         </p>
         <p
-          className="text-center text-neutral-700
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-2 mb-1
 leading-snug"
@@ -57,7 +57,7 @@ leading-snug"
           {`With our personalized consultations, our astrologers delve into your birth chart[kundali], meticulously examining the positions of celestial bodies such as the Sun, Moon, and planets. We offer tailored guidance that aligns with your unique circumstances by analyzing their influences on various aspects of your life, including personality traits, relationships, and career prospects.`}
         </p>
         <p
-          className="text-center text-neutral-700
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-2 mb-1
 leading-snug"
@@ -65,7 +65,7 @@ leading-snug"
           {`Astrology is a powerful tool that can help you gain clarity, make informed decisions, and navigate the ups and downs of life. Our comprehensive astrology services at GuruCool go beyond birth chart analysis. We delve into elements, moon signs, numerology, and even tarot to provide you with a holistic understanding of your life's journey.`}
         </p>
         <p
-          className="text-center text-neutral-700
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-2 mb-1
 leading-snug"
@@ -73,7 +73,7 @@ leading-snug"
           {`Astrology holds the key to transforming your life in profound ways. At GuruCool, we understand the immense benefits that astrology can bring to your journey of self-discovery and personal growth.`}
         </p>
         <p
-          className="text-center text-neutral-700
+          className="text-justify text-neutral-700
 text-xs xl:text-base mb-1
 font-medium
 leading-snug"

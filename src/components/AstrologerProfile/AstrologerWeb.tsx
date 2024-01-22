@@ -45,7 +45,6 @@ const AstrologerWeb = ({
     sort: string,
     userId: string | undefined
   ) => {
-   
     const feedbackAstro = await Get_ASTROLOGER_FEEDBACK(id, sort, userId);
     setFeedbackdata(feedbackAstro.feedback);
   };
@@ -58,8 +57,6 @@ const AstrologerWeb = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Sort]);
-
- 
 
   const Specialities: any = {
     Love: { img: heart, desc: "Relationship" },
@@ -164,8 +161,8 @@ font-semibold"
               </p>
             </div>
           </div>
-          <div className="p-[16px] w-fit flex items-center justify-center border-zinc-300 border rounded-md bg-white gap-[10px] lg:gap-[24px]">
-            <div className="w-fit flex flex-col gap-[12px] items-center justify-center">
+          <div className="py-[14px] px-[16px] w-fit flex items-center justify-center border-zinc-300 border rounded-md bg-white gap-[10px] lg:gap-[24px]">
+            <div className="w-fit flex flex-col gap-[10px] items-center justify-center">
               <Image width="36" height="36" src={clock} alt="time" />
               <p
                 className="
@@ -189,7 +186,7 @@ font-semibold"
               </p>
             </div>
             <div className="w-[0] h-[120px] border border-stone-300"></div>
-            <div className=" flex flex-col gap-[12px] items-center justify-center">
+            <div className=" flex flex-col gap-[10px] items-center justify-center">
               <Image width="36" height="36" src={user} alt="time" />
               <p
                 className="
@@ -212,7 +209,7 @@ font-semibold"
               </p>
             </div>
             <div className="w-[0] h-[120px]  border border-stone-300"></div>
-            <div className=" flex flex-col gap-[12px] items-center justify-center">
+            <div className=" flex flex-col gap-[10px] items-center justify-center">
               <Image width="36" height="36" src={star2} alt="time" />
               <p
                 className="
@@ -344,7 +341,7 @@ text-sm
         </div>
       </div>
 
-      <div className="p-5">
+      <div>
         <div className=" gap-[16px] md:w-auto xl:max-w-[72rem] rounded-2xl p-6  border-2 items-start flex flex-col  border-zinc-300">
           <h2
             className="text-neutral-700
@@ -356,7 +353,7 @@ font-semibold"
             About Me
           </h2>
           <p className={` text-stone-600 text-base font-medium leading-snug`}>
-            {data.description.slice(0, descLength)}
+            {`${data.description.slice(0, descLength)} `}
             {descLength == data.description.length ? (
               <span
                 onClick={() => setdescLength(200)}
@@ -365,13 +362,13 @@ cursor-pointer
 text-lg
 font-medium"
               >
-                {" "}
-                Read Less
+                {`Read Less`}
               </span>
             ) : (
               <span
                 onClick={toggleDescription}
                 className="text-violet-500
+                underline hover:text-blue-500
 cursor-pointer
 text-lg
 font-medium"
@@ -395,7 +392,7 @@ font-medium"
           </div>
           {data.images.length == imgLength ? (
             <p
-              className="cursor-pointer w-full text-right text-neutral-800
+              className="cursor-pointer underline hover:text-blue-500 w-full text-right text-neutral-800
 text-lg
 font-semibold"
               onClick={() => setimgLength(4)}
@@ -404,7 +401,7 @@ font-semibold"
             </p>
           ) : (
             <p
-              className="cursor-pointer w-full text-right text-neutral-800
+              className="cursor-pointer underline hover:text-blue-500 w-full text-right text-neutral-800
 text-lg
 font-semibold"
               onClick={toggleImgLength}
@@ -424,7 +421,7 @@ font-semibold"
           >
             Specialities
           </h3>
-          <div className="rounded-md xl:w-[556px] md:w-[400px] xl:min-h-[359px]  flex-wrap shadow justify-start inline-flex gap-[26px] items-start p-4">
+          <div className="rounded-md xl:w-[556px] md:w-[400px] xl:min-h-[359px]  flex-wrap shadow border border-zinc-200 justify-start inline-flex gap-[26px] items-start p-4">
             {data.specialization.map((specialtyName: any) => {
               const specialityData = Specialities[specialtyName];
 
@@ -464,17 +461,19 @@ font-semibold"
           >
             Skills
           </h3>
-          <div className="lg:w-[558px] md:w-[350px] overflow-y-scroll scrollbar-thin scrollbar-webkit h-[460px] xl:h-[359.22px] p-2 items-start bg-white rounded-md shadow  flex  flex-wrap gap-2">
-            {data.skills.map((data: string) => (
-              <div
-                key={data}
-                className="px-6 w-fit py-3 h-fit bg-zinc-100 rounded-[64px] justify-center items-center gap-2.5 flex"
-              >
-                <div className=" text-neutral-500 text-base font-medium  leading-snug">
-                  {data}
+          <div className="lg:w-[558px] border border-zinc-200 md:w-[350px] overflow-y-scroll scrollbar-webkit scrollbar-thin  h-[460px] xl:h-[359.22px] p-2 items-start bg-white rounded-md shadow  flex  flex-wrap">
+            <div className="flex flex-wrap  gap-2">
+              {data.skills.map((data: string) => (
+                <div
+                  key={data}
+                  className="px-6 w-fit py-3 h-fit bg-zinc-100 rounded-[64px] justify-center items-center gap-2.5 flex"
+                >
+                  <div className=" text-neutral-500 text-base font-medium  leading-snug">
+                    {data}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -487,7 +486,7 @@ font-semibold"
           >
             Reviews
           </h3>
-          <div className="py-8 px-16 scrollbar-thin scrollbar-webkit max-w-[792px] overflow-y-scroll sticky overflow-x-hidden max-h-[1502px] bg-white rounded-[10px] shadow justify-start flex-col items-start gap-10 flex">
+          <div className="py-8 px-16 border border-zinc-200 scrollbar-thin scrollbar-webkit max-w-[792px] overflow-y-scroll sticky overflow-x-hidden max-h-[1502px] bg-white rounded-[10px] shadow justify-start flex-col items-start gap-10 flex">
             <div className="border-b pb-3 border-gray-200 w-full flex  gap-[195px] items-center">
               <div className="flex items-center gap-3">
                 <Image src={star3} width="30" height="30" alt="star" />
@@ -644,7 +643,7 @@ font-semibold"
         </p>
         <Link
           href="/call-to-astrologers"
-          className="text-right w-full text-md text-neutral-800 font-semibold leading-[25px]"
+          className="text-right w-full underline hover:text-blue-500 text-xl text-neutral-800 font-semibold leading-[25px]"
         >
           See all
         </Link>
