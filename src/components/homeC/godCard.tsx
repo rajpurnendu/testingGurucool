@@ -1,12 +1,15 @@
 import Image from "next/image";
 import god from "@/../public/assets/godImg.webp";
-const GodCard = () => {
+import Link from "next/link";
+const GodCard = ({ data }: any) => {
   return (
-    <div className="mx-auto rounded-xl min-w-[201px] min-h-[237px] shadow-lg border border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]">
+    <div className="mx-auto rounded-xl md:max-w-[300px] min-w-[201px] min-h-[237px] shadow-lg border border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]">
       <Image
-        src={god}
-        className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[84px] xl:rounded-md rounded-[3px]"
+        src={data?.titleImage?.url}
+        className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[89px] xl:rounded-md rounded-[3px]"
         alt="god"
+        width={500}
+        height={500}
         priority
       />
       <div className="flex justify-between items-center w-full">
@@ -19,18 +22,23 @@ font-medium
 leading-[15px]
 "
         >
-          Hanuman Chaalisa
+          {data?.author?.firstName} {data?.author?.lastName}
         </h3>
-        <div className="px-[4px] py-[5px] md:py-[3px] md:px-[6px]  xl:px-[6px] xl:py-[3px] rounded-[15px] xl:rounded-[30px] border border-violet-500 border-opacity-60">
-          <p
-            className="text-neutral-800
+        <div className="px-[4px] py-[0px] md:py-[0px] md:px-[6px]  xl:px-[6px]  rounded-[15px] xl:rounded-[30px] border border-violet-500 border-opacity-60">
+          {data?.tags?.map((tag: string, index: number) => (
+            <Link
+              key={index}
+              href={`/blogs/category/${tag.replace("/", "-")}`}
+              className="text-neutral-800
           text-xs
-          md:text-[10px]
+          // md:text-[10px]
           font-normal
-          leading-[15px]"
-          >
-            Aarti
-          </p>
+          leading-none
+          "
+            >
+              {tag}
+            </Link>
+          ))}
         </div>
       </div>
       <p
@@ -41,15 +49,15 @@ leading-[15px]
 opacity-60
 "
       >
-        A blog by Mr. abc which will help you to know about your year which is
-        coming so you can plang your year accordingly and wisely.
+        {data?.description?.slice(0, 100)}...
       </p>
       <div className="w-full flex justify-end">
         <div
           className=" p-1 xl:p-2 bg-amber-500 bg-opacity-20 xl:rounded-[30px] rounded-[15px] shadow justify-center items-center
          flex  border "
         >
-          <p
+          <Link
+            href={`/blogs`}
             className="text-neutral-800
             text-xs
             xl:font-normal
@@ -57,7 +65,7 @@ opacity-60
             leading-[15px]"
           >
             Read More
-          </p>
+          </Link>
         </div>
       </div>
     </div>

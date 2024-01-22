@@ -2,6 +2,10 @@ import aarti from '@/../public/assets/imges/img2.webp'
 import live from '@/../public/assets/imges/img3.webp'
 import gods from '@/../public/assets/imges/img4.webp'
 import chat from '@/../public/assets/imges/img5.webp'
+import abhey from '@/../public/assets/abhey.webp'
+import sweta from '@/../public/assets/sweta.webp'
+import richa from '@/../public/assets/richa.webp'
+import atul from '@/../public/assets/atul.webp'
 
 import kundali from '@/../public/assets/imges/img6.webp'
 import horoscope from '@/../public/assets/imges/img7.webp'
@@ -84,40 +88,40 @@ export const card = [
     }
 ]
 
-export const card2 = [
-    {
-        date: `7th May '23`,
-        desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
-        img: userImg,
-        name: 'Savannah Nguyen',
-        city: 'New Delhi'
+// export const card2 = [
+//     {
+//         date: `7th May '23`,
+//         desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
+//         img: userImg,
+//         name: 'Savannah Nguyen',
+//         city: 'New Delhi'
 
-    },
-    {
-        date: `7th May '23`,
-        desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
-        img: userImg,
-        name: 'Savannah Nguyen',
-        city: 'New Delhi'
+//     },
+//     {
+//         date: `7th May '23`,
+//         desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
+//         img: userImg,
+//         name: 'Savannah Nguyen',
+//         city: 'New Delhi'
 
-    },
-    {
-        date: `7th May '23`,
-        desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
-        img: userImg,
-        name: 'Savannah Nguyen',
-        city: 'New Delhi'
+//     },
+//     {
+//         date: `7th May '23`,
+//         desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
+//         img: userImg,
+//         name: 'Savannah Nguyen',
+//         city: 'New Delhi'
 
-    },
-    {
-        date: `7th May '23`,
-        desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
-        img: userImg,
-        name: 'Savannah Nguyen',
-        city: 'New Delhi'
+//     },
+//     {
+//         date: `7th May '23`,
+//         desc: '"As a satisfied customer i would like to reccoment gurucool to everyone out there you get very genuine and fair astrologer on the site plus the astrolgers are very supportive and they always there to help me pf',
+//         img: userImg,
+//         name: 'Savannah Nguyen',
+//         city: 'New Delhi'
 
-    },
-]
+//     },
+// ]
 
 export const card3 = [
     {
@@ -205,28 +209,28 @@ export const TestmonialData=[
     {
         name:'Atul',
         desc:'I found out about GuruCool from instagram, in the beginning I was not sure if this app could help me or not, but I connected with Dr Balkrishna Ji. Now I can confidently say that my decision was right. I was struggling with my career and the astrologer helped me out. Now I am in a very good position in a fintech start-up. I can say that it is worth trying.',
-        img:userImg,
+        img:atul,
         city:'Kota'
     },
     {
         name:'Shweta',
         desc:`Marriage is one of the most significant decisions in the life of any human. My married life was not going well initially. Although it was a love marriage, somehow me and my partner were not able to make our marriage successful initially. Then one day I was scrolling facebook and I saw a live session of Manorama ma'am. i instantly downloaded the app because I was seeking genuine help. She first took time and got to know about my problem. Then she asked me to do some things in my day to day life and within 3 to 4 months me and my partner were back again like old times. Now I am pregnant also and we are expecting a child very soon. I don't know if I had not consulted with Manorama Ji then my marriage could not be successful.`,
-        img:userImg,
+        img:sweta,
         city:'Jaipur'
 
     },
     {
         name:'Richa',
         desc:`When I heard about GuruCool, I was a struggling student, I was also working in customer support to manage my expenses. At that time, it was very difficult for me to manage both my job and studies. Then I connected with Usha Siingh ma'am. It was the best decision of my life so far. Usha Ji guided me throughout my studies and job and in the end I completed my graduation this year and now I am in a very good organisation. All of the credits go to GuruCool and Usha Singh Ji.`,
-        img:userImg,
+        img:richa,
         city:'Mumbai'
 
     },
     {
         name:'Abhay',
         desc:`I am a businessman. I deal with medical equipment. When I started taking consultations on GuruCool, my business was not going well. I had a very good year when COVID19 was there, but after that my business started going down and down only. I did not know what to do at that time. Then I had a few consultations with some of the astrologers on this platform and I must say, all of them guided me so well that last month my business recorded the highest revenue of all time so far. All thanks to GuruCool.`,
-        img:userImg,
-        city:'Punjab'
+        img:abhey,
+        city:'Delhi'
 
     },
 ];

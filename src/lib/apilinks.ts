@@ -19,6 +19,9 @@ export const G_GET_USER_PROFILE = BASE_URL + "user/getProfile";
 
 export const REGISTER_NEW_USER=`${BASE_URL}user/register`;
 
+export const G_GET_SINGLE_ASTROLOGER_BY_TOKEN = (guruID:string) =>
+  `${BASE_URL}guru/getSingleGuru?guruId=${guruID}`;
+
 
 
 export const GET_HOMEPAGE_ASTROLOGERS = (queryParams:string):string => {

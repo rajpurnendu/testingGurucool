@@ -51,10 +51,26 @@ const useFilterStore = create((set) => ({
   languages: [],
   gender: "",
   responseData: null, // Initial response data is null
+  astroDetails: null, // Initial astroDetails data is null
+  minimumCallDuration: null, // Initial astroDetails data is null
+  callPurchasedId: "", // Initial callPurchasedId is empty string
+  callAvailability: "",
 
   // Function to update the response data
   setResponseData: (data) => {
     set({ responseData: data });
+  },
+  setAstroDetails: (data) => {
+    set({ astroDetails: data });
+  },
+  setMinCallDuration: (data) => {
+    set({ minimumCallDuration: data });
+  },
+  setCallPurchasedId: (data) => {
+    set({ callPurchasedId: data });
+  },
+  setCallAvailability: (data) => {
+    set({ callAvailability: data });
   },
 
   // Function to update a specific filter parameter
