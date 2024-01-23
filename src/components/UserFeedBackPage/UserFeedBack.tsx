@@ -1,24 +1,43 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profileimg from "../../../public/assets/Balkrishna.jpg";
 import Image from "next/image";
 import Star from "./Star";
 import Link from "next/link";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import { useRouter } from "next/navigation";
 
 const UserFeedBack = ({
   astroDetails,
   callPurchasedId,
   amount,
   callDuration,
+  guruToken,
+  userId,
 }: {
   astroDetails: any;
   callPurchasedId: string;
   amount: number;
   callDuration: number;
+  guruToken: string;
+  userId: string;
 }) => {
   const [rating, setRating] = useState(0);
   const [checkedState, setCheckedState] = useState<string[]>([]);
   const [feedbacktext, setFeedbacktext] = useState("");
+  const [guruData, setGuruData] = useState<any>();
+  console.log(guruToken);
+  const router = useRouter();
+  useEffect(() => {
+    fetch(G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken))
+      .then((response) => response.json())
+      .then((data) => setGuruData(data.guru));
+  }, []);
+
+  console.log(guruData);
+  console.log(callPurchasedId);
+  console.log(amount);
+  console.log(callDuration);
 
   const handleCheckboxChange = (feedback: any, isChecked: any) => {
     if (isChecked) {
@@ -62,13 +81,52 @@ const UserFeedBack = ({
     ],
   ];
 
-  const handleSubmit = (e: any) => {
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   console.log(rating, checkedState, feedbacktext);
+  // };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(rating, checkedState, feedbacktext);
+    try {
+      const response = await fetch(
+        "https://prod.gurucool.life/api/v1/guru/addFeedback",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Include other headers if necessary
+          },
+          body: JSON.stringify({
+            user: userId,
+            astrologer: astroDetails?.user?._id,
+            rating: rating,
+            bad: rating <= 2 ? checkedState.join(", ") : "",
+            good: rating > 2 ? checkedState.join(", ") : "",
+            badFeedback: rating <= 2 ? feedbacktext : "",
+            goodFeedback: rating > 2 ? feedbacktext : "",
+            purchaseId: callPurchasedId,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        setRating(0);
+        setCheckedState([]);
+        setFeedbacktext("");
+        alert("Feedback submitted!!!");
+        router.push("/");
+      } else {
+        // Handle non-200 responses
+        const errorData = await response.json();
+        alert("Error: " + errorData.message);
+      }
+    } catch (error: any) {
+      alert("Error: " + error.message);
+    }
   };
 
   console.log(astroDetails);
-  
 
   return (
     <div className="max-w-[72rem] mx-auto flex justify-between xl:flex-row flex-col mt-[90px] my-[20px]">
@@ -94,14 +152,16 @@ const UserFeedBack = ({
               Consultaion Charge
             </p>
             <p className="text-[rgb(20,164,0)] text-[25px] font-[600]">
-              19.07₹
+              {amount} ₹
             </p>
           </div>
           <div className="w-[48%] flex flex-col items-center justify-center">
             <p className="text-[18px] font-[600] text-[rgb(128,128,128)]">
               Call Duration
             </p>
-            <p className="text-[rgb(20,164,0)] text-[25px] font-[600]">0 Min</p>
+            <p className="text-[rgb(20,164,0)] text-[25px] font-[600]">
+              {callDuration} Min
+            </p>
           </div>
         </div>
         <p className="text-[rgb(20,164,0)]  text-center font-[700] text-[17px] mt-[5px] mb-[15px]">

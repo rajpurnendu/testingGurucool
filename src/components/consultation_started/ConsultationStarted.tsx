@@ -23,6 +23,8 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
     setAmount,
     callDuration,
     setCallDuration,
+    userId,
+    setUserId
   } = useFilterStore();
 
   const [callStatus, setCallStatus] = useState();
@@ -40,6 +42,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
       if (loginToken) {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
+        setUserId(data.user._id)
         // console.log(data);
       }
     };
@@ -61,6 +64,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
         G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
       );
       const data2 = await response2.json();
+      console.log(data2);
       
       setAstroDetails(data2.guru);
       if (data1.purchase.callStatus === "completed") {
