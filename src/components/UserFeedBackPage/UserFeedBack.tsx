@@ -5,7 +5,17 @@ import Image from "next/image";
 import Star from "./Star";
 import Link from "next/link";
 
-const UserFeedBack = () => {
+const UserFeedBack = ({
+  astroDetails,
+  callPurchasedId,
+  amount,
+  callDuration,
+}: {
+  astroDetails: any;
+  callPurchasedId: string;
+  amount: number;
+  callDuration: number;
+}) => {
   const [rating, setRating] = useState(0);
   const [checkedState, setCheckedState] = useState<string[]>([]);
   const [feedbacktext, setFeedbacktext] = useState("");
@@ -57,13 +67,16 @@ const UserFeedBack = () => {
     console.log(rating, checkedState, feedbacktext);
   };
 
+  console.log(astroDetails);
+  
+
   return (
     <div className="max-w-[72rem] mx-auto flex justify-between xl:flex-row flex-col mt-[90px] my-[20px]">
       <div className="xl:w-[50%] w-full px-5 py-[5px]">
         <div className="mb-[30px]">
           <div className="rounded-full h-[140px] overflow-hidden flex items-center justify-center w-[140px] text-white m-auto">
             <Image
-              src={profileimg}
+              src={astroDetails?.user?.avatar?.url}
               className="w-full h-full"
               width="300"
               height="300"
@@ -71,7 +84,7 @@ const UserFeedBack = () => {
             />
           </div>
           <h4 className="text-[22px] font-[600] text-center mt-[10px]">
-            AstroName
+            {astroDetails.user.firstName} {astroDetails.user.lastName}
           </h4>
         </div>
         <div className="h-0 border-b w-[95%] m-auto border-[rgb(150,94,251)]"></div>

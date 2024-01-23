@@ -17,28 +17,28 @@ const GodCard = ({ data }: any) => {
         height={500}
         priority
       />
-      <div className="flex justify-between items-center w-full">
+      <div className="flex gap-1 items-center w-full">
         <h3
           className="text-neutral-800
-xl:text-lg
+xl:text-md
 xl:font-semibold
 text-xs
 font-medium
 leading-[15px]
 "
         >
-          {data?.author?.firstName} {data?.author?.lastName}
+          {data?.title}
         </h3>
-        <div className="px-[4px] py-[0px] md:py-[0px] md:px-[6px]  xl:px-[6px]  rounded-[15px] xl:rounded-[30px] border border-violet-500 border-opacity-60">
+        <div className="px-[4px] flex justify-normal items-center py-[0px] md:py-[0px] md:px-[6px]  xl:px-[6px]  rounded-[15px] xl:rounded-[30px] border border-violet-500 border-opacity-60 w-fit">
           {data?.tags?.map((tag: string, index: number) => (
             <Link
               key={index}
               href={`/blogs/category/${tag.replace("/", "-")}`}
               className="text-neutral-800
           text-xs
-          // md:text-[10px]
+         
           font-normal
-          leading-none
+          leading-0
           "
             >
               {tag}

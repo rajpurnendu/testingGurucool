@@ -44,7 +44,8 @@ md:leading-[13.92px]"
           </div>
         </div>
         <div className="md:w-[217px] w-[177px] h-[95px]">
-          <p
+        <Link
+        href={handleNavigate(blog?.title)}
             className="text-neutral-800
 md:text-sm
 text-xs
@@ -54,7 +55,7 @@ md:leading-tight"
           >
             {blog?.title?.slice(0, 25)}...
             {blog?.description?.slice(0, 50)}...
-          </p>
+          </Link>
         </div>
         {blog?.tags?.map((tag: string, index: number) => (
           <Link

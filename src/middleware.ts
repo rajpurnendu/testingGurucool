@@ -15,5 +15,5 @@ export function middleware(request: NextRequest) {
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/wallet/:path*','/my-profile/:path*'],
+  matcher: ['/wallet/:path*','/my-profile/:path*','/call-consultation-started', '/call-consultation-ended'],
 }

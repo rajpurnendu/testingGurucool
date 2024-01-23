@@ -7,7 +7,7 @@ import { accordian } from "./arraytext";
 const Faq = ({ searchParams }: { searchParams: any }) => {
   const filtername = searchParams.key || "";
   return (
-    <div className="w-auto xl:w-[72rem] mx-auto xl:my-[2rem] px-5 ">
+    <div className="w-auto xl:w-[72rem] mx-auto xl:my-[2rem] px-5 md:px-[0px] flex flex-col items-center justify-center">
       <h1 className="text-center xl:mb-[12px] mb-[4px] text-lg xl:text-[22px] font-semibold xl:leading-7">{`FAQ'S`}</h1>
       <Image
         src={line}

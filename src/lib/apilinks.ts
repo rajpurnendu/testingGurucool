@@ -73,3 +73,5 @@ export const GET_ALL_EXPIRED_COUPONS_USER=()=>`https://test.gurucool.life/api/v1
 
 export const PUTFOLLOW_ASTRO = ()=>`${BASE_URL}user/followGuru`
 export const PUTUNFOLLOW_ASTRO = ()=>`${BASE_URL}user/unfollowGuru`
+
+export const PAYMENT_STATUS=(paymentID:string)=>`${TESTING_URL}payments/get_payment_info?paymentID=${paymentID}`;
