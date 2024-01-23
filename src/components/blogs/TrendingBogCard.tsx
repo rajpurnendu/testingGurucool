@@ -2,26 +2,36 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+const handleNavigate = (title: string) => {
+  const formattedTitle = title.trim().replace(/%/g, "-").replace(/\s+/g, "-");
+  const lowercaseformattedTitle = formattedTitle.toLowerCase();
+  return `/blogs/${lowercaseformattedTitle}/`;
+};
+
 const TrendingBogCard = ({ blog }: any) => {
   return (
-    <div className="items-start rounded-[13.97px] shadow  max-w-[376px] flex flex-col p-[13.36px] gap-[11.18px] justify-start">
-      <div className=" overflow-hidden w-full">
+    <div className="items-start shadow border border-zinc-200 rounded-[13.97px]  max-w-[376px] flex flex-col p-[13.36px] gap-[11.18px] justify-start">
+      <Link
+        href={handleNavigate(blog?.title)}
+        className=" overflow-hidden h-[155px] w-[350px] rounded-[6px]"
+      >
         <Image
-          className="h-[155px] w-[350px] object-cover"
+          className=" w-full h-full"
           width={500}
           height={500}
           src={blog?.titleImage?.url}
           alt="Image Blog"
           priority={true}
         />
-      </div>
+      </Link>
+
       <p
         className="text-neutral-800
 text-base
 leading-none
 font-semibold"
       >
-        {blog?.title?.slice(0, 25)}...
+        {blog?.title?.slice(0, 20)}...
         {blog?.description?.slice(0, 50)}...
       </p>
       <div className="flex justify-between w-full items-center">
@@ -30,7 +40,7 @@ font-semibold"
             {blog?.author?.firstName[0]}
             {blog?.author?.lastName[0]}
           </div>
-          <div className="flex flex-col items-start justify-start">
+          <div className="flex flex-col items-start gap-[4px] justify-start">
             <p
               className="text-neutral-500
 text-sm

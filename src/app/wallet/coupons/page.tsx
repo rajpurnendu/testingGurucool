@@ -1,4 +1,5 @@
 import Coupons from "@/components/wallet/Coupons";
+import { decryptedData } from "@/lib/EncryptionDecryption";
 import { cookies } from "next/headers";
 
 const Couponspage = ({
@@ -10,7 +11,11 @@ const Couponspage = ({
   const loginToken = cookieStore.get("loginToken");
   return (
     <Coupons
-      forAmount={searchParams?.forAmount}
+      forAmount={
+        searchParams?.forAmount
+          ? decryptedData(searchParams?.forAmount)
+          : undefined
+      }
       loginToken={loginToken?.value}
     />
   );

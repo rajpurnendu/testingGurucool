@@ -1,4 +1,5 @@
 import Walletpackages from "@/components/wallet/Walletpackages";
+import { decryptedData } from "@/lib/EncryptionDecryption";
 import { cookies } from "next/headers";
 import React from "react";
 
@@ -12,7 +13,9 @@ const Walletpage = ({
   return (
     <Walletpackages
       loginToken={loginToken?.value}
-      coupon={searchParams?.coupon}
+      coupon={
+        searchParams?.coupon ? decryptedData(searchParams?.coupon) : undefined
+      }
     />
   );
 };

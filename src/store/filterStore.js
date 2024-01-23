@@ -55,6 +55,8 @@ const useFilterStore = create((set) => ({
   minimumCallDuration: null, // Initial astroDetails data is null
   callPurchasedId: "", // Initial callPurchasedId is empty string
   callAvailability: "",
+  amount: null,
+  callDuration: null,
 
   // Function to update the response data
   setResponseData: (data) => {
@@ -71,6 +73,12 @@ const useFilterStore = create((set) => ({
   },
   setCallAvailability: (data) => {
     set({ callAvailability: data });
+  },
+  setAmount: (data) => {
+    set({ amount: data });
+  },
+  setCallDuration: (data) => {
+    set({ callDuration: data });
   },
 
   // Function to update a specific filter parameter

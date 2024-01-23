@@ -15,7 +15,7 @@ import ConsultationModalContent from "./ConsultationModalContent";
 import InsufficientBalanceContent from "./InsufficientBalanceContent";
 import { getUserprofile } from "@/lib/data";
 import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
   console.log(loginToken);
@@ -36,6 +36,8 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
   // } else {
   //   setAstroData(data);
   // }
+
+  const router = useRouter()
 
   useEffect(() => {
     if (responseData?.guru?.docs.length) {
@@ -137,6 +139,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
       .then((data) => {
         setAstroDetails(data.guru);
         setCallBtnClicked(true);
+        setCallAvailability(data?.guru?.callAvailability)
         // onOpen();
         openModal();
       })
@@ -236,7 +239,11 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
 
           setCallPurchasedId(responseData.purchaseId);
           // navigate("/callconsultationstarted");
-          redirect("/callconsultationstarted");
+          console.log(responseData);
+          // redirect("/Call-consultation-started");
+          router.push("/call-consultation-started");
+          // ('/dashboard', { scroll: false })
+          
         } else {
           const errorData = await response.json();
           throw new Error(errorData.message);
@@ -249,38 +256,37 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
     startConsultation();
   };
 
-  useEffect(() => {
-    const fetchDataforAstrologer = async () => {
-      try {
-        const response = await fetch(
-          G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
-        );
+  // useEffect(() => {
+  //   const fetchDataforAstrologer = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
+  //       );
 
-        if (response.ok) {
-          const responseData = await response.json();
-          //console.log("ResponseData", responseData);
-          setCallAvailability(responseData?.guru?.callAvailability);
-        } else {
-          throw new Error("Request failed");
-        }
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-    /* The above code is setting up an interval that will execute the functions `fetchData()` and
-   `fetchDataforAstrologer()` every 5 seconds. */
-    const interval = setInterval(() => {
-      // fetchData();
-      fetchDataforAstrologer();
-    }, 5000);
+  //       if (response.ok) {
+  //         const responseData = await response.json();
+  //         //console.log("ResponseData", responseData);
+  //         setCallAvailability(responseData?.guru?.callAvailability);
+  //       } else {
+  //         throw new Error("Request failed");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user profile:", error);
+  //     }
+  //   };
+  //   /* The above code is setting up an interval that will execute the functions `fetchData()` and
+  //  `fetchDataforAstrologer()` every 5 seconds. */
+  //   const interval = setInterval(() => {
+  //     // fetchData();
+  //     fetchDataforAstrologer();
+  //   }, 5000);
 
-    // fetchData();
-    fetchDataforAstrologer();
-    return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // fetchData();
+  //   fetchDataforAstrologer();
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  console.log(callAvailability);
+  // console.log(callAvailability);
 
   return (
     <div>
@@ -327,7 +333,11 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
               </svg>
             </button>
             <button
-              className={`w-[5.5rem] md:w-[13.375rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-4 px-[0.46rem] md:px-[1.38rem] rounded md:rounded-xl  ${
+              className={`w-[5.5rem] md:w-[13.375rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-4 px-[0.46rem] md:px-[1.38rem] rounded md:rounded-xl ${
+                astroDetails?.callAvailability === "online"
+                  ? "cursor-pointer"
+                  : "cursor-no-drop"
+              }  ${
                 astroDetails?.callAvailability === "online"
                   ? "bg-[#26C884]"
                   : "bg-white"
@@ -352,13 +362,15 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
               {callAvailability === "online" && "Call"}
               {callAvailability === "busy" && "Busy"}
               {callAvailability === "offline" && "Offline"}
-              <IoCall className={`text-[0.8rem] md:text-[2.5rem] ${
-                astroDetails?.callAvailability === "online"
-                  ? " text-white"
-                  : astroDetails?.callAvailability === "busy"
-                  ? "text-red-500"
-                  : "text-[#707070]"
-              } `} />
+              <IoCall
+                className={`text-[0.8rem] md:text-[2.5rem] ${
+                  astroDetails?.callAvailability === "online"
+                    ? " text-white"
+                    : astroDetails?.callAvailability === "busy"
+                    ? "text-red-500"
+                    : "text-[#707070]"
+                } `}
+              />
             </button>
           </div>
         </div>

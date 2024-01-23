@@ -11,7 +11,7 @@ const handleNavigate = (title: string) => {
 const BlogCards = ({ blog }: any) => {
   // console.log(blog);
   return (
-    <div className="max-w-[370px] h-fit  p-[4.18px] bg-white rounded-[6.96px] shadow flex  justify-start items-start gap-[6.26px]">
+    <div className="max-w-[370px] h-fit border border-zinc-200 p-[4.18px] bg-white rounded-[6.96px] shadow flex  justify-start items-start gap-[6.26px]">
       <div className="flex flex-col gap-[9.6px] md:gap-[6.26px] items-start justify-start">
         <div className="flex justify-center items-center gap-[8.35px]">
           <div className="w-[29px] h-[29px] rounded-full text-white bg-[#965efb] flex justify-center items-center">
@@ -66,17 +66,19 @@ md:leading-tight"
           </Link>
         ))}
       </div>
-      <Link href={handleNavigate(blog?.title)}>
-        <div className="rounded-[6.96px] overflow-hidden shadow w-[135px] md:w-[208px] flex">
-          <Image
-            className="w-full h-[165px] object-cover"
-            width={500}
-            height={500}
-            src={blog?.titleImage?.url}
-            alt="Image Blog"
-            priority={true}
-          />
-        </div>
+
+      <Link
+        href={handleNavigate(blog?.title)}
+        className="rounded-[6.96px] overflow-hidden shadow w-[135px] md:w-[208px] flex"
+      >
+        <Image
+          className="w-full h-[165px] object-cover"
+          width={500}
+          height={500}
+          src={blog?.titleImage?.url}
+          alt="Image Blog"
+          priority={true}
+        />
       </Link>
     </div>
   );

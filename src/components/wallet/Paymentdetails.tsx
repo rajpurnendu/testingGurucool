@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import useRazorpay, { RazorpayOptions } from "react-razorpay";
 import { razorpayCheckoutHandler } from "@/lib/actions";
+import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
 
 const Paymentdetailscomponent = ({
   searchParams,
@@ -61,8 +62,10 @@ const Paymentdetailscomponent = ({
   }, [loginToken]);
 
   useEffect(() => {
-    setAmount(searchParams?.pmt);
-    setCoupon(searchParams?.coupon);
+    setAmount(searchParams?.pmt ? decryptedData(searchParams?.pmt) : undefined);
+    setCoupon(
+      searchParams?.coupon ? decryptedData(searchParams?.coupon) : undefined
+    );
   }, [searchParams]);
 
   const handleRemoveCoupon = async () => {
@@ -231,7 +234,11 @@ const Paymentdetailscomponent = ({
                     Apply Coupons
                   </p>
                 </div>
-                <Link href={`/wallet/coupons?forAmount=${amount}`}>
+                <Link
+                  href={`/wallet/coupons?forAmount=${
+                    amount && encryptData(amount?.toString())
+                  }`}
+                >
                   <button className="border-[#965efbb2] py-[6px] px-2 flex justify-center items-center border-[0.5px] rounded text-[#965efbb2] text-[12px] font-normal md:py-2 md:px-4 md:text-[20px] md:font-semibold md:text-[#965EFB] md:border md:rounded-[8px]">
                     See All
                   </button>

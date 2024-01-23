@@ -84,7 +84,7 @@ const AstrologerWeb = ({
   }
   return (
     <div className="my-[90px] mx-auto max-w-[72rem] hidden  md:flex items-st flex-col justify-start gap-10">
-      <div className="bg-gradient-to-r  xl:max-w-[72rem] from-violet-100 via-white to-white rounded-md shadow-md  items-end md:flex md:gap-[20px] xl:gap-[64.33px] p-[20px] lg:p-[38.38px] mx-auto">
+      <div className="bg-gradient-to-r  xl:max-w-[72rem] from-violet-100 via-white to-white rounded-md shadow-md  items-end md:flex md:gap-[20px] xl:gap-[64.33px] p-[20px] lg:p-[18.38px] mx-auto">
         <div className="flex flex-col items-center relative gap-[18.38px]">
           <div className="overflow-hidden  w-[183px] h-[183px] rounded-full flex items-center justify-center">
             <Image
@@ -100,6 +100,7 @@ const AstrologerWeb = ({
               <Image src={checkicon} className="w-[22px] h-[22px]" alt="icon" />
               <p
                 className="text-stone-300
+              
 text-[22.97px]
 font-semibold"
               >
@@ -161,8 +162,8 @@ font-semibold"
               </p>
             </div>
           </div>
-          <div className="py-[14px] px-[16px] w-fit flex items-center justify-center border-zinc-300 border rounded-md bg-white gap-[10px] lg:gap-[24px]">
-            <div className="w-fit flex flex-col gap-[10px] items-center justify-center">
+          <div className="py-[10px] px-[16px] w-fit flex items-center justify-center border-zinc-300 border rounded-md border-opacity-70 bg-white gap-[10px] lg:gap-[24px]">
+            <div className="w-fit flex flex-col gap-[6px] items-center justify-center">
               <Image width="36" height="36" src={clock} alt="time" />
               <p
                 className="
@@ -185,8 +186,8 @@ font-semibold"
                 {data.experience}+ Yrs
               </p>
             </div>
-            <div className="w-[0] h-[120px] border border-stone-300"></div>
-            <div className=" flex flex-col gap-[10px] items-center justify-center">
+            <div className="w-[0] h-[120px] border border-opacity-70 border-stone-300"></div>
+            <div className=" flex flex-col gap-[6px] items-center justify-center">
               <Image width="36" height="36" src={user} alt="time" />
               <p
                 className="
@@ -208,8 +209,8 @@ font-semibold"
                 {data.followersCount}
               </p>
             </div>
-            <div className="w-[0] h-[120px]  border border-stone-300"></div>
-            <div className=" flex flex-col gap-[10px] items-center justify-center">
+            <div className="w-[0] h-[120px]  border-opacity-70  border border-stone-300"></div>
+            <div className=" flex flex-col  gap-[6px] items-center justify-center">
               <Image width="36" height="36" src={star2} alt="time" />
               <p
                 className="
@@ -251,21 +252,21 @@ font-semibold"
             <div>
               <p
                 className="text-zinc-500
-lg:text-lg
+lg:text-xl
+leading-none
 text-sm
-font-medium
-leading-relaxed"
+font-medium"
               >
                 Offline
               </p>
               <p
                 className="
               text-zinc-500
-              lg:text-lg
+              lg:text-base
 text-sm
               font-medium
             
-              leading-relaxed"
+              leading-none"
               >
                 ₹ 24/min
               </p>
@@ -283,22 +284,22 @@ text-sm
               <div>
                 <p
                   className="text-white
-                lg:text-lg
+                lg:text-xl
                 text-left
                 text-sm
 font-medium
-leading-relaxed"
+leading-none"
                 >
                   call now
                 </p>
                 <p
                   className="
               text-white
-              lg:text-lg
+              lg:text-base
 text-sm
               font-medium
             
-              leading-relaxed"
+              leading-none"
                 >
                   ₹{data.fee}/min
                 </p>

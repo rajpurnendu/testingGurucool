@@ -15,7 +15,7 @@ const Blogmain = async ({
   searchParams?: { query?: string; page?: string };
 }) => {
   //Get All Blogs from this Action
-  const data = await getAllblogs(1, 50);
+  const data = await getAllblogs(1, 250);
   const data1 = await getAllTrendingblogs();
   // Published Blogs will be show in the browser which filter out all
   const publishedBlog = Array.isArray(data)
@@ -48,7 +48,7 @@ const Blogmain = async ({
               tag.toLowerCase() === filtername.replace("-", "/").toLowerCase()
           )
         );
-  const ITEMS_PER_PAGE: number = 6;
+  const ITEMS_PER_PAGE: number = 12;
 
   let totalPages = Math.ceil(Number(filteredData.length) / ITEMS_PER_PAGE);
   const currentPage = Number(searchParams?.page) || 1;
@@ -79,7 +79,7 @@ leading-7"
           >
             Category Topics
           </h4>
-          {Categories.slice(0, 12).map((text, index) => {
+          {Categories.map((text, index) => {
             return (
               <div
                 key={index}

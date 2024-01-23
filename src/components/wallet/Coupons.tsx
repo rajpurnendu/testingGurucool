@@ -17,6 +17,7 @@ import {
   getAllExpiredCoupons,
 } from "@/lib/data";
 import Link from "next/link";
+import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
 
 const Coupons = ({
   forAmount,
@@ -169,8 +170,12 @@ const Coupons = ({
                         <Link
                           href={
                             forAmount
-                              ? `/wallet/paymentdetails?pmt=${forAmount}&coupon=${coupon?.couponCode}`
-                              : `/wallet/pricelist?coupon=${coupon?.couponCode}`
+                              ? `/wallet/paymentdetails?pmt=${encryptData(
+                                  forAmount
+                                )}&coupon=${encryptData(coupon?.couponCode)}`
+                              : `/wallet/pricelist?coupon=${encryptData(
+                                  coupon?.couponCode
+                                )}`
                           }
                         >
                           <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded md:h-[51px] md:w-[139px] md:rounded-lg">
