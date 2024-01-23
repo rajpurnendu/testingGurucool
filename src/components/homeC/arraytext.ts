@@ -34,7 +34,7 @@ export const card = [
         desc: " Join Aarti and Bhakti collections where you can create a harmonious relationship with Gods with sacred bhajans, aarti, chalisa, stotram, etc.",
         img: aarti,
         btn:"Read More",
-        url:'/call-to-astrologers'
+        url:'/blogs'
     },
     {
         id: 2,
@@ -43,7 +43,7 @@ export const card = [
         subtitle: "Chat consultation with astrologers anytime anywhere",
         img: live,
         btn:"Explore More",
-        url:'/call-to-astrologers'
+        url:"https://play.google.com/store/apps/details?id=com.gurucool&pcampaignid=web_share"
     },
     {
         id: 3,
@@ -52,7 +52,7 @@ export const card = [
         subtitle: "Chat consultation with astrologers anytime anywhere",
         img: gods,
         btn:"Read More",
-        url:'/call-to-astrologers'
+        url:'/blogs'
     },
     {
         id: 4,
@@ -61,7 +61,7 @@ export const card = [
         subtitle: "Chat consultation with astrologers anytime anywhere",
         img: chat,
         btn:'Chat Now',
-        url:'/call-to-astrologers'
+        url:"https://play.google.com/store/apps/details?id=com.gurucool&pcampaignid=web_share"
     },
     // {
     //     id: 5,

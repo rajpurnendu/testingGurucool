@@ -4,6 +4,7 @@ import Speciality from "@/components/consult_page/Speciality";
 import { GET_Spec_Astrologer } from "../../../lib/data";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import ConsultationBanner from "@/components/consultationBanner/ConsultationBanner";
 
 export default async function Page({
   params,
@@ -18,7 +19,9 @@ export default async function Page({
   const loginToken = cookieStore.get("loginToken");
   return (
     <>
-    
+      <div className="flex items-center max-w-[72rem] justify-center mt-16">
+        <ConsultationBanner />
+      </div>
       <Speciality />
       <Searchbar />
       <ConsultCard data={data?.guru.docs} loginToken={loginToken?.value} />

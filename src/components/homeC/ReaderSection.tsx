@@ -2,7 +2,7 @@ import GodCard from "./godCard";
 import { getAllblogs } from "@/lib/data";
 
 const ReaderSection = async () => {
-  const data = await getAllblogs(1, 50);
+  const data = await getAllblogs(2, 4);
 
   return (
     <div className="xl:w-[72rem] m-auto mt-[36px] xl:mt-[3.75rem] w-auto">
@@ -14,8 +14,8 @@ const ReaderSection = async () => {
         </p>
       </div>
 
-      <div className="px-[20px] no-scrollbar flex xl:gap-[30px] xl:overflow-hidden md:overflow-y-hidden overflow-x-scroll gap-[14px] justify-between">
-        {data.slice(4, 8).map((d: any, index: any) => (
+      <div className="px-[20px] md:px-[0px] no-scrollbar flex xl:gap-[30px] xl:overflow-hidden md:overflow-y-hidden overflow-x-scroll gap-[14px] justify-between">
+        {data.slice(0, 4).map((d: any, index: any) => (
           <GodCard key={index} data={d} />
         ))}
       </div>

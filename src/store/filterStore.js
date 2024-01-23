@@ -57,6 +57,7 @@ const useFilterStore = create((set) => ({
   callAvailability: "",
   amount: null,
   callDuration: null,
+  userId: "",
 
   // Function to update the response data
   setResponseData: (data) => {
@@ -79,6 +80,9 @@ const useFilterStore = create((set) => ({
   },
   setCallDuration: (data) => {
     set({ callDuration: data });
+  },
+  setUserId: (data) => {
+    set({ userId: data });
   },
 
   // Function to update a specific filter parameter

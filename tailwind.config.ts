@@ -38,6 +38,9 @@ const config: Config = {
         blink: 'blink 1s linear infinite',
       
       },
+      height: {
+        'screen-62': 'calc(100vh - 62px)',
+      },
     },
   },
   plugins: [

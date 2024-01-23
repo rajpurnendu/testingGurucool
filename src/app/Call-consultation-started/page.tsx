@@ -9,7 +9,7 @@ const CallconsultationStarted = () => {
  
   const cookieStore = cookies();
   const loginToken = cookieStore.get("loginToken") || "";
-  return <div className="mt-16">
+  return <div className="mt-16 h-screen-62">
     <ConsultationStarted loginToken={typeof loginToken === "object" ? loginToken.value : loginToken}  />
   </div>;
 };

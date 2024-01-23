@@ -1,4 +1,4 @@
-import { G_GET_ALL_CONSULT_ASTROLOGERS,G_GET_Trending_BLOGS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS,G_GET_Trending_BLOGS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER, PAYMENT_STATUS } from "./apilinks";
 
 // import { setCookie } from 'cookies-next';
 
@@ -425,3 +425,26 @@ export async function getAllExpiredCoupons(loginToken:string){
 }catch(error){
   throw new Error('Failed to fetch data.');
 }}
+
+export async function getPaymentStatus(paymentID:string){
+
+  try {
+    const response = await fetch(
+      PAYMENT_STATUS(paymentID), { cache: 'no-store' }
+    );
+    // console.log(response)
+    if (response.ok) {
+      const data = await response.json(); 
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+      throw new Error('Failed to fetch Payment Status.');
+  }
+}

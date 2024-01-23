@@ -10,7 +10,7 @@ const handleNavigate = (title: string) => {
 
 const TrendingBogCard = ({ blog }: any) => {
   return (
-    <div className="items-start shadow border border-zinc-200 rounded-[13.97px]  max-w-[376px] flex flex-col p-[13.36px] gap-[11.18px] justify-start">
+    <div className="items-start shadow border  border-zinc-200 rounded-[13.97px]  max-w-[376px] flex flex-col p-[13.36px] gap-[11.18px] justify-start">
       <Link
         href={handleNavigate(blog?.title)}
         className=" overflow-hidden h-[155px] w-[350px] rounded-[6px]"
@@ -25,7 +25,8 @@ const TrendingBogCard = ({ blog }: any) => {
         />
       </Link>
 
-      <p
+      <Link
+        href={handleNavigate(blog?.title)}
         className="text-neutral-800
 text-base
 leading-none
@@ -33,7 +34,7 @@ font-semibold"
       >
         {blog?.title?.slice(0, 20)}...
         {blog?.description?.slice(0, 50)}...
-      </p>
+      </Link>
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center justify-center gap-[5.5px]">
           <div className="rounded-full w-[41px] h-[41px] overflow-hidden flex items-center justify-center bg-black text-white">

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import BlogCards from "@/components/blogs/BlogCards";
 import Pagination from "@/components/ui/pagination";
-import TrendingBogCard from "@/components/blogs/TrendingBogCard";
+import TrendingGod from "@/components/trendingCardCrousel/trendingGod";
 
 const Blogmain = async ({
   params,
@@ -114,14 +114,8 @@ font-semibold"
           >
             Trending Blogs
           </h4>
-          <div className="w-full">
-            <div className="flex items-start px-1 pb-1  w-[100%] gap-4 overflow-x-scroll no-scrollbar">
-              {data1
-                // .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
-                .map((blog: any, index: number) => (
-                  <TrendingBogCard key={index} blog={blog} />
-                ))}
-            </div>
+          <div className="xl:w-[90%] w-full mx-auto flex items-start justify-center">
+            <TrendingGod data1={data1} />
           </div>
           <h4
             className="text-neutral-800

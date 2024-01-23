@@ -1,0 +1,18 @@
+.owl-theme .owl-nav.disabled + .owl-dots{
+    margin-top: 10px !important;
+    display: flex;
+    justify-content: center;
+}
+.owl-dot.active span {
+    width: 18px !important;
+    height:18px !important;
+    opacity: 70;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    background-color: #965EFB !important;
+}
+.owl-dot span {
+    
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+   opacity: 70;
+}
+/* .owl-dots :active */
