@@ -152,7 +152,7 @@ const UserFeedBack = ({
               Consultaion Charge
             </p>
             <p className="text-[rgb(20,164,0)] text-[25px] font-[600]">
-              {amount} ₹
+              {Math.round(amount)} ₹
             </p>
           </div>
           <div className="w-[48%] flex flex-col items-center justify-center">
@@ -160,7 +160,7 @@ const UserFeedBack = ({
               Call Duration
             </p>
             <p className="text-[rgb(20,164,0)] text-[25px] font-[600]">
-              {callDuration} Min
+              {Math.round(callDuration)} Min
             </p>
           </div>
         </div>

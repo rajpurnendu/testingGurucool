@@ -6,7 +6,7 @@ import "./consult.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "next/image";
-import img1 from "../../../public/images/banner/First Free Banner.png";
+import img1 from "../../../public/images/banner/First Free Banner.svg";
 import img2 from "../../../public/images/banner/Web Consult Page Banner.svg";
 
 declare global {
@@ -48,7 +48,7 @@ const ConsultationBanner = () => {
         id="1"
         className="w-full h-[300px] flex items-center justify-center"
       >
-        <Image src={img1} alt="offer" className="w-full h-full" />
+        <Image src={img1} alt="offer" className="w-fit h-full" />
       </a>
       <div
         id="2"
