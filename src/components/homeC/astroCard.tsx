@@ -160,20 +160,20 @@ xl:leading-[20.88px]"
              text-xs
              xl:text-xl
              xl:font-semibold
-             xl:leading-normal
+           
              font-bold
-             leading-[18px]"
+             leading-none"
           >
             {data.rating}
           </p>
           <p
             className="text-neutral-700
-             text-[10px]
+             text-xs
              xl:text-xl
-             xl:font-normal
-             xl:leading-normal
-             font-bold
-             leading-[11px]"
+             xl:font-semi-bold
+             
+             font-semibold
+             leading-none"
           >
             {`(${formatValue(data.astroRatingSum)})`}
           </p>

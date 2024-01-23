@@ -1,6 +1,11 @@
 import Image from "next/image";
 import god from "@/../public/assets/godImg.webp";
 import Link from "next/link";
+const handleNavigate = (title: string) => {
+  const formattedTitle = title.trim().replace(/%/g, "-").replace(/\s+/g, "-");
+  const lowercaseformattedTitle = formattedTitle.toLowerCase();
+  return `/blogs/${lowercaseformattedTitle}/`;
+};
 const GodCard = ({ data }: any) => {
   return (
     <div className="mx-auto rounded-xl md:max-w-[300px] min-w-[201px] min-h-[237px] shadow-lg border border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]">
@@ -57,7 +62,7 @@ opacity-60
          flex  border "
         >
           <Link
-            href={`/blogs`}
+            href={handleNavigate(data?.title)}
             className="text-neutral-800
             text-xs
             xl:font-normal

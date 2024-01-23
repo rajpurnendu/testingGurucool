@@ -7,6 +7,7 @@ import Iconapplycoupon from "../../../public/images/wallet/discount-solid-svgrep
 import { getAllWalletPackages, getUserprofile } from "@/lib/data";
 import clsx from "clsx";
 import Link from "next/link";
+import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
 
 const Walletpackages = ({
   loginToken,
@@ -15,9 +16,6 @@ const Walletpackages = ({
   loginToken: string | undefined;
   coupon: string | undefined;
 }) => {
-  // console.log("====================================");
-  // console.log(coupon);
-  // console.log("====================================");
   const [walletBal, setWalletbal] = useState<number>(0);
   const [firstUser, setFirstUser] = useState<boolean>(false);
 
@@ -134,7 +132,9 @@ const Walletpackages = ({
               <Link
                 href={
                   packages?.[2]?.[1]?.active
-                    ? `/wallet/paymentdetails?pmt=${packages?.[2]?.[1]?.amount}`
+                    ? `/wallet/paymentdetails?pmt=${encryptData(
+                        packages?.[2]?.[1]?.amount.toString()
+                      )}`
                     : ""
                 }
               >
@@ -175,8 +175,12 @@ const Walletpackages = ({
                 href={
                   packagew.active
                     ? coupon
-                      ? `/wallet/paymentdetails?pmt=${packagew?.amount}&coupon=${coupon}`
-                      : `/wallet/paymentdetails?pmt=${packagew?.amount}`
+                      ? `/wallet/paymentdetails?pmt=${encryptData(
+                          packagew?.amount.toString()
+                        )}&coupon=${encryptData(coupon)}`
+                      : `/wallet/paymentdetails?pmt=${encryptData(
+                          packagew?.amount.toString()
+                        )}`
                     : ""
                 }
                 key={index}
@@ -238,8 +242,12 @@ const Walletpackages = ({
                 href={
                   packagew.active
                     ? coupon
-                      ? `/wallet/paymentdetails?pmt=${packagew?.amount}&coupon=${coupon}`
-                      : `/wallet/paymentdetails?pmt=${packagew?.amount}`
+                      ? `/wallet/paymentdetails?pmt=${encryptData(
+                          packagew?.amount.toString()
+                        )}&coupon=${encryptData(coupon)}`
+                      : `/wallet/paymentdetails?pmt=${encryptData(
+                          packagew?.amount.toString()
+                        )}`
                     : ""
                 }
                 key={index}
