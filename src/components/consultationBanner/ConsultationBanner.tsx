@@ -2,12 +2,19 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import "./consult.css";
+// import "" from "jquery";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "next/image";
 import img1 from "../../../public/images/banner/First Free Banner.png";
 import img2 from "../../../public/images/banner/Web Consult Page Banner.svg";
 
+declare global {
+  interface Window {
+    $: JQueryStatic;
+    jQuery: JQueryStatic;
+  }
+}
 var $ = require("jquery");
 if (typeof window !== "undefined") {
   window.$ = window.jQuery = require("jquery");
