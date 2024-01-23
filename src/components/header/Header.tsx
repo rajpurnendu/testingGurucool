@@ -68,12 +68,14 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               <></>
             )}
             {/* <div className="md:w-200 md:h-200 sm:w-150 sm:h-150 w-100 h-100"> */}
-            <Image
-              src={Gurucool_Logo}
-              width={150}
-              height={150}
-              alt="Gurucool"
-            />
+            <Link href={"/"}>
+              <Image
+                src={Gurucool_Logo}
+                width={150}
+                height={150}
+                alt="Gurucool"
+              />
+            </Link>
             {/* </div> */}
           </div>
           <div
