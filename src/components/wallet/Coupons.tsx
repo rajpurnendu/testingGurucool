@@ -153,7 +153,7 @@ const Coupons = ({
                     }}
                   >
                     <div className="h-[100%] w-[100%] flex flex-col justify-between px-5 py-2 md:px-8 md:py-4">
-                      <p className=" text-[14px] font-semibold md:text-[26px]">
+                      <p className=" text-[10px] font-semibold md:text-[22px]">
                         {coupon?.offerText1}
                       </p>
                       <div className="flex justify-between items-center">
@@ -217,7 +217,7 @@ const Coupons = ({
                     }}
                   >
                     <div className="h-[100%] w-[100%] flex flex-col justify-between px-5 py-2 md:px-8 md:py-4">
-                      <p className=" text-[14px] font-semibold md:text-[26px] text-[#707070]">
+                      <p className=" text-[10px] font-semibold md:text-[22px] text-[#707070]">
                         {coupon?.offerText1}
                       </p>
                       <div className="flex justify-between items-center">

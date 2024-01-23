@@ -278,7 +278,11 @@ const Paymentdetailscomponent = ({
                     <p className="text-[14px] font-normal pl-3 text-green-500 flex gap-3 md:text-[18px]">
                       {data[1]?.offerText}
                       <Image
-                        src={Iconapplycoupon}
+                        src={
+                          data?.[0]?.couponType === "Cashback"
+                            ? Cashbackicon
+                            : Iconapplycoupon
+                        }
                         height={20}
                         width={20}
                         alt="Discount Icon"

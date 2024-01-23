@@ -91,8 +91,8 @@ const Walletpackages = ({
         </div>
         {/* Note  */}
         <p className="w-[95%] m-auto text-center text-[12px] font-medium text-gray-500 mt-4 mb-8 md:text-[20px] md:font-normal">
-          <strong>NOTE:</strong>Minimum wallet balance 5 minute required to
-          start chat please recharge your wallet
+          <strong className="text-black">NOTE:</strong>Minimum wallet balance 5
+          minute required to start chat please recharge your wallet
         </p>
         {/* All Coupons Section  */}
         <div className="w-full h-[50px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center mb-4 md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl md:w-[80%] md:mt-[48px]">
@@ -204,9 +204,12 @@ const Walletpackages = ({
                   }}
                 >
                   <p
-                    className={clsx("text-[14px] md:text-[18px]", {
-                      "text-white": packagew?.highlight,
-                    })}
+                    className={clsx(
+                      "text-[14px] md:text-[18px] md:font-semibold",
+                      {
+                        "text-white": packagew?.highlight,
+                      }
+                    )}
                   >
                     {packagew?.currency}
                     {packagew?.amount}
@@ -271,9 +274,12 @@ const Walletpackages = ({
                   }}
                 >
                   <p
-                    className={clsx("text-[14px] md:text-[18px]", {
-                      "text-white": packagew?.highlight,
-                    })}
+                    className={clsx(
+                      "text-[14px] md:text-[18px] md:font-semibold",
+                      {
+                        "text-white": packagew?.highlight,
+                      }
+                    )}
                   >
                     {packagew?.currency}
                     {packagew?.amount}
