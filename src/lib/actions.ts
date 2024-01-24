@@ -49,7 +49,7 @@ export async function verifyOtp(requestData: {phone: string, userOTP: string }):
 
     const result = await response.json();
     // console.log(result);
-    setCookie('loginToken', result?.token, { cookies, secure: true, httpOnly: true, sameSite: 'strict',maxAge: 60*60*24*15 });
+    setCookie('loginToken', result?.token, { cookies, secure: true, httpOnly: true, sameSite: 'none',maxAge: 60*60*24*15 });
     setCookie('phone', requestData.phone, { cookies});
     return result;
   } catch (error) {
@@ -95,7 +95,7 @@ export async function registerNewUser(requestData: {
     }
    
     const data=await response.json();
-    setCookie('loginToken', data?.token, { cookies, secure: true, httpOnly: true, sameSite: 'strict',maxAge: 60*60*24 });
+    setCookie('loginToken', data?.token, { cookies, secure: true, httpOnly: true, sameSite: 'none',maxAge: 60*60*24 });
 
     return data;
   } catch (error) {
@@ -108,15 +108,22 @@ export async function updateUser(
   formData: FormData,
 ) {
   try {
-    const response=await fetch(P_PUT_USER_DETAILS(formData.get("firstName") as string,formData.get("lastName") as string,formData.get("gender") as string,formData.get("email") as string),{
+    const avatarFile = formData.get("file") as File;
+    const hasNewAvatar = avatarFile && avatarFile.size > 0;
+    if (!hasNewAvatar) {
+      // Remove "avatar" field from FormData
+      formData.delete("file");
+    }
+    const response=await fetch(P_PUT_USER_DETAILS(),{
       method:'POST',
       headers: {
         Authorization: `Bearer ${loginToken}`,
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
       },
+      body:formData,
+      // body:hasNewAvatar?formData:JSON.stringify({firstName:formData.get("firstName") as string,lastName:formData.get("lastName") as string,gender:formData.get("gender") as string,email:formData.get("email") as string}),
       cache:'no-store'
     })
-
     if(!response.ok){
       throw new Error("Network response was not ok!!");
     }

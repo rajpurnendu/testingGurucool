@@ -35,8 +35,8 @@ export const GET_HOMEPAGE_ASTROLOGERS = (queryParams:string):string => {
 
 export const G_GET_ALL_CONSULT_ASTROLOGERS = BASE_URL + `guru/astrologersDetails`;
 
-export const P_PUT_USER_DETAILS = (firstName:string, lastName:string, gender:string, email:string|undefined) =>
-  `${BASE_URL}user/editProfile?firstName=${firstName}&lastName=${lastName}&gender=${gender}&email=${email}`;
+export const P_PUT_USER_DETAILS = () =>
+  `${BASE_URL}user/editProfile`;
 
 
 export const GET_ALL_FOLLOWING_ASTROLOGERS=BASE_URL+"user/getUserFollowing";

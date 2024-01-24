@@ -15,6 +15,21 @@ const Displayeditform = ({
       {/* 1  */}
       <div className="flex flex-col items-start">
         {/* Flex Input Section  */}
+        {/* Image Section  */}
+        <div className="flex items-center flex-col w-[100%]">
+          <p className="text-[11px] w-[270px] mb-[1px] md:text-[13px] md:w-[370px] text-left">
+            Select Your Image(Image should be less than 1024kb)
+          </p>
+          <div className="w-[270px] md:w-[370px] flex justify-center">
+            <input
+              type="file"
+              name="file"
+              placeholder="Choose Your Image"
+              className="m-auto pl-0 pr-0"
+              accept="image/*"
+            />
+          </div>
+        </div>
         {/* 1 */}
         <div className="flex items-center flex-col w-[100%]">
           <p className="text-[11px] w-[270px] text-left mb-[1px] md:text-[13px] md:w-[370px]">
