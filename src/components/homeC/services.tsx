@@ -17,9 +17,9 @@ const Services = () => {
   return (
     <div className=" w-auto xl:w-[72rem] mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="px-[20px]">
-        <h1 className="text-center xl:text-[2.125rem] text-base font-[500] xl:mb-[20px]">
+        <h2 className="text-center xl:text-[2.125rem] text-base font-[500] xl:mb-[20px]">
           Services
-        </h1>
+        </h2>
         <p className="text-center xl:leading-6  text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-{400]">
           We provide all astrology-based services here at Gurucool, whether
           astrological consultations, gods and devotion, or blogs.
@@ -46,7 +46,7 @@ const Services = () => {
             </p>
           </div>
           <Link href={cards[0].url}>
-            <div className="xl:p-4 p-[2.83px] md:p-4 bg-emerald-500 justify-center  border border-transparent items-center gap-2.5 inline-flex hover:border-black">
+            <div className="xl:p-4 p-[2.83px] md:p-4 bg-emerald-500 justify-center   items-center gap-2.5 inline-flex hover:shadow-lg transition duration-300 ease-in-out">
               <p className="text-right text-white text-[9.27px] md:text-lg xl:text-lg font-semibold leading-3">
                 {cards[0].btn}
               </p>

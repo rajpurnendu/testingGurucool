@@ -11,8 +11,8 @@ const handleNavigate = (title: string) => {
 const BlogCards = ({ blog }: any) => {
   // console.log(blog);
   return (
-    <div className="max-w-[370px] h-fit border border-zinc-200 p-[4.18px] bg-white rounded-[6.96px] shadow flex  justify-start items-start gap-[6.26px]">
-      <div className="flex flex-col gap-[9.6px] md:gap-[6.26px] items-start justify-start">
+    <div className="max-w-[391px] h-fit border border-zinc-200  bg-white rounded-[6.96px] shadow flex  justify-start items-start gap-[6.26px]">
+      <div className="p-[4.18px] flex flex-col gap-[9.6px] md:gap-[6.26px] items-start justify-start">
         <div className="flex justify-center items-center gap-[8.35px]">
           <div className="w-[29px] h-[29px] rounded-full text-white bg-[#965efb] flex justify-center items-center">
             {blog?.author?.firstName[0]}
@@ -44,17 +44,18 @@ md:leading-[13.92px]"
           </div>
         </div>
         <div className="md:w-[217px] w-[177px] h-[95px]">
-        <Link
-        href={handleNavigate(blog?.title)}
+          <Link
+            href={handleNavigate(blog?.title)}
             className="text-neutral-800
 md:text-sm
 text-xs
 leading-[15px]
 font-semibold
+tracking-tighter
 md:leading-tight"
           >
-            {blog?.title?.slice(0, 25)}...
-            {blog?.description?.slice(0, 50)}...
+            {/* {blog?.title?.slice(0, 25)}... */}
+            {blog?.description?.slice(0, 75)}...
           </Link>
         </div>
         {blog?.tags?.map((tag: string, index: number) => (
@@ -70,16 +71,18 @@ md:leading-tight"
 
       <Link
         href={handleNavigate(blog?.title)}
-        className="rounded-[6.96px] overflow-hidden shadow w-[135px] md:w-[208px] flex"
+        className="rounded-[6.96px]   overflow-hidden shadow w-[135px] h-full md:w-[208px] flex"
       >
-        <Image
-          className="w-full h-[165px] object-cover"
-          width={500}
-          height={500}
-          src={blog?.titleImage?.url}
-          alt="Image Blog"
-          priority={true}
-        />
+        <div className="w-full h-[175px] overflow-hidden">
+          <Image
+            className="w-full h-full object-cover"
+            width={500}
+            height={500}
+            src={blog?.titleImage?.url}
+            alt="Image Blog"
+            priority={true}
+          />
+        </div>
       </Link>
     </div>
   );

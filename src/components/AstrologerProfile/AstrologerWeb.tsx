@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
+import { IoCall } from "react-icons/io5";
+import useFilterStore from "@/store/filterStore";
 import { Get_ASTROLOGER_FEEDBACK } from "@/lib/data";
+import { redirect, useRouter } from "next/navigation";
+import { getUserprofile } from "@/lib/data";
 import call2 from "../../../public/assets/AstrologerProfileIcons/call2.svg";
 import checkicon from "../../../public/assets/AstrologerProfileIcons/check.png";
 import star from "../../../public/assets/AstrologerProfileIcons/Star.webp";
@@ -23,6 +27,9 @@ import star3 from "../../../public/assets/AstrologerProfileIcons/start3.webp";
 import Link from "next/link";
 import AstroCard from "../homeC/astroCard";
 import { FollowAstro, UnFollowAstro } from "@/lib/actions";
+import ConsultationModalContent from "../consult_page/ConsultationModalContent";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import Modal from "../ReusableModal/ReusableModal";
 
 const AstrologerWeb = ({
   data,
@@ -32,6 +39,216 @@ const AstrologerWeb = ({
   similar,
   isFollowing,
 }: any) => {
+  //
+  type UserDetails = {
+    consultationCount?: number;
+    wallet?: number;
+    // Add other properties as needed
+  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const increment = () => {
+    // Ensure not going beyond the array's length
+    if (currentIndex + 12 < astroData.length) {
+      setCurrentIndex(currentIndex + 12);
+    }
+  };
+
+  const decrement = () => {
+    // Ensure not going below 0
+    if (currentIndex - 12 >= 0) {
+      setCurrentIndex(currentIndex - 12);
+    }
+  };
+  const [userDetails, setUserDetails] = useState<UserDetails>();
+  const [insufficientBalance, setInsufficientBalance] = useState(false);
+  // const [callAvailability, setCallAvailability] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [astroData, setAstroData] = useState([]);
+  const { responseData, setResponseData } = useFilterStore();
+  const router = useRouter();
+  useEffect(() => {
+    if (responseData?.guru?.docs.length) {
+      setAstroData(responseData?.guru?.docs);
+    } else {
+      setAstroData(data); // Make sure 'data' is defined or imported
+    }
+    // eslint-disable-next-line
+  }, [responseData]);
+  // const displayedData = astroData.slice(0, currentIndex + 12);
+  // console.log(displayedData);
+
+  function capitalizeFirstLetter(str: string) {
+    // converting first letter to uppercase
+    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+
+    return capitalized;
+  }
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
+  const isMobile = window.innerWidth < 768;
+
+  const {
+    astroDetails,
+    setAstroDetails,
+    setMinCallDuration,
+    minimumCallDuration,
+    setCallPurchasedId,
+    callAvailability,
+    setCallAvailability,
+  } = useFilterStore();
+
+  useEffect(() => {
+    const userProfile = async () => {
+      if (loginToken) {
+        let data = await getUserprofile(loginToken);
+        setUserDetails(data.userDetails);
+        console.log(data);
+      }
+    };
+
+    userProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(userDetails);
+  const [callBtnClicked, setCallBtnClicked] = useState(false);
+  const callClickedHandler = (guruToken: string) => {
+    // userProfile();
+    localStorage.setItem("guruToken", guruToken);
+    fetch(
+      `https://prod.gurucool.life/api/v1/guru/getSingleGuru?guruId=${guruToken}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAstroDetails(data.guru);
+        setCallBtnClicked(true);
+        setCallAvailability(data?.guru?.callAvailability);
+        // onOpen();
+        openModal();
+      })
+      .catch((error) => {
+        // Handle error here
+        console.error("Error fetching data:", error);
+      });
+  };
+  console.log(astroDetails);
+
+  const fee = getPrice(userDetails, astroDetails);
+  console.log(fee);
+  function getPrice(userDetails: any, astroDetails: any) {
+    if (userDetails?.consultationCount === 0) {
+      return astroDetails?.firstOfferPrice?.national?.fee;
+    } else {
+      return astroDetails?.fee;
+    }
+  }
+  const userWalletBalance: any = userDetails && userDetails?.wallet;
+  // console.log(userWalletBalance);
+  const minCallDuration = Math.floor(userWalletBalance / fee);
+  console.log(typeof minCallDuration);
+
+  useEffect(() => {
+    if (fee > 0) {
+      if (userWalletBalance >= fee * 5) {
+        setInsufficientBalance(false);
+        setMinCallDuration(minCallDuration);
+        // // //console.log("minCallDuration",minCallDuration);
+      } else {
+        setInsufficientBalance(true);
+      }
+    } else {
+      setInsufficientBalance(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [astroDetails, userDetails]);
+
+  // const guruToken: string | null = localStorage.getItem("guruToken");
+  const guruToken: string = localStorage.getItem("guruToken") || "";
+  useEffect(() => {
+    // console.log("fetchastrologerdata")
+    const fetchDataforAstrologer = async () => {
+      try {
+        const response = await fetch(
+          G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
+        );
+
+        if (response.ok) {
+          const responseData = await response.json();
+          // console.log(responseData)
+          setCallAvailability(responseData?.guru?.callAvailability);
+        } else {
+          Error("Request failed");
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchDataforAstrologer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const startConsultationHandler = (e: any) => {
+    e.preventDefault();
+    const startConsultationUrlV1 =
+      "https://prod.gurucool.life/api/v3/consultations/initiateCall";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    };
+    const requestData = {
+      astrologerID: astroDetails.user._id,
+      minutes: minCallDuration,
+    };
+    console.log("Consultation Started......");
+
+    const startConsultation = async () => {
+      //console.log(requestData);
+      try {
+        const response = await fetch(startConsultationUrlV1, {
+          method: "POST",
+          headers: {
+            ...config.headers,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        });
+        // //console.log(response);
+        if (response.status === 200) {
+          console.log("Suc......................");
+          const responseData = await response.json();
+          localStorage.setItem("purchaseId", responseData.purchaseId);
+
+          setCallPurchasedId(responseData.purchaseId);
+          // navigate("/callconsultationstarted");
+          console.log(responseData);
+          // redirect("/Call-consultation-started");
+          router.push("/call-consultation-started");
+          // ('/dashboard', { scroll: false })
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+      } catch (error: any) {
+        setErrorMsg(error.message);
+        //console.log(error);
+      }
+    };
+    startConsultation();
+  };
+  // console.log(astroData);
+  //
+
   const [descLength, setdescLength] = useState(200);
   const [imgLength, setimgLength] = useState(4);
   const [Sort, setSort] = useState("recent");
@@ -268,12 +485,19 @@ text-sm
             
               leading-none"
               >
-                ₹ 24/min
+                ₹{data.fee}/min
               </p>
             </div>
           </div>
           {data.callAvailability === "online" ? (
-            <div className="cursor-pointer hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-emerald-500 rounded-tl-[6.89px] rounded-bl-[6.89px]">
+            <div
+              onClick={() => {
+                if (data?.callAvailability === "online") {
+                  callClickedHandler(data?.user?.guru);
+                }
+              }}
+              className="cursor-pointer hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-emerald-500 rounded-tl-[6.89px] rounded-bl-[6.89px]"
+            >
               <Image
                 src={call}
                 className="text-white w-25 h-25 lg:w-29 lg:h-29"
@@ -654,6 +878,91 @@ font-semibold"
           ))}
         </div>
       </div>
+      <Modal
+        size={isMobile ? "xs" : "lg"}
+        show={showModal}
+        onClose={closeModal}
+      >
+        <div className="w-full flex flex-col items-center gap-4 md:gap-8 ">
+          <ConsultationModalContent
+            astroDetails={astroDetails}
+            fee={fee}
+            minCallDuration={minCallDuration}
+            userWalletBalance={userWalletBalance}
+          />
+          {/* <InsufficientBalanceContent/> */}
+          <div className="flex justify-center gap-4">
+            <button className="w-[5.5rem] md:w-[13.375rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-4 px-[0.46rem] md:px-[1.38rem] rounded md:rounded-xl bg-[#26C884] text-white text-[0.75rem] md:text-[1.625rem] font-semibold leading-tight ">
+              Recharge
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                // width="40"
+                // height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                className="w-[0.83rem] md:w-[2.5rem] md:h-[2.5rem] h-[0.83rem]"
+              >
+                <path
+                  d="M25 13.75H37.5V11.25C37.5 9.5924 36.8415 8.00269 35.6694 6.83058C34.4973 5.65848 32.9076 5 31.25 5H8.75C7.0924 5 5.50269 5.65848 4.33058 6.83058C3.15848 8.00269 2.5 9.5924 2.5 11.25V28.75C2.5 30.4076 3.15848 31.9973 4.33058 33.1694C5.50269 34.3415 7.0924 35 8.75 35H31.25C32.9076 35 34.4973 34.3415 35.6694 33.1694C36.8415 31.9973 37.5 30.4076 37.5 28.75V26.25H25C23.3424 26.25 21.7527 25.5915 20.5806 24.4194C19.4085 23.2473 18.75 21.6576 18.75 20C18.75 18.3424 19.4085 16.7527 20.5806 15.5806C21.7527 14.4085 23.3424 13.75 25 13.75ZM25 16.25C24.0054 16.25 23.0516 16.6451 22.3483 17.3483C21.6451 18.0516 21.25 19.0054 21.25 20C21.25 20.9946 21.6451 21.9484 22.3483 22.6517C23.0516 23.3549 24.0054 23.75 25 23.75H37.5V16.25H25ZM25 22.5C24.5055 22.5 24.0222 22.3534 23.6111 22.0787C23.2 21.804 22.8795 21.4135 22.6903 20.9567C22.5011 20.4999 22.4516 19.9972 22.548 19.5123C22.6445 19.0273 22.8826 18.5819 23.2322 18.2322C23.5819 17.8826 24.0273 17.6445 24.5123 17.548C24.9972 17.4516 25.4999 17.5011 25.9567 17.6903C26.4135 17.8795 26.804 18.2 27.0787 18.6111C27.3534 19.0222 27.5 19.5055 27.5 20C27.5 20.663 27.2366 21.2989 26.7678 21.7678C26.2989 22.2366 25.663 22.5 25 22.5Z"
+                  fill="#FEFEFE"
+                />
+                <path
+                  d="M37.4998 11.25V13.75H33.7498C33.4154 12.0331 32.8433 10.3713 32.0498 8.8125C31.3656 7.46927 30.5265 6.21071 29.5498 5.0625H31.2498C32.8966 5.06242 34.4769 5.71231 35.6473 6.87093C36.8176 8.02955 37.4833 9.60325 37.4998 11.25Z"
+                  fill="#FEFEFE"
+                />
+                <path
+                  d="M34.0874 16.25H37.4999V23.75H33.0374C33.8861 21.3455 34.2432 18.7951 34.0874 16.25Z"
+                  fill="#FEFEFE"
+                />
+                <path
+                  d="M31.9374 26.25H37.4999V28.75C37.4999 30.4076 36.8414 31.9973 35.6693 33.1694C34.4972 34.3415 32.9075 35 31.2499 35H22.3374C22.7999 34.8125 23.2624 34.6 23.7124 34.375C27.237 32.5944 30.1138 29.7525 31.9374 26.25Z"
+                  fill="#FEFEFE"
+                />
+              </svg>
+            </button>
+            <button
+              className={`w-[5.5rem] md:w-[13.375rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-4 px-[0.46rem] md:px-[1.38rem] rounded md:rounded-xl ${
+                astroDetails?.callAvailability === "online"
+                  ? "cursor-pointer"
+                  : "cursor-no-drop"
+              }  ${
+                astroDetails?.callAvailability === "online"
+                  ? "bg-[#26C884]"
+                  : "bg-white"
+              } ${
+                astroDetails?.callAvailability === "online"
+                  ? "border-none"
+                  : "border border-[#3A3938]"
+              } ${
+                astroDetails?.callAvailability === "online"
+                  ? " text-white"
+                  : astroDetails?.callAvailability === "busy"
+                  ? "text-red-500"
+                  : "text-[#707070]"
+              } text-[0.75rem] md:text-[1.625rem] font-semibold leading-tight`}
+              // onClick={closeModal}
+              onClick={(e) => {
+                if (callAvailability === "online") {
+                  startConsultationHandler(e);
+                }
+              }}
+            >
+              {callAvailability === "online" && "Call"}
+              {callAvailability === "busy" && "Busy"}
+              {callAvailability === "offline" && "Offline"}
+              <IoCall
+                className={`text-[0.8rem] md:text-[2.5rem] ${
+                  astroDetails?.callAvailability === "online"
+                    ? " text-white"
+                    : astroDetails?.callAvailability === "busy"
+                    ? "text-red-500"
+                    : "text-[#707070]"
+                } `}
+              />
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

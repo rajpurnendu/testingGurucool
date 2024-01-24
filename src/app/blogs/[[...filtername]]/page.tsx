@@ -69,7 +69,7 @@ const Blogmain = async ({
         {/* <div> */}
         {/* Filter Section  */}
         <div className="  flex md:flex-col h-fit md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
-          <h4
+          <h1
             className="text-neutral-800
 text-[22px]
 hidden
@@ -78,7 +78,7 @@ font-semibold
 leading-7"
           >
             Category Topics
-          </h4>
+          </h1>
           {Categories.map((text, index) => {
             return (
               <div
@@ -107,23 +107,23 @@ leading-7"
 
         {/* Blog Card UI */}
         <div className="flex flex-col gap-5 items-start overflow-hidden justify-start">
-          <h4
+          <h2
             className="text-neutral-800
 text-[26px]
 font-semibold"
           >
             Trending Blogs
-          </h4>
+          </h2>
           <div className="xl:w-[90%] w-full mx-auto flex items-start justify-center">
             <TrendingGod data1={data1} />
           </div>
-          <h4
+          <h2
             className="text-neutral-800
 text-[26px]
 font-semibold"
           >
             Related Blog
-          </h4>
+          </h2>
           <div className="flex flex-wrap gap-x-[0px] xl:gap-x-[97px] gap-y-[40px] w-fit justify-center items-start">
             {filteredData
               .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)

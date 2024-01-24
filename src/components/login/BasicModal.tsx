@@ -72,7 +72,6 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
           isInternational: false,
         })
           .then((result) => {
-           
             if (result?.success) {
               setOtpsendmsg(result?.message);
               setOtpsend(true);
@@ -109,7 +108,6 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
         .then((result) => {
           // console.log(result);
           if (result?.success) {
-           
             //TODO: New User Logic and OLd use Logic here
             if (result.newUser) {
               //TODO: New User Logic
@@ -202,7 +200,9 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
                                 onChange={setOtp}
                                 numInputs={6}
                                 renderSeparator={<span></span>}
-                                renderInput={(props) => <input {...props} />}
+                                renderInput={(props) => (
+                                  <input {...props} inputMode="numeric" />
+                                )}
                                 containerStyle="login-otp-container"
                                 inputStyle="login-otp-input"
                               />

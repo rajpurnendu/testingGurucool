@@ -70,36 +70,42 @@ const Coupons = ({
       <div className="md:w-[614px] m-auto">
         {/* Tab Section  */}
         <div className="flex justify-between w-[90%] m-auto">
-          <button
-            className={clsx("text-[16px] font-semibold text-[#707070]", {
-              "border-b-[6px] border-[#965EFB] pb-1":
-                selectedtab === "Available",
-            })}
+          <h2
+            className={clsx(
+              "text-[16px] cursor-pointer font-semibold text-[#707070]",
+              {
+                "border-b-[6px] border-[#965EFB] pb-1":
+                  selectedtab === "Available",
+              }
+            )}
             onClick={() => {
               setSelectedtab("Available");
             }}
           >
             Available
-          </button>
+          </h2>
           <div className=" border-r-[2px]" />
-          <button
-            className={clsx("text-[16px] font-semibold text-[#707070]", {
-              "border-b-[6px] border-[#965EFB] pb-1":
-                selectedtab === "Used/Expire",
-            })}
+          <h2
+            className={clsx(
+              "text-[16px] cursor-pointer font-semibold text-[#707070]",
+              {
+                "border-b-[6px] border-[#965EFB] pb-1":
+                  selectedtab === "Used/Expire",
+              }
+            )}
             onClick={() => {
               setSelectedtab("Used/Expire");
             }}
           >
             Used/Expire
-          </button>
+          </h2>
         </div>
 
         {/* Coupon Code Input Section  */}
         <div className="mt-[20px] w-[95%] m-auto">
-          <h5 className="text-[16px] font-semibold mb-5 md:text-[26px]">
+          <h1 className="text-[16px] font-semibold mb-5 md:text-[26px]">
             Have a Code?
-          </h5>
+          </h1>
           <div
             className="w-full h-[55px] p-2 flex justify-between items-center rounded-lg bg-white md:h-[98px]"
             style={{

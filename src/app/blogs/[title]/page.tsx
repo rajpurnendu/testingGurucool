@@ -39,7 +39,7 @@ const Blogsinglepage = async ({ params }: { params: { title: string } }) => {
               height={50}
             />
             <div>
-              <p className="leading-normal text-[16px] font-normal mb-[2px] text-[#2b2b2b] opacity-40 md:mb-[5px]">
+              <h2 className="leading-normal text-[16px] font-normal mb-[2px] text-[#2b2b2b] opacity-40 md:mb-[5px]">
                 {Blog?.authorName?.charAt(0).toUpperCase() +
                   Blog?.authorName?.slice(1).toLowerCase()}{" "}
                 <span className="leading-normal text-[16px] font-normal text-[#2b2b2b] mb-0">
@@ -49,10 +49,10 @@ const Blogsinglepage = async ({ params }: { params: { title: string } }) => {
                       Blog.category.slice(1)
                     : undefined}
                 </span>
-              </p>
-              <p className="leading-normal text-[16px] font-normal mb-[2px] text-[#2b2b2b] opacity-40 md:mb-[5px]">
+              </h2>
+              <h2 className="leading-normal text-[16px] font-normal mb-[2px] text-[#2b2b2b] opacity-40 md:mb-[5px]">
                 {convertIst(Blog?.date)}
-              </p>
+              </h2>
             </div>
           </div>
         </div>

@@ -57,9 +57,9 @@ const Displayuserinfo = ({ userDetails }: { userDetails: any }) => {
               <span className="ml-[7px]">Gender</span>
             </span>
           </h5>
-          <h5 className="text-[14px] font-medium text-[#3f3f3f] mb-0 md:text-[16px]">
+          <h2 className="text-[14px] font-medium text-[#3f3f3f] mb-0 md:text-[16px]">
             {userDetails?.user?.gender}
-          </h5>
+          </h2>
         </div>
         {/* 2  */}
         <div className="flex justify-between w-80 md:w-[468px] md:mb-6">

@@ -7,7 +7,6 @@ import Mostchoice from "../../../public/assets/Mostchoice.svg";
 import { BsFillStarFill } from "react-icons/bs";
 import { FaBriefcase } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
-
 import Spec from "../../../public/assets/Spec.svg";
 import useFilterStore from "@/store/filterStore";
 import Modal from "../ReusableModal/ReusableModal";
@@ -37,7 +36,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
   //   setAstroData(data);
   // }
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (responseData?.guru?.docs.length) {
@@ -119,7 +118,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
     };
 
     userProfile();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(userDetails);
 
@@ -139,7 +138,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
       .then((data) => {
         setAstroDetails(data.guru);
         setCallBtnClicked(true);
-        setCallAvailability(data?.guru?.callAvailability)
+        setCallAvailability(data?.guru?.callAvailability);
         // onOpen();
         openModal();
       })
@@ -159,7 +158,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
       return astroDetails?.fee;
     }
   }
-  const userWalletBalance:any = userDetails && userDetails?.wallet;
+  const userWalletBalance: any = userDetails && userDetails?.wallet;
   // console.log(userWalletBalance);
   const minCallDuration = Math.floor(userWalletBalance / fee);
   console.log(typeof minCallDuration);
@@ -176,7 +175,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
     } else {
       setInsufficientBalance(true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [astroDetails, userDetails]);
 
   // const guruToken: string | null = localStorage.getItem("guruToken");
@@ -202,7 +201,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
     };
 
     fetchDataforAstrologer();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startConsultationHandler = (e: any) => {
@@ -243,7 +242,6 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
           // redirect("/Call-consultation-started");
           router.push("/call-consultation-started");
           // ('/dashboard', { scroll: false })
-          
         } else {
           const errorData = await response.json();
           throw new Error(errorData.message);
@@ -429,7 +427,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
             {/* right section of the card */}
             <div className="flex flex-col items-center justify-between w-[65%] h-full">
               <div className="flex flex-col items-baseline justify-start w-full h-[5.31rem] pl-[0.5rem] pt-[0.25rem]">
-                <Link href={`/blogs`}>
+                <Link href={`/astrologers/${datas.userName}`}>
                   <h5 className="text-[0.875rem] font-semibold text-black mb-[0.25rem] text-left">
                     {` ${datas?.user.firstName} ${datas?.user.lastName}`}
                   </h5>
@@ -530,12 +528,12 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
           </button>
         ) : null}
         {!(currentIndex + 12 >= astroData.length) ? (
-          <button
+          <h2
             onClick={increment}
-            className="w-fit bg-[#965EFB] rounded-lg text-white p-2"
+            className="w-fit cursor-pointer bg-[#965EFB] rounded-lg text-white p-2"
           >
             See More
-          </button>
+          </h2>
         ) : null}
       </div>
     </div>

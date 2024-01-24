@@ -6,7 +6,7 @@ const ContentSection = () => {
       className=" m-auto xl:mt-[3.75rem] mt-[32px] xl:px-[25px] md:px-[23px]
     xl:pb-[60px] pb-[32px]"
     >
-      <h1
+      <h3
         className="text-center w-[86px] mx-auto xl:w-full text-neutral-700
 text-base
 xl:text-xl
@@ -17,7 +17,7 @@ xl:mb-[24px]
 "
       >
         What is astrology ?
-      </h1>
+      </h3>
       <p
         className="text-neutral-700
         w-[300px]

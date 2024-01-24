@@ -64,12 +64,12 @@ const Walletpackages = ({
         <div className="w-[95%] h-[12vh] m-auto bg-[#965efbb2] rounded-3xl md:w-[597px] md:h-[176px] flex justify-between">
           {/* 1  */}
           <div className="p-4 flex flex-col justify-between h-[100%] w-[50%] md:w-[70%] md:justify-evenly md:pl-8">
-            <p className="w-[100%] text-white text-[14px] font-medium md:text-[34px]">
+            <h1 className="w-[100%] text-white text-[14px] font-medium md:text-[34px]">
               Available Balance
-            </p>
-            <p className="w-[100%] text-white text-[22px] font-semibold md:text-[34px]">
+            </h1>
+            <h2 className="w-[100%] text-white text-[22px] font-semibold md:text-[34px]">
               ₹ {Math.floor(walletBal)}
-            </p>
+            </h2>
           </div>
           {/* 2 */}
           <div className="px-4 flex flex-col justify-center items-end h-[100%] w-[50%]">
@@ -90,10 +90,10 @@ const Walletpackages = ({
           </div>
         </div>
         {/* Note  */}
-        <p className="w-[95%] m-auto text-center text-[12px] font-medium text-gray-500 mt-4 mb-8 md:text-[20px] md:font-normal">
+        <h2 className="w-[95%] m-auto text-center text-[12px] font-medium text-gray-500 mt-4 mb-8 md:text-[20px] md:font-normal">
           <strong className="text-black">NOTE:</strong>Minimum wallet balance 5
           minute required to start chat please recharge your wallet
-        </p>
+        </h2>
         {/* All Coupons Section  */}
         <div className="w-full h-[50px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center mb-4 md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl md:w-[80%] md:mt-[48px]">
           <div className="flex items-center gap-[16px] md:gap-[39px]">

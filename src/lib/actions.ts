@@ -91,7 +91,7 @@ export async function registerNewUser(requestData: {
     })
 
     if(!response.ok){
-      throw new Error("Network response was not ok!!");
+      throw new Error("Network response was not ok!!",await response.json());
     }
    
     const data=await response.json();

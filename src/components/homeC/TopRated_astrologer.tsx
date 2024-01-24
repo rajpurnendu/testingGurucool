@@ -36,9 +36,9 @@ const TopRated_astrologer = async ({
   return (
     <div className="xl:w-[72rem] w-auto mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="p-[20px]">
-        <h1 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
+        <h3 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
           Top-rated astrologers
-        </h1>
+        </h3>
         <p className="text-center text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-normal">
           Choose top-rated astrologers from Gurukool and get real solutions to
           all your challenges and problems.

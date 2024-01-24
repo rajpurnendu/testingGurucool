@@ -10,7 +10,10 @@ function formatValue(value: number) {
 const AstroCard = ({ data }: { data: any }) => {
   // console.log();
   return (
-    <div className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow xl:shadow-lg xl:min-h-[400.10px] relative bg-white rounded-lg">
+    <Link
+      href={`/astrologers/${data?.userName}`}
+      className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow hover:xl:shadow-lg transition duration-300 ease-in-out xl:min-h-[400.10px] relative bg-white rounded-lg"
+    >
       <Image
         width="200"
         height="200"
@@ -18,10 +21,7 @@ const AstroCard = ({ data }: { data: any }) => {
         src={data?.backgroundBanner?.image_Url}
         alt="banner"
       />
-      <Link
-        href={`/astrologers/${data?.userName}`}
-        className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute"
-      >
+      <div className="w-[114.31px] h-[114.31px] xl:left-[80px] left-[30%] top-[20%] xl:top-[57.17px] absolute">
         <div className="xl:w-[116.01px] w-[75px] h-[75px] xl:h-[116.01px] xl:left-[-1.55px]  xl:top-0 absolute bg-zinc-300 rounded-full" />
 
         <Image
@@ -42,7 +42,7 @@ const AstroCard = ({ data }: { data: any }) => {
             <div className="w-[18.54px] h-[18.54px] xl:left-[86.51px] left-[45%] top-[-2%] xl:top-[3.08px] absolute bg-red-500 rounded-full" />
           </div>
         )}
-      </Link>
+      </div>
 
       {data?.mostTrusted == true ? (
         <div>
@@ -212,13 +212,14 @@ xl:text-xl
 xl:font-semibold
 xl:leading-normal
 font-bold
+w-fit
 leading-[12px]"
           >
             {data.experience} Yrs
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

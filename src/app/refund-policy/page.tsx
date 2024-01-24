@@ -1,10 +1,10 @@
 const page = () => {
   return (
     <div className="max-w-[72rem] mx-auto px-3 mt-[90px]">
-      <h2 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
+      <h1 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
         Refund Policy
-      </h2>
-      <p className="mb-[2rem]">
+      </h1>
+      <h2 className="mb-[2rem]">
         The Company can issue refunds for purchased Credits to your dedicated
         account within one hour of the transaction if the payment was made using
         an Online/Source account. No other refunds for purchased Credits are
@@ -13,9 +13,9 @@ const page = () => {
         Transferring Credits to other users or Accounts is not permitted, and
         the Company will not transfer your in-app credits to any other user or
         Account.
-      </p>
+      </h2>
       <br />
-      <p className="font-bold">REFUND OF USED CREDITS</p>
+      <h2 className="font-bold">REFUND OF USED CREDITS</h2>
       <p className="mb-[2rem]">
         Astrological consultations are subjective, and different astrologers may
         provide varying results. Credits spent are intended to compensate

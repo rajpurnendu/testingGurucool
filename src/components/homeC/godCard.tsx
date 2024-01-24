@@ -8,27 +8,33 @@ const handleNavigate = (title: string) => {
 };
 const GodCard = ({ data }: any) => {
   return (
-    <div className="mx-auto rounded-xl md:max-w-[300px] min-w-[201px] min-h-[237px] shadow-lg border border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]">
-      <Image
-        src={data?.titleImage?.url}
-        className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[89px] xl:rounded-md rounded-[3px]"
-        alt="god"
-        width={500}
-        height={500}
-        priority
-      />
-      <div className="flex gap-1 items-center w-full">
-        <h3
-          className="text-neutral-800
+    <div className="mx-auto rounded-xl md:max-w-[300px] min-w-[201px] min-h-[237px] shadow hover:shadow-lg border transition duration-300 ease-in-out border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]">
+      <Link href={handleNavigate(data?.title)}>
+        <Image
+          src={data?.titleImage?.url}
+          className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[89px] xl:rounded-md rounded-[3px]"
+          alt="god"
+          width={500}
+          height={500}
+          priority
+        />
+      </Link>
+
+      <div className="flex gap-1 cursor-pointer items-center w-full">
+        <Link href={handleNavigate(data?.title)}>
+          <h3
+            className="text-neutral-800
 xl:text-md
 xl:font-semibold
 text-xs
 font-medium
 leading-[15px]
 "
-        >
-          {data?.title}
-        </h3>
+          >
+            {data?.title}
+          </h3>
+        </Link>
+
         <div className="px-[4px] flex justify-normal items-center py-[0px] md:py-[0px] md:px-[6px]  xl:px-[6px]  rounded-[15px] xl:rounded-[30px] border border-violet-500 border-opacity-60 w-fit">
           {data?.tags?.map((tag: string, index: number) => (
             <Link
@@ -36,6 +42,7 @@ leading-[15px]
               href={`/blogs/category/${tag.replace("/", "-")}`}
               className="text-neutral-800
           text-xs
+w-max
          
           font-normal
           leading-0
@@ -46,19 +53,23 @@ leading-[15px]
           ))}
         </div>
       </div>
-      <p
-        className="text-neutral-700
+      <Link href={handleNavigate(data?.title)}>
+        <p
+          className="text-neutral-700
 text-xs
 font-normal
 leading-[15px]
+
 opacity-60
 "
-      >
-        {data?.description?.slice(0, 100)}...
-      </p>
+        >
+          {data?.description?.slice(0, 100)}...
+        </p>
+      </Link>
+
       <div className="w-full flex justify-end">
         <div
-          className=" p-1 xl:p-2 bg-amber-500 bg-opacity-20 xl:rounded-[30px] rounded-[15px] shadow justify-center items-center
+          className=" p-1 cursor-pointer xl:p-2 bg-amber-500 bg-opacity-20 xl:rounded-[30px] rounded-[15px] shadow justify-center items-center
          flex  border "
         >
           <Link

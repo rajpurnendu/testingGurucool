@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useState } from "react";
 
 const ReusableCard2 = ({ data }: any) => {
-  const [descLength, setDescLength] = useState();
+  const [descLength, setDescLength] = useState(220);
   return (
-    <div className="relative rounded-xl xl:rounded-lg shadow xl:shadow  xl:min-w-[281px] min-w-[247px] p-[1rem]">
+    <div className="relative rounded-xl xl:rounded-lg shadow xl:shadow hover:xl:shadow-md transition duration-300 ease-in-out  xl:min-w-[281px] min-w-[247px] p-[1rem]">
       <div className="flex flex-col items-center xl:gap-[0.81rem] gap-[23px]">
         <div className="flex flex-row w-full justify-end items-end">
           <svg
@@ -38,14 +38,32 @@ const ReusableCard2 = ({ data }: any) => {
             7th May 23
           </p>
         </div>
-        <div className="px-2">
-          <p className="xl:text-[1rem] text-justify text-xs font-normal leading-[1.2rem]">
-            {`${data.desc.slice(0, 220)}...`}
-          </p>
-          <p className="text-[#965EFB] font-semibold text-xs leading-[25px] xl:text-[1.125rem]">
-            View More
-          </p>
-        </div>
+        {data.desc.length > descLength ? (
+          <div className="px-2">
+            <p className="xl:text-[1rem] text-justify text-xs font-normal leading-[1.2rem]">
+              {`${data.desc.slice(0, descLength)}...`}
+            </p>
+            <p
+              onClick={() => setDescLength(data.desc.length)}
+              className="text-[#965EFB] cursor-pointer font-semibold text-xs leading-[25px] xl:text-[1.125rem]"
+            >
+              View More
+            </p>
+          </div>
+        ) : (
+          <div className="px-2">
+            <p className="xl:text-[1rem] text-justify text-xs font-normal leading-[1.2rem]">
+              {`${data.desc.slice(0, descLength)}`}
+            </p>
+            <p
+              onClick={() => setDescLength(220)}
+              className="text-[#965EFB] cursor-pointer font-semibold text-xs leading-[25px] xl:text-[1.125rem]"
+            >
+              View Less
+            </p>
+          </div>
+        )}
+
         <div className="w-full m-auto">
           <div className="flex flex-col items-center gap-[0.25rem] justify-center">
             <Image

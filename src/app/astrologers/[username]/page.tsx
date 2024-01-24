@@ -22,6 +22,10 @@ const page = async ({ params }: { params: { username: string } }) => {
     item.user.guru.includes(data?.guru.user?.guru)
   );
 
+  // console.log("..../");
+
+  // console.log(data);
+  // console.log("..../");
   return (
     <div>
       <AstrologerWeb

@@ -1,9 +1,9 @@
 const page = () => {
   return (
     <div className="max-w-[72rem] mx-auto px-3 mt-[90px]">
-      <h2 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
+      <h1 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
         Disclaimer
-      </h2>
+      </h1>
       <p className="mb-[1rem]">
         {` The information provided by GuruCool ("we," "us," or "our") on the
             GuruCool website (the "Site") is for general informational purposes
@@ -17,7 +17,7 @@ const page = () => {
         use of the Site or reliance on any information provided.`}
       </p>
       <br />
-      <h3 className="font-bold">External Links Disclaimer:</h3>
+      <h2 className="font-bold">External Links Disclaimer:</h2>
       <p className="mb-[1rem]">
         The Site may contain links to third-party websites or content that are
         not investigated, monitored, or checked for accuracy, adequacy,
@@ -26,7 +26,7 @@ const page = () => {
         or reliability of any information offered by third-party websites linked
         through the Site.
       </p>
-      <h3 className="font-bold">Professional Disclaimer:</h3>
+      <h2 className="font-bold">Professional Disclaimer:</h2>
       <p className="mb-[1rem]">
         The Site does not provide [medical/legal/fitness/health/other] advice
         and should not be considered a substitute for professional advice. The

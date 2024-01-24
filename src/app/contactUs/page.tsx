@@ -13,14 +13,14 @@ const page = () => {
         add funds to their GuruCool wallet through trusted payment gateways like
         Razorpay and utilize the wallet balance to pay for consultancy services
       </p>
-      <h1 className="text-[24px] font-[700] mb-[30px]  xl:text-[36px] xl:mb-[35px] xl:mt-[35px] mt-[30px]">
+      <h2 className="text-[24px] font-[700] mb-[30px]  xl:text-[36px] xl:mb-[35px] xl:mt-[35px] mt-[30px]">
         Contact Us
-      </h1>
+      </h2>
       <div className="mt-[4px] mb-0">
-        <p className="mb-0 text-[16px] text-[#333]">
+        <h2 className="mb-0 text-[16px] text-[#333]">
           {`If you have any questions or concerns, please don't hesitate to reach
         out to us:`}
-        </p>
+        </h2>
         <div className="border mt-[22px] border-[#ccc] rounded-[8px] p-[6px]">
           <p className="text-[16px]">Email:</p>
 

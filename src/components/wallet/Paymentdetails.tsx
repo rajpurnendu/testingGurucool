@@ -230,9 +230,9 @@ const Paymentdetailscomponent = ({
                     alt="See All Coupon"
                     className=" md:h-[59px] md:w-[59px]"
                   />
-                  <p className="text-[14px] font-medium md:text-[22px] md:font-semibold">
+                  <h1 className="text-[14px] font-medium md:text-[22px] md:font-semibold">
                     Apply Coupons
-                  </p>
+                  </h1>
                 </div>
                 <Link
                   href={`/wallet/coupons?forAmount=${

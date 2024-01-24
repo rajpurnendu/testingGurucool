@@ -19,13 +19,13 @@ const Speciality = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
- const colorMapping: {[key: string]: string} = {
+  const colorMapping: { [key: string]: string } = {
     "/call-to-astrologers/Love": "text-red-500",
     "/call-to-astrologers/Business": "text-blue-500",
     // Add other routes and their corresponding colors here
-};
+  };
 
-// const colorClass: string = colorMapping[pathname] || "";
+  // const colorClass: string = colorMapping[pathname] || "";
 
   const Specialization = [
     {
@@ -55,14 +55,11 @@ const Speciality = () => {
       id: 2,
       name: (
         <p
-
-      
           className={`text-[14px] md:text-[20px] font-semibold ${
             pathname === "/call-to-astrologers/Marriage"
               ? "text-[#34ebd8]"
               : "text-gray-600"
           }`}
-
         >
           Marriage
         </p>
@@ -197,15 +194,12 @@ const Speciality = () => {
     },
   ];
 
-  
-
-
   return (
     <>
-      <div  className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 lg:sticky lg:top-[5px] pb-2 bg-white z-10">
-        <h6 className="mb-[10px] md:mb-[24px] text-[20px] sm:text-[20px] md:text-[26px] font-medium text-[#3D3D3D] text-left md:block">
+      <div className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 lg:sticky lg:top-[5px] pb-2 bg-white z-10">
+        <h1 className="mb-[10px] md:mb-[24px] text-[20px] sm:text-[20px] md:text-[26px] font-medium text-[#3D3D3D] text-left md:block">
           Specialities
-        </h6>
+        </h1>
 
         <div className="w-full flex lg:justify-between items-center md:gap-7 lg:gap-0">
           <div
@@ -214,7 +208,7 @@ const Speciality = () => {
           >
             {/* 8d66d4 */}
             <Link href={"/call-to-astrologers"}>
-              <div
+              <h2
                 className={clsx(
                   `text-sm md:text-[20px] text-gray-600 font-semibold border-[1px] border-gray-600 rounded-md px-2 py-1 md:border-0`,
                   {
@@ -223,7 +217,7 @@ const Speciality = () => {
                 )}
               >
                 All
-              </div>
+              </h2>
             </Link>
 
             {Specialization.map((curr, index) => {

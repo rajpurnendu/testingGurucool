@@ -3,9 +3,9 @@ import Link from "next/link";
 const page = () => {
   return (
     <div className="max-w-[72rem] mx-auto px-3 mt-[90px]">
-      <h2 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
+      <h1 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
         Terms & Conditions
-      </h2>
+      </h1>
       <h2 className="text-[24px] font-[500] my-[8px] xl:text-[35px]">
         PLEASE READ THIS IMPORTANT DISCLAIMER CAREFULLY:
       </h2>
@@ -76,9 +76,9 @@ const page = () => {
           full force and effect.
         </p>
       </div>
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         II. SERVICES
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           6. The Services constitute a web-based technology platform that
@@ -215,9 +215,9 @@ const page = () => {
           and electronic communications.
         </p>
       </div>
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         III. PAYMENT
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           17. For availing certain parts of Services, you may be required to
@@ -307,9 +307,9 @@ const page = () => {
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]"></p>
       </div>
 
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         IV. WARRANTIES AND DISCLAIMERS
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           24. The Services are provided on an “AS IS” and “AS AVAILABLE” basis.
@@ -364,9 +364,9 @@ const page = () => {
         </p>
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]"></p>
       </div>
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         V. WARRANTIES AND DISCLAIMERS
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           30. During the provision of Services, including while accessing
@@ -391,9 +391,9 @@ const page = () => {
           of an accident or complaint involving you or an Astrologer Partner.
         </p>
       </div>
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         VI. WAIVER
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           32. You hereby authorize and give consent to the Company to send you,
@@ -413,9 +413,9 @@ const page = () => {
           shall continue to remain in effect.
         </p>
       </div>
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         VII. INDEMNITY
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           33. You agree to indemnify and hold the Company and its affiliates,
@@ -427,9 +427,9 @@ const page = () => {
           Partners.
         </p>
       </div>
-      <h2 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
+      <h3 className="text-[20px] font-[500] mt-[16px] mb-[8px] lg:text-[28px] lg:mt-[20px] lg:mb-[8px] md:mt-[20px] md:mb-[8px]">
         VIII. JURISDICTION AND DISPUTE RESOLUTION
-      </h2>
+      </h3>
       <div className="mb-[14px] md:mb-[16px] xl:mb-[16px]">
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]">
           34. Except as otherwise set forth in these terms, these Terms shall be

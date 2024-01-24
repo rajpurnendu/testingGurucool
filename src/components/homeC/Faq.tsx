@@ -8,7 +8,7 @@ const Faq = ({ searchParams }: { searchParams: any }) => {
   const filtername = searchParams.key || "";
   return (
     <div className="w-auto xl:w-[72rem] mx-auto xl:my-[2rem] px-5 md:px-[0px] flex flex-col items-center justify-center">
-      <h1 className="text-center xl:mb-[12px] mb-[4px] text-lg xl:text-[22px] font-semibold xl:leading-7">{`FAQ'S`}</h1>
+      <h3 className="text-center xl:mb-[12px] mb-[4px] text-lg xl:text-[22px] font-semibold xl:leading-7">{`FAQ'S`}</h3>
       <Image
         src={line}
         className="w-[38px] h-[2.06px] xl:w-[139.40px] xl:h-[6.82px] mx-auto xl:mx-auto mb-[15px] xl:m-[12px]"

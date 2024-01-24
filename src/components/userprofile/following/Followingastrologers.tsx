@@ -20,14 +20,14 @@ const Followingastrologers = async ({ loginToken }: { loginToken: string }) => {
             alt="Not Following Banner"
             className="m-auto md:h-[150px] md:w-[150px]"
           />
-          <div className="text-center w-[100%] m-auto text-[#a0a0a0]">
+          <h1 className="text-center w-[100%] m-auto text-[#a0a0a0]">
             You are not following any astrologers at the moment.You will be
             notified once the following astrologer online
-          </div>
+          </h1>
           <div className="w-full flex justify-center items-center">
-            <button className="inline-flex appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight font-semibold h-[52px] min-w-10 text-[1rem] px-4 text-white bg-[#8d66d4] rounded-md mt-[15px] md:w-[244px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-[#7740de] duration-300 ...">
+            <h2 className="inline-flex cursor-pointer appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight font-semibold h-[52px] min-w-10 text-[1rem] px-4 text-white bg-[#8d66d4] rounded-md mt-[15px] md:w-[244px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-[#7740de] duration-300 ...">
               Follow Now
-            </button>
+            </h2>
           </div>
         </div>
       ) : (

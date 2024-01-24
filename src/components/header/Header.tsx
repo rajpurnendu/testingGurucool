@@ -40,9 +40,8 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
       }
     };
     userProfile();
-    setTimeout(() => {
-      ToggelOpen();
-    }, 5000);
+
+    ToggelOpen();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginToken]);
   const onToggleMenu = () => {
