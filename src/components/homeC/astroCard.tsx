@@ -1,14 +1,42 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getUserprofile } from "@/lib/data";
 
 function formatValue(value: number) {
   const formattedValue = (value / 1000).toFixed(1);
   return `${formattedValue}K`;
 }
 
-const AstroCard = ({ data }: { data: any }) => {
-  // console.log();
+const AstroCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
+  const [userDetails, setUserDetails] = useState();
+
+  useEffect(() => {
+    const userProfile = async () => {
+      if (loginToken) {
+        const datafollow =
+          loginToken && (await getUserprofile(loginToken.value));
+
+        setUserDetails(data.userDetails);
+        console.log(data);
+      }
+    };
+
+    userProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fee = getPrice(userDetails, data);
+
+  function getPrice(userDetails: any, data: any) {
+    if (userDetails?.consultationCount === 0 || !loginToken) {
+      return data?.firstOfferPrice?.national?.fee;
+    } else {
+      return data?.fee;
+    }
+  }
+
   return (
     <Link
       href={`/astrologers/${data?.userName}`}
@@ -189,7 +217,7 @@ xl:text-[21.26px]
 xl:font-medium
 "
           >
-            ₹{data.fee}/
+            ₹{fee}/
           </p>
           <p
             className="text-emerald-500

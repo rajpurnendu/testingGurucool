@@ -11,12 +11,16 @@ import {
 import Link from "next/link";
 import AstroCard from "./astroCard";
 import { GET_Spec_Astrologer } from "@/lib/data";
+import { cookies } from "next/headers";
 
 const TopRated_astrologer = async ({
   searchParam,
 }: {
   searchParam?: { filter?: string; id?: string };
 }) => {
+  const cookieStore = cookies();
+
+  const loginToken = cookieStore.get("loginToken");
   const filtername = searchParam?.filter || "all";
   const queary = filtername.charAt(0).toUpperCase() + filtername.slice(1);
 
@@ -81,7 +85,7 @@ const TopRated_astrologer = async ({
       </div>
       <div className="flex gap-[12.53px] xl:overflow-visible no-scrollbar overflow-x-auto mx-auto xl:justify-center md:justify-center  items-center px-[20px] xl:px-0">
         {data.guru.docs.slice(0, 4).map((data: any, index: number) => (
-          <AstroCard data={data} key={index} />
+          <AstroCard data={data} key={index} loginToken={loginToken} />
         ))}
       </div>
     </div>

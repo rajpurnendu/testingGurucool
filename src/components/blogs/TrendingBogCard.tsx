@@ -10,20 +10,22 @@ const handleNavigate = (title: string) => {
 
 const TrendingBogCard = ({ blog }: any) => {
   return (
-    <div className="items-start shadow border  border-zinc-200 rounded-[13.97px]  max-w-[376px] flex flex-col p-[13.36px] gap-[11.18px] justify-start">
-      <Link
-        href={handleNavigate(blog?.title)}
-        className=" overflow-hidden h-[155px] w-[350px] rounded-[6px]"
-      >
-        <Image
-          className=" w-full h-full"
-          width={500}
-          height={500}
-          src={blog?.titleImage?.url}
-          alt="Image Blog"
-          priority={true}
-        />
-      </Link>
+    <div className="items-center shadow border overflow-hidden p-[9.9px]  border-zinc-200 rounded-[13.97px]  max-w-[376px] flex flex-col md:p-[13.36px] gap-[11.18px] justify-start">
+      <div>
+        <Link
+          href={handleNavigate(blog?.title)}
+          className=" overflow-hidden h-[155px] w-[350px] rounded-[6px]"
+        >
+          <Image
+            className=" w-full h-full"
+            width={500}
+            height={500}
+            src={blog?.titleImage?.url}
+            alt="Image Blog"
+            priority={true}
+          />
+        </Link>
+      </div>
 
       <Link
         href={handleNavigate(blog?.title)}

@@ -2,12 +2,13 @@
 import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
 import { getUserprofile } from "@/lib/data";
 import useFilterStore from "@/store/filterStore";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Modal from "../ReusableModal/ReusableModal";
 import ConsultationFailed from "./ConsultationFailed";
 import ConsultationStartedModal from "./ConsultationStartedModal";
+import { handleNavigate } from "@/lib/actions";
 
 const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   const {
@@ -24,7 +25,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
     callDuration,
     setCallDuration,
     userId,
-    setUserId
+    setUserId,
   } = useFilterStore();
 
   const [callStatus, setCallStatus] = useState();
@@ -42,7 +43,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
       if (loginToken) {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
-        setUserId(data.user._id)
+        setUserId(data.user._id);
         // console.log(data);
       }
     };
@@ -65,7 +66,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
       );
       const data2 = await response2.json();
       console.log(data2);
-      
+
       setAstroDetails(data2.guru);
       if (data1.purchase.callStatus === "completed") {
         // logEvent(analytics, "Call_Success_For", {
@@ -86,7 +87,8 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
         // );
         setAmount(data1.purchase.amount);
         localStorage.removeItem("purchaseId");
-        router.push("/call-consultation-ended");
+        handleNavigate();
+        // router.push("/call-consultation-ended");
       } else if (callStatus === "started") {
         setCallMsg("Your Call has been Started");
       } else if (callStatus === "failed") {

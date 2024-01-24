@@ -5,6 +5,8 @@ import TopRated_astrologer from "@/components/homeC/TopRated_astrologer";
 import ReaderSection from "@/components/homeC/ReaderSection";
 import ContentSection from "@/components/homeC/ContentSection";
 import Faq from "@/components/homeC/Faq";
+import { cookies } from "next/headers";
+
 const page = ({
   params,
   searchParams,
@@ -12,6 +14,8 @@ const page = ({
   params: { filtername: string[] };
   searchParams?: { filter?: string; id?: string };
 }) => {
+
+
   return (
     <>
       <Banner />

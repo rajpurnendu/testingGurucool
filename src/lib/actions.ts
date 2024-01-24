@@ -241,6 +241,10 @@ export const razorpayCheckoutHandler = async (
     }
 };
 
+export const handleNavigate = () => {
+  redirect("/call-consultation-ended");
+};
+
 
 
 

@@ -9,7 +9,7 @@ const handleNavigate = (title: string) => {
 };
 
 const BlogCards = ({ blog }: any) => {
-  // console.log(blog);
+ 
   return (
     <div className="max-w-[391px] h-fit border border-zinc-200  bg-white rounded-[6.96px] shadow flex  justify-start items-start gap-[6.26px]">
       <div className="p-[4.18px] flex flex-col gap-[9.6px] md:gap-[6.26px] items-start justify-start">
