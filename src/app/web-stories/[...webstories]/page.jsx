@@ -5,10 +5,9 @@
 import Image from "next/image";
 import { getAllWebstoriesq, getSingleStory } from "@/lib/data";
 // import { Suspense, useEffect, useState } from "react";
-import { Suspense } from "react";
 import { GET_SINGLE_WEB_STORY } from "@/lib/apilinks";
 
-export const config = { amp: true };
+export const config = { amp: 'hybrid' };
 
 const WebStoryPage = async ({ params }) => {
   // const [webStory, setWebStory] = useState();
