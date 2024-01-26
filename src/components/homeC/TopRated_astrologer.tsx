@@ -21,7 +21,7 @@ const TopRated_astrologer = async ({
   const cookieStore = cookies();
 
   const loginToken = cookieStore.get("loginToken");
-  const filtername = searchParam?.filter || "all";
+  const filtername = searchParam?.filter || "All";
   const queary = filtername.charAt(0).toUpperCase() + filtername.slice(1);
 
   const data = await GET_Spec_Astrologer(queary);

@@ -44,7 +44,7 @@ const useFilterStore = create((set) => ({
   // //   },
   // // Function to apply filters and fetch data
   pageNumber: 1,
-  perPage: 15,
+  perPage: 200,
   skills: [],
   specialization: "",
   sortOrder: "",
@@ -58,8 +58,13 @@ const useFilterStore = create((set) => ({
   amount: null,
   callDuration: null,
   userId: "",
+  name: "",
+  consultAstroData:[],
 
   // Function to update the response data
+  sePerPage: (data) => {
+    set({ perPage: data });
+  },
   setResponseData: (data) => {
     set({ responseData: data });
   },
@@ -83,6 +88,12 @@ const useFilterStore = create((set) => ({
   },
   setUserId: (data) => {
     set({ userId: data });
+  },
+  setName: (data) => {
+    set({ name: data });
+  },
+  setConsultAstroData: (data) => {
+    set({ consultAstroData: data });
   },
 
   // Function to update a specific filter parameter
@@ -111,7 +122,7 @@ const useFilterStore = create((set) => ({
   clearFilters: () => {
     set({
       pageNumber: 1,
-      perPage: 12,
+      perPage: 200,
       skills: [],
       specialization: "",
       sortOrder: "",

@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { setCookie, deleteCookie, hasCookie, getCookie, getCookies } from 'cookies-next';
-import { PUTFOLLOW_ASTRO, PUTUNFOLLOW_ASTRO, P_PUT_USER_DETAILS, P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER } from './apilinks';
+import { PUTFOLLOW_ASTRO, PUTUNFOLLOW_ASTRO, P_PUT_USER_DETAILS, P_SEND_LOGIN_OTP, P_VERIFY_LOGIN_OTP, REGISTER_NEW_USER, TESTING_URL } from './apilinks';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
  // setCookie('test', 'purnendu.....', { cookies });
@@ -206,13 +206,13 @@ export const razorpayCheckoutHandler = async (
     try {
       // Fetch key from the server
       const keyResponse = await fetch(
-        "https://prod.gurucool.life/api/v1/payments/key"
+        `${TESTING_URL}payments/key`
       );
       const { key } = await keyResponse.json();
 
       // Fetch checkout details from the server
       const checkoutResponse = await fetch(
-        "https://test.gurucool.life/api/v1/payments/checkout",
+        `${TESTING_URL}payments/checkout`,
         {
           method: "POST",
           headers: {
@@ -239,10 +239,6 @@ export const razorpayCheckoutHandler = async (
       console.error("There was a problem with the fetch operation:", error);
       return undefined
     }
-};
-
-export const handleNavigate = () => {
-  redirect("/call-consultation-ended");
 };
 
 

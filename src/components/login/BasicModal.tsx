@@ -123,7 +123,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         }),
       {
         loading: "Verifying...",
@@ -134,7 +134,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
   };
 
   return (
-    <div className="fixed top-0 w-full h-full  bg-[rgba(0,0,0,0.7)] z-[21]">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 top-0 w-full h-full backdrop-blur-sm  bg-[rgba(0,0,0,0.7)] ">
       {/* {true && ( */}
       <div className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-[rgba(0, 0, 0, 0.7)] flex items-center justify-center z-[21]">
         <div

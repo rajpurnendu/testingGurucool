@@ -8,16 +8,31 @@ import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
 import SideBar from "../sideBar/SideBar";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Speciality = () => {
   const pathname = usePathname();
-
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleOutSide = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      setSidebarOpen(false);
+    }
+  };
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutSide);
+
+    // Clean up the event listener on unmount
+    return () => {
+      document.removeEventListener("click", handleOutSide);
+    };
+  }, [modalRef]);
 
   const colorMapping: { [key: string]: string } = {
     "/call-to-astrologers/Love": "text-red-500",
@@ -196,10 +211,13 @@ const Speciality = () => {
 
   return (
     <>
-      <div className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 lg:sticky lg:top-[5px] pb-2 bg-white z-10">
-        <h1 className="mb-[10px] md:mb-[24px] text-[20px] sm:text-[20px] md:text-[26px] font-medium text-[#3D3D3D] text-left md:block">
+      <div
+        // ref={modalRef}
+        className="lg:mt-[37px] mb-[20px] md:mb-[20px] lg:mb-[21px] md:px-1 lg:sticky lg:top-[5px] pb-2 bg-white z-10"
+      >
+        <h6 className="mb-[10px] md:mb-[24px] text-[20px] sm:text-[20px] md:text-[26px] font-medium text-[#3D3D3D] text-left md:block">
           Specialities
-        </h1>
+        </h6>
 
         <div className="w-full flex lg:justify-between items-center md:gap-7 lg:gap-0">
           <div
@@ -208,7 +226,7 @@ const Speciality = () => {
           >
             {/* 8d66d4 */}
             <Link href={"/call-to-astrologers"}>
-              <h2
+              <div
                 className={clsx(
                   `text-sm md:text-[20px] text-gray-600 font-semibold border-[1px] border-gray-600 rounded-md px-2 py-1 md:border-0`,
                   {
@@ -217,7 +235,7 @@ const Speciality = () => {
                 )}
               >
                 All
-              </h2>
+              </div>
             </Link>
 
             {Specialization.map((curr, index) => {

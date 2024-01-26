@@ -1,4 +1,4 @@
-import { G_GET_ALL_CONSULT_ASTROLOGERS,G_GET_Trending_BLOGS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER, PAYMENT_STATUS, Get_SINGLE_ASTRO2 } from "./apilinks";
+import { G_GET_ALL_CONSULT_ASTROLOGERS,G_GET_Trending_BLOGS,GET_ASTRO_FEEDBACK, G_GET_BLOGS,Get_SINGLE_ASTRO, G_GET_SINGLE_BLOGS, G_GET_USER_PROFILE,GET_ALL_CONSULTATIONS_DETAILS,GET_ALL_FOLLOWING_ASTROLOGERS,GET_ALL_PACKAGES_WALLET,GET_HOMEPAGE_ASTROLOGERS, GET_PAYMENT_DETAILS, GET_SIMILAR_ASTRO, GET_ALL_COUPONS_USER, GET_ALL_EXPIRED_COUPONS_USER, PAYMENT_STATUS, GET_HOMEPAGE_ASTROLOGERS2, GET_SINGLE_WEB_STORY, GET_ALL_WEB_STORIES} from "./apilinks";
 
 // import { setCookie } from 'cookies-next';
 
@@ -110,7 +110,7 @@ export async function GET_Spec_Astrologer (query:string):Promise<any | undefined
   try {
     const response = await fetch(
       GET_HOMEPAGE_ASTROLOGERS(query),
-      { next: { revalidate: 4 }}
+      { next: { revalidate: 0 }}
     );
     if (response.ok) {
       const data = await response.json(); 
@@ -127,6 +127,29 @@ export async function GET_Spec_Astrologer (query:string):Promise<any | undefined
       throw new Error('Failed to fetch Single blog data.');
   }
 }
+
+export async function GET_Spec_Astrologer2 (query:string):Promise<any | undefined>{
+  try {
+    const response = await fetch(
+      GET_HOMEPAGE_ASTROLOGERS2(query),
+      { next: { revalidate: 0 }}
+    );
+    if (response.ok) {
+      const data = await response.json(); 
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+      throw new Error('Failed to fetch Single blog data.');
+  }
+}
+
 
 
 
@@ -164,7 +187,7 @@ export async function getUserfollowingAstrologers(loginToken:string):Promise<any
           'Authorization': `Bearer ${loginToken}`,
           'Content-Type': 'application/json',
         },
-        next: { revalidate: 4 }
+        next: { revalidate: 0 }
       }
     );
     if (response.ok) {
@@ -192,7 +215,7 @@ export async function getUserAllConsultations(loginToken:string,uid:number,consu
           'Authorization': `Bearer ${loginToken}`,
           'Content-Type': 'application/json',
         },
-        next: { revalidate: 4 }
+        next: { revalidate: 0 }
       }
     );
     if (response.ok) {
@@ -217,28 +240,7 @@ export async function Get_Single_Astrologer(params:string) {
   try {
     const response = await fetch(
       Get_SINGLE_ASTRO(params),
-      { next: { revalidate: 4 }}
-    );
-    if (response.ok) {
-      const data = await response.json(); 
-      return data;
-    } else {
-      console.error(
-        "Error fetching data:",
-        response.status,
-        response.statusText
-      );
-      return undefined;
-    }
-  } catch (error) {
-    throw new Error('Failed to fetch Single astrologer data.');
-  }
-}
-export async function Get_Single_Astrologer2(params:string) {
-  try {
-    const response = await fetch(
-      Get_SINGLE_ASTRO2(params),
-      { next: { revalidate: 4 }}
+      { next: { revalidate: 0 }}
     );
     if (response.ok) {
       const data = await response.json(); 
@@ -295,7 +297,7 @@ export async function Get_ASTROLOGER_FEEDBACK(gid:number,sort?:string,userId?:st
       GET_ASTRO_FEEDBACK(gid,sort,userId),
       
         
-        { next: { revalidate: 4 },}
+        { next: { revalidate: 0 },}
     );
     if (response.ok) {
       const data = await response.json(); 
@@ -366,14 +368,7 @@ export async function getPaymentdetails(loginToken:string,amount:string,couponCo
   throw new Error('Failed to fetch data.');
 }}
 
-/**
- * The function `convertToIstDateTime` takes an ISO datetime string and converts it to Indian Standard
- * Time (IST) format.
- * @param {string|undefined} isoDateTime - The `isoDateTime` parameter is a string representing a date
- * and time in ISO 8601 format.
- * @returns The function `convertToIstDateTime` returns a formatted string representation of the input
- * ISO date and time in IST (Indian Standard Time) timezone.
- */
+
 export const convertToIstDateTime = (isoDateTime:string|undefined) => {
   if (!isoDateTime) {
     return null;
@@ -467,5 +462,56 @@ export async function getPaymentStatus(paymentID:string){
     }
   } catch (error) {
       throw new Error('Failed to fetch Payment Status.');
+  }
+}
+
+
+export async function getAllWebstories() {
+  // console.log(query);
+
+  try {
+    const response = await fetch(GET_ALL_WEB_STORIES, {
+      next: { revalidate: 0 },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      // console.log(data);
+
+      // setCookie('loginToken', 'kkkkkkkkk');
+      return data;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+    throw new Error("Failed to fetch Single blog data.");
+  }
+}
+
+
+export async function getAllWebstoriesq(
+  query: string
+): Promise<any | undefined> {
+  try {
+    const response = await fetch(GET_SINGLE_WEB_STORY(query), {
+      next: { revalidate: 0 },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data?.webStory?.webStorySlides;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+      return undefined;
+    }
+  } catch (error) {
+    throw new Error("Failed to fetch Main blog data.");
   }
 }

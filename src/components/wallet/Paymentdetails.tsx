@@ -19,6 +19,7 @@ import Link from "next/link";
 import useRazorpay, { RazorpayOptions } from "react-razorpay";
 import { razorpayCheckoutHandler } from "@/lib/actions";
 import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
+import { TESTING_URL } from "@/lib/apilinks";
 
 const Paymentdetailscomponent = ({
   searchParams,
@@ -112,7 +113,7 @@ const Paymentdetailscomponent = ({
         // image:
         //   "https://gurucool.life/static/media/GurucoolNewWebLogo.7044d1e41f0ae5cc0426c727085ab32d.svg",
         callback_url:
-          "https://test.gurucool.life/api/v1/payments/payment-verification",
+        `${TESTING_URL}payments/payment-verification`,
         order_id: data?.checkout?.orderId,
         prefill: {
           name: userDetails?.firstName + " " + userDetails?.lastName,

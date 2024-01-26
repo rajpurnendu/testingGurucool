@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const page = () => {
@@ -56,12 +57,12 @@ We use your personal information to provide you with the Services, process your 
       <p className="mb-[14px] xl:mb-[16px]">
         {`If you have any questions or concerns about our privacy policy, please contact us at `}
 
-        <a
+        <Link
           href="mailto:hi@gurucool.life."
           className="text-[#007BFF] hover:text-[#3b71ca]"
         >
           hi@gurucool.life.
-        </a>
+        </Link>
       </p>
     </div>
   );

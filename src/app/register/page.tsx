@@ -61,9 +61,9 @@ const Register = () => {
     }
 
     // TODO: Registration process
-    registerNewUser(formData)
+    registerNewUser({ ...formData, file: null, email: "" })
       .then((result) => {
-        // console.log(result);
+        console.log(result);
         if (result?.success) {
           toast.success(result.message);
           router.push("/");

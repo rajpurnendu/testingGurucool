@@ -68,7 +68,7 @@ const Blogmain = async ({
       >
         {/* <div> */}
         {/* Filter Section  */}
-        <div className="  flex md:flex-col h-fit md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
+        <div className="  flex md:flex-col h-fit items-[self-end]  md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
           <h1
             className="text-neutral-800
 text-[22px]
@@ -83,7 +83,7 @@ leading-7"
             return (
               <div
                 key={index}
-                className="w-[207px] mx-1 flex items-center justify-start mb md:border-b-2 py-3"
+                className="w-full mx-1 flex items-center  justify-start mb md:border-b-2 py-3"
               >
                 <Link
                   scroll={false}
@@ -124,7 +124,7 @@ font-semibold"
           >
             Related Blog
           </h2>
-          <div className="flex flex-wrap gap-x-[0px] xl:gap-x-[97px] gap-y-[40px] w-fit justify-center items-start">
+          <div className="flex flex-wrap gap-x-[0px] xl:gap-x-[97px] gap-y-[40px] w-fit justify-start items-start">
             {filteredData
               .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
               .map((blog: any, index) => (

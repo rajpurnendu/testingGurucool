@@ -2,7 +2,6 @@ import AstrologerWeb from "@/components/AstrologerProfile/AstrologerWeb";
 import {
   Get_ASTROLOGER_FEEDBACK,
   Get_Single_Astrologer,
-  Get_Single_Astrologer2,
   Get_SIMILAR_ASTROLOGER,
   getUserprofile,
 } from "@/lib/data";
@@ -13,7 +12,6 @@ const page = async ({ params }: { params: { username: string } }) => {
   let param = params.username;
 
   const data = await Get_Single_Astrologer(param);
-  const data2 = await Get_Single_Astrologer2(param);
   const FeedbackData1 = await Get_ASTROLOGER_FEEDBACK(data?.guru?.gid);
   const SimilarAstroData1 = await Get_SIMILAR_ASTROLOGER(data?.guru?.gid);
   const cookieStore = cookies();
@@ -33,14 +31,12 @@ const page = async ({ params }: { params: { username: string } }) => {
       <AstrologerWeb
         isFollowing={isFollowing}
         data={data?.guru}
-        data2={data2?.guru}
         useraProfileId={datafollow?.user?._id}
         loginToken={loginToken?.value}
         feedback={FeedbackData1?.feedback}
         similar={SimilarAstroData1}
       />
       <AstrologerMobile
-        data2={data2?.guru}
         isFollowing={isFollowing}
         data={data?.guru}
         useraProfileId={datafollow?.user?._id}

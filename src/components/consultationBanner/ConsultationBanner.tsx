@@ -8,6 +8,7 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "next/image";
 import img1 from "../../../public/images/banner/First Free Banner.svg";
 import img2 from "../../../public/images/banner/Web Consult Page Banner.svg";
+import Link from "next/link";
 
 declare global {
   interface Window {
@@ -25,6 +26,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 const ConsultationBanner = () => {
   return (
     <OwlCarousel
+     margin={50}
       loop
       autoplay
       autoplayHoverPause
@@ -41,7 +43,7 @@ const ConsultationBanner = () => {
         },
       }}
     >
-      <a
+      <Link
         target="_blank"
         rel="noopener noreferrer"
         href="https://play.google.com/store/apps/details?id=com.gurucool&pcampaignid=web_share"
@@ -49,7 +51,7 @@ const ConsultationBanner = () => {
         className="w-full h-[300px] flex items-center justify-center"
       >
         <Image src={img1} alt="offer" className="w-fit h-full" />
-      </a>
+      </Link>
       <div
         id="2"
         className="w-full h-[300px] flex items-center overflow-hidden justify-center"

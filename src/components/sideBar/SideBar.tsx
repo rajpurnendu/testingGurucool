@@ -1,6 +1,6 @@
 "use client";
 import { ImCross } from "react-icons/im";
-import react, { useState, useEffect, useRef } from "react";
+import react, { useState, forwardRef, useEffect, useRef } from "react";
 import {
   All,
   Marriage,
@@ -13,7 +13,7 @@ import {
 } from "../../../public/assets/icons/icons";
 // import useFilterStore from "@/store/filterStore";
 import { GET_Spec_Astrologer } from "@/lib/data";
-import { GET_HOMEPAGE_ASTROLOGERS } from "@/lib/apilinks";
+import { GET_HOMEPAGE_ASTROLOGERS, TESTING_URL } from "@/lib/apilinks";
 import useFilterStore from "@/store/filterStore";
 
 const special = [
@@ -47,15 +47,12 @@ const language = [
   { id: 11, name: "Rajasthani" },
 ];
 
-const SideBar = ({
-  isOpen,
+// interface SideBarProps {
+//   isOpen: boolean;
+//   onClose: any;
+// }
 
-  onClose,
-}: {
-  isOpen: boolean;
-
-  onClose: any;
-}) => {
+const SideBar = ({ isOpen, onClose }: { isOpen: boolean; onClose: any }) => {
   // const {
   //   selectedSpecialities,
   //   selectedLanguages,
@@ -133,7 +130,7 @@ const SideBar = ({
   //   setMainData(updatedData);
   //   onClose();
   // };
-  // https://prod.gurucool.life/api/v1/guru/astrologersDetails
+  // `${TESTING_URL}guru/astrologersDetails`
   // const handleApplyFilter = async () => {
   //   const params = getApiParams();
   //   const selectedSpecialityFilters = selectedSpecialities.join(',');
@@ -224,11 +221,12 @@ const SideBar = ({
       updateFilterParam("specialization", selectedSpecialization);
     }
   };
-  console.log("skills==>", skills);
-  console.log("languages==>", languages);
-  console.log("specialization==>", specialization);
-  console.log("gender==>", gender);
-  console.log("price==>", sortOrder);
+  // console.log("skills==>", skills);
+  // console.log("languages==>", languages);
+  // console.log("specialization==>", specialization);
+  // console.log("gender==>", gender);
+  // console.log("price==>", sortOrder);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   const fetchDataWithFilters = async () => {
     // Construct the filterParams object
@@ -248,7 +246,7 @@ const SideBar = ({
       .join("&");
 
     try {
-      const apiUrl = `https://prod.gurucool.life/api/v1/guru/astrologersDetails?${queryString}`;
+      const apiUrl = `${TESTING_URL}guru/astrologersDetails?${queryString}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -258,7 +256,7 @@ const SideBar = ({
       const responseData = await response.json();
 
       // Set the response data in the global store
-      console.log(responseData);
+      // console.log(responseData);
 
       setResponseData(responseData);
     } catch (error) {
@@ -266,6 +264,26 @@ const SideBar = ({
       console.error(error);
     }
   };
+
+  // const sideDrawerRef = useRef(null);
+  // useEffect(() => {
+  //   const handleClickOutside = (event:any) => {
+  //     if (sideDrawerRef.current && !sideDrawerRef.current.contains(event.target)) {
+  //       onClose();
+  //     }
+  //   };
+
+  //   // Bind the event listener
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     // Unbind the event listener on clean up
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [onClose]);
+
+  // if (!isOpen) {
+  //   return null;
+  // }
 
   return (
     <div
@@ -447,13 +465,13 @@ const SideBar = ({
           <div
             className={`p-1 border w-fit h-9 gap-4 items-center flex justify-between  ${
               spec == "love" ? "border-[#965EFB]" : "border-[#8d8c8c]"
-            } rounded-[5px] hover:border-[#965EFB]`}
+            } rounded-[5px] hover:border-[#965EFB] cursor-pointer`}
             onClick={() => handleSpecializationChange("Love")}
           >
             <Love fill={specialization === "Love"} />
             <p
               className={`my-2 hover:text-[#965EFB] ${
-                spec == "love" ? "text-[#965EFB]" : "text-black"
+                specialization === "Love" ? "text-[#965EFB]" : "text-black"
               }  text-[14px] leading-2`}
             >
               Love
@@ -462,13 +480,13 @@ const SideBar = ({
           <div
             className={`p-1 border w-fit h-9 gap-4 items-center flex justify-between  ${
               spec == "marriage" ? "border-[#965EFB]" : "border-[#8d8c8c]"
-            } rounded-[5px] hover:border-[#965EFB]`}
+            } rounded-[5px] hover:border-[#965EFB] cursor-pointer`}
             onClick={() => handleSpecializationChange("Marriage")}
           >
             <Marriage fill={specialization === "Marriage"} />
             <p
               className={`my-2 hover:text-[#965EFB] ${
-                spec == "marriage" ? "text-[#965EFB]" : "text-black"
+                specialization === "Marriage" ? "text-[#965EFB]" : "text-black"
               }  text-[14px] leading-2`}
             >
               Marriage
@@ -477,13 +495,13 @@ const SideBar = ({
           <div
             className={`p-1 border w-fit h-9 gap-4 items-center flex justify-between  ${
               spec == "job" ? "border-[#965EFB]" : "border-[#8d8c8c]"
-            } rounded-[5px] hover:border-[#965EFB]`}
+            } rounded-[5px] hover:border-[#965EFB] cursor-pointer`}
             onClick={() => handleSpecializationChange("Business")}
           >
             <Job fill={specialization === "Business"} />
             <p
               className={`my-2 hover:text-[#965EFB] ${
-                spec == "job" ? "text-[#965EFB]" : "text-black"
+                specialization === "Business" ? "text-[#965EFB]" : "text-black"
               }  text-[14px] leading-2`}
             >
               Business
@@ -492,13 +510,13 @@ const SideBar = ({
           <div
             className={`p-1 border w-fit h-9 gap-4 items-center flex justify-between  ${
               spec == "career" ? "border-[#965EFB]" : "border-[#8d8c8c]"
-            } rounded-[5px] hover:border-[#965EFB]`}
+            } rounded-[5px] hover:border-[#965EFB] cursor-pointer`}
             onClick={() => handleSpecializationChange("Career")}
           >
             <Career fill={specialization === "Career"} />
             <p
               className={`my-2 hover:text-[#965EFB] ${
-                spec == "career" ? "text-[#965EFB]" : "text-black"
+                specialization === "Career" ? "text-[#965EFB]" : "text-black"
               }  text-[14px] leading-2`}
             >
               Career
@@ -507,13 +525,13 @@ const SideBar = ({
           <div
             className={`p-1 border w-fit h-9 gap-4 items-center flex justify-between  ${
               spec == "family" ? "border-[#965EFB]" : "border-[#8d8c8c]"
-            } rounded-[5px] hover:border-[#965EFB]`}
+            } rounded-[5px] hover:border-[#965EFB] cursor-pointer`}
             onClick={() => handleSpecializationChange("Life")}
           >
             <Family fill={specialization === "Life"} />
             <p
               className={`my-2 hover:text-[#965EFB] ${
-                spec == "family" ? "text-[#965EFB]" : "text-black"
+                specialization === "Life" ? "text-[#965EFB]" : "text-black"
               }  text-[14px] leading-2`}
             >
               Life
@@ -537,13 +555,13 @@ const SideBar = ({
           <div
             className={`p-1 border w-fit h-9 gap-4 items-center flex justify-between  ${
               spec == "tarot" ? "border-[#965EFB]" : "border-[#8d8c8c]"
-            } rounded-[5px] hover:border-[#965EFB]`}
+            } rounded-[5px] hover:border-[#965EFB] cursor-pointer`}
             onClick={() => handleSpecializationChange("Tarot")}
           >
             <Tarot fill={specialization === "Tarot"} />
             <p
               className={`my-2 hover:text-[#965EFB] ${
-                spec == "tarot" ? "text-[#965EFB]" : "text-black"
+                specialization === "Tarot" ? "text-[#965EFB]" : "text-black"
               }  text-[14px] leading-2`}
             >
               Tarot
@@ -586,13 +604,14 @@ const SideBar = ({
                 setPrice("Below ₹30.0");
               }}
             >
-              <label>
+              <label className="flex gap-2">
                 <input
                   type="radio"
                   name="sortOrder"
                   value="below 30"
                   checked={sortOrder === "below 30"}
                   onChange={() => handleFilterChange("sortOrder", "below 30")}
+                  className="form-radio checked:bg-green-500"
                 />
                 Below 30
               </label>
@@ -603,7 +622,7 @@ const SideBar = ({
                 setPrice("Low to High");
               }}
             >
-              <label>
+              <label className="flex gap-2">
                 <input
                   type="radio"
                   name="sortOrder"
@@ -620,7 +639,7 @@ const SideBar = ({
                 setPrice("High to Low");
               }}
             >
-               <label>
+              <label className="flex gap-2">
                 <input
                   type="radio"
                   name="sortOrder"
@@ -666,7 +685,7 @@ const SideBar = ({
                 setChecked("female Astrologers");
               }}
             >
-              <label>
+              <label className="flex gap-2">
                 <input
                   type="radio"
                   name="gender"
@@ -683,7 +702,7 @@ const SideBar = ({
                 setChecked("Male Astrologers");
               }}
             >
-              <label>
+              <label className="flex gap-2">
                 <input
                   type="radio"
                   name="gender"
@@ -699,7 +718,10 @@ const SideBar = ({
 
         <div className="p-3">
           <button
-            onClick={fetchDataWithFilters}
+            onClick={() => {
+              fetchDataWithFilters();
+              onClose();
+            }}
             className="bg-[#965EFB] w-full text-white font-semibold py-2 rounded-md"
           >
             Apply
@@ -709,5 +731,4 @@ const SideBar = ({
     </div>
   );
 };
-
 export default SideBar;

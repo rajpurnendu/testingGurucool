@@ -22,7 +22,7 @@ const ConsultationEnded = ({ loginToken }: { loginToken: string }) => {
   } = useFilterStore();
 
   const guruToken: string = localStorage.getItem("guruToken") || "";
-  console.log(guruToken);
+  // console.log(guruToken);
 //   console.log(loginToken);
   
 //   const [userDetails, setUserDetails] = useState<any>();

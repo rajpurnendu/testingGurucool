@@ -3,7 +3,26 @@ import Balkrishna from "../../../public/assets/Balkrishna.jpg";
 import Insufficient_balance from "../../../public/assets/Insufficient_balance.png";
 import Image from "next/image";
 
-const InsufficientBalanceContent = () => {
+const InsufficientBalanceContent = ({
+  astroDetails,
+  fee,
+  minCallDuration,
+  userWalletBalance,
+}: {
+  astroDetails: any;
+  fee: string;
+  minCallDuration: number;
+  userWalletBalance: any;
+}) => {
+
+  console.log("Astrodetails>>>>>>>>>", astroDetails );
+  console.log("Fee>>>>>>>>>", fee);
+  console.log("minCallDuration>>>>>>>>>", minCallDuration);
+  console.log("userWalletBalance>>>>>>>>>", userWalletBalance);
+
+  const feeNumber = parseFloat(fee);
+const Balance_required = feeNumber * 5;
+  
   return (
     <>
       <div className="flex flex-col items-center gap-[0.5rem]">
@@ -27,18 +46,22 @@ const InsufficientBalanceContent = () => {
       <div className="w-full py-[0.66rem] md:py-8 border-t-[0.196px] border-b-[0.196px] border-gray-700 ">
         <div className="w-full flex justify-center">
           <div className="flex flex-col items-center gap-[0.5rem]  md:gap-6 p-[0.17rem]">
-            <h3 className="text-[0.75rem] md:text-[1.25rem] font-normal">Available Balance</h3>
+            <h3 className="text-[0.75rem] md:text-[1.25rem] font-normal">
+              Available Balance
+            </h3>
             <h4 className="text-[0.875rem] md:text-[2.125rem] font-semibold text-red-600 ">
-              ₹5/min
+              ₹{Math.round(userWalletBalance)}
             </h4>
           </div>
           <div className="w-[0.196px] bg-gray-700 mx-[0.91rem] md:mx-8"></div>
           <div className="flex flex-col items-center gap-[0.5rem]  md:gap-6 p-[0.17rem]">
-            <h3 className="text-[0.75rem] md:text-[1.25rem] font-normal">Balance required</h3>
+            <h3 className="text-[0.75rem] md:text-[1.25rem] font-normal">
+              Balance required
+            </h3>
 
             <h4 className="text-[0.875rem]  md:text-[2.125rem] font-semibold text-green-500 ">
               {" "}
-              ₹1000
+              ₹{Balance_required}
             </h4>
           </div>
         </div>
@@ -46,19 +69,21 @@ const InsufficientBalanceContent = () => {
           Astrologer&apos;s consultation charge:
           <span className="text-violet-400 text-[0.75rem] md:text-[1.375rem] font-medium">
             {" "}
-            ₹20/min
+            ₹{fee}/min
           </span>
         </h5>
       </div>
       <div className="w-full bg-[#26C884] p-[0.38rem] md:p-4 rounded-[0.17rem] ">
         <h6 className="font-normal leading-tight text-[0.75rem] md:text-[1.25rem] text-white text-justify">
-          Minimum balance of 5 minutes (INR 25.00) is required to start call
-          with Y astrologer.
+         {` Minimum balance of 5 minutes ₹${Balance_required} is required to start call
+          with Y astrologer.`}
         </h6>
       </div>
       <div className="flex w-full">
         <div>
-          <h6 className="text-[0.75rem] md:text-[1.375rem] font-medium leading-normal ">Note: </h6>
+          <h6 className="text-[0.75rem] md:text-[1.375rem] font-medium leading-normal ">
+            Note:{" "}
+          </h6>
         </div>
         <div className="w-full ml-[0.27rem] ">
           <h5 className="text-left text-[0.75rem] md:text-[1.25rem] font-normal">

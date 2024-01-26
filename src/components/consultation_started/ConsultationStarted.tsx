@@ -1,14 +1,17 @@
 "use client";
-import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
+
 import { getUserprofile } from "@/lib/data";
 import useFilterStore from "@/store/filterStore";
-import { redirect, usePathname, useRouter } from "next/navigation";
+
+import { usePathname, useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Modal from "../ReusableModal/ReusableModal";
 import ConsultationFailed from "./ConsultationFailed";
 import ConsultationStartedModal from "./ConsultationStartedModal";
-import { handleNavigate } from "@/lib/actions";
+
 
 const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   const {
@@ -50,22 +53,22 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
 
     userProfile();
   }, []);
-  console.log(userDetails);
+  // console.log(userDetails);
 
   async function fetchCallStartedData() {
     try {
       const response1 = await fetch(
-        `https://prod.gurucool.life/api/v1/consultations/consultationReceipt?purchaseId=${purchaseId}`
+        `${TESTING_URL}consultations/consultationReceipt?purchaseId=${purchaseId}`
       );
       const data1 = await response1.json();
-      console.log(data1.purchase.callStatus);
+      // console.log(data1.purchase.callStatus);
 
       setCallStatus(data1.purchase.callStatus);
       const response2 = await fetch(
         G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
       );
       const data2 = await response2.json();
-      console.log(data2);
+      // console.log(data2);
 
       setAstroDetails(data2.guru);
       if (data1.purchase.callStatus === "completed") {
@@ -87,8 +90,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
         // );
         setAmount(data1.purchase.amount);
         localStorage.removeItem("purchaseId");
-        handleNavigate();
-        // router.push("/call-consultation-ended");
+        router.push("/call-consultation-ended");
       } else if (callStatus === "started") {
         setCallMsg("Your Call has been Started");
       } else if (callStatus === "failed") {
@@ -101,16 +103,16 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
         // });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
-  console.log(astroDetails);
+  // console.log(astroDetails);
 
   const [eventName, setEventName] = useState();
   useEffect(() => {
     if (loginToken && userDetails?.uid) {
-      console.log(userDetails);
+      // console.log(userDetails);
 
       const uid = userDetails.uid.toString();
       const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -121,20 +123,20 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
       setEventName(encodedStr);
     }
   }, [loginToken, userDetails]);
-  console.log(eventName);
+  // console.log(eventName);
 
   useEffect(() => {
     if (eventName) {
-      console.log("EVENT>>>>>>>>>>>>>>>>>>>>>>>>>", eventName);
+      // console.log("EVENT>>>>>>>>>>>>>>>>>>>>>>>>>", eventName);
       const newSocket = io("https://prod.gurucool.life");
 
       newSocket.on("connect", () => {
-        console.log("Connected to the server");
+        // console.log("Connected to the server");
       });
 
       newSocket.on(eventName, (data: any) => {
         // // //console.log("Socket Event>>>>>>>>>>>>>>>>>>>>>>>>>");
-        console.log("Socket Event DATA>>>>>>>>>>>>>>>>>>>>>>>>>", data);
+        // console.log("Socket Event DATA>>>>>>>>>>>>>>>>>>>>>>>>>", data);
         fetchCallStartedData();
       });
 

@@ -19,7 +19,7 @@ const AstroCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
           loginToken && (await getUserprofile(loginToken.value));
 
         setUserDetails(data.userDetails);
-        console.log(data);
+        // console.log(data);
       }
     };
 

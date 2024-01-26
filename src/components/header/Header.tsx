@@ -238,13 +238,22 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                 } bg-white shadow-lg p-[10px] z-[1000] w-[214px] h-auto rounded-[4px] transition-all duration-500 ease-in-out`}
               >
                 <div className="flex flex-col items-start gap-2">
-                  <Link href="/my-profile" onClick={toggelDrop}>
+                  <Link
+                    href="/my-profile"
+                    onClick={toggelDrop}
+                    className="w-full hover:scale-105 transition-all duration-200 ease-in-out"
+                  >
                     My Profile
                   </Link>
-                  <Link href="/wallet/pricelist" onClick={toggelDrop}>
+                  <Link
+                    href="/wallet/pricelist"
+                    onClick={toggelDrop}
+                    className="w-full hover:scale-105 transition-all duration-200 ease-in-out"
+                  >
                     Wallet
                   </Link>
                   <button
+                    className="w-full text-left hover:scale-105 transition-all duration-200 ease-in-out"
                     onClick={async () => {
                       logout();
                       toggelDrop;

@@ -28,13 +28,12 @@ import Link from "next/link";
 import AstroCard from "../homeC/astroCard";
 import { FollowAstro, UnFollowAstro } from "@/lib/actions";
 import ConsultationModalContent from "../consult_page/ConsultationModalContent";
-import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
 import Modal from "../ReusableModal/ReusableModal";
 import { BasicModal } from "../login/BasicModal";
 
 const AstrologerWeb = ({
   data,
-  data2,
   useraProfileId,
   feedback,
   loginToken,
@@ -77,8 +76,6 @@ const AstrologerWeb = ({
     }
     // eslint-disable-next-line
   }, [responseData]);
-  // const displayedData = astroData.slice(0, currentIndex + 12);
-  // console.log(displayedData);
 
   function capitalizeFirstLetter(str: string) {
     // converting first letter to uppercase
@@ -92,7 +89,7 @@ const AstrologerWeb = ({
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const isMobile = window.innerWidth < 768;
+  // const isMobile = window.innerWidth < 768;
 
   const {
     astroDetails,
@@ -109,21 +106,18 @@ const AstrologerWeb = ({
       if (loginToken) {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
-        console.log(data);
       }
     };
 
     userProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(userDetails);
+
   const [callBtnClicked, setCallBtnClicked] = useState(false);
   const callClickedHandler = (guruToken: string) => {
     // userProfile();
     localStorage.setItem("guruToken", guruToken);
-    fetch(
-      `https://prod.gurucool.life/api/v1/guru/getSingleGuru?guruId=${guruToken}`
-    )
+    fetch(`${TESTING_URL}guru/getSingleGuru?guruId=${guruToken}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -142,10 +136,8 @@ const AstrologerWeb = ({
         console.error("Error fetching data:", error);
       });
   };
-  console.log(astroDetails);
-console.log(data2)
-  const fee = getPrice(userDetails, data2);
-  console.log(fee)
+
+  const fee = getPrice(userDetails, data);
   function getPrice(userDetails: any, astroDetails: any) {
     if (userDetails?.consultationCount === 0 || !loginToken) {
       return astroDetails?.firstOfferPrice?.national?.fee;
@@ -154,16 +146,14 @@ console.log(data2)
     }
   }
   const userWalletBalance: any = userDetails && userDetails?.wallet;
-  // console.log(userWalletBalance);
+
   const minCallDuration = Math.floor(userWalletBalance / fee);
-  console.log(typeof minCallDuration);
 
   useEffect(() => {
     if (fee > 0) {
       if (userWalletBalance >= fee * 5) {
         setInsufficientBalance(false);
         setMinCallDuration(minCallDuration);
-        // // //console.log("minCallDuration",minCallDuration);
       } else {
         setInsufficientBalance(true);
       }
@@ -172,11 +162,32 @@ console.log(data2)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [astroDetails, userDetails]);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // const guruToken: string | null = localStorage.getItem("guruToken");
-  const guruToken: string = localStorage.getItem("guruToken") || "";
+  // useEffect to set isMobile, runs only on client-side
   useEffect(() => {
-    // console.log("fetchastrologerdata")
+    const checkIfMobile = () => window.innerWidth < 768;
+    setIsMobile(checkIfMobile());
+
+    // Optionally, to handle window resizing:
+    window.addEventListener("resize", () => {
+      setIsMobile(checkIfMobile());
+    });
+
+    // Cleanup listener
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
+  // const guruToken: string | null = localStorage.getItem("guruToken");
+  const [guruToken, setGuruToken] = useState("");
+
+  useEffect(() => {
+    // Access localStorage only when the component mounts on the client-side
+    const token = localStorage.getItem("guruToken") || "";
+    setGuruToken(token);
+
+    // ... other client-side only effects
+  }, []);
+  useEffect(() => {
     const fetchDataforAstrologer = async () => {
       try {
         const response = await fetch(
@@ -185,7 +196,7 @@ console.log(data2)
 
         if (response.ok) {
           const responseData = await response.json();
-          // console.log(responseData)
+
           setCallAvailability(responseData?.guru?.callAvailability);
         } else {
           Error("Request failed");
@@ -215,7 +226,6 @@ console.log(data2)
     console.log("Consultation Started......");
 
     const startConsultation = async () => {
-      //console.log(requestData);
       try {
         const response = await fetch(startConsultationUrlV1, {
           method: "POST",
@@ -225,7 +235,7 @@ console.log(data2)
           },
           body: JSON.stringify(requestData),
         });
-        // //console.log(response);
+
         if (response.status === 200) {
           console.log("Suc......................");
           const responseData = await response.json();
@@ -233,7 +243,7 @@ console.log(data2)
 
           setCallPurchasedId(responseData.purchaseId);
           // navigate("/callconsultationstarted");
-          console.log(responseData);
+
           // redirect("/Call-consultation-started");
           router.push("/call-consultation-started");
           // ('/dashboard', { scroll: false })
@@ -243,13 +253,10 @@ console.log(data2)
         }
       } catch (error: any) {
         setErrorMsg(error.message);
-        //console.log(error);
       }
     };
     startConsultation();
   };
-  // console.log(astroData);
-  //
 
   const [descLength, setdescLength] = useState(200);
   const [imgLength, setimgLength] = useState(4);
@@ -319,7 +326,7 @@ console.log(data2)
                 alt="profile"
               />
             </div>
-            {data.mostTrusted == true ? (
+            {data?.mostTrusted == true ? (
               <div className="absolute bottom-[36%] py-[5px] gap-2 items-center flex  px-[6px] rounded-bl-[24px] rounded-tr-[10px] bg-[#965EFB]">
                 <Image
                   src={checkicon}
@@ -347,14 +354,14 @@ font-semibold"
             {loginToken ? (
               !isFollowing ? (
                 <div
-                  onClick={() => FollowAstro(loginToken, data.user.guru)}
+                  onClick={() => FollowAstro(loginToken, data?.user.guru)}
                   className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
                 >
                   Follow
                 </div>
               ) : (
                 <div
-                  onClick={() => UnFollowAstro(loginToken, data.user.guru)}
+                  onClick={() => UnFollowAstro(loginToken, data?.user.guru)}
                   className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-red-500 rounded-md"
                 >
                   UnFollow
@@ -373,8 +380,8 @@ font-semibold"
 text-[34px]
 font-semibold"
               >
-                {`${data.user.firstName} 
-              ${data.user.lastName}`}
+                {`${data?.user.firstName} 
+              ${data?.user.lastName}`}
               </h1>
               <div className=" flex gap-[10px] items-center">
                 <Image src={language} width="30" height="30" alt="langugage" />
@@ -386,7 +393,7 @@ font-semibold"
               leading-[25px]
               "
                 >
-                  {data.languages.join(",")}
+                  {data?.languages.join(",")}
                 </p>
               </div>
             </div>
@@ -891,7 +898,11 @@ font-semibold"
           </Link>
           <div className="flex gap-[45px] md:max-w-[768px] lg:max-w-[972px]  no-scrollbar overflow-x-scroll mx-auto items-center px-[20px]">
             {similar.recommendedAstrologers.map((similarData: any) => (
-              <AstroCard key={similarData._id} data={similarData} loginToken={loginToken} />
+              <AstroCard
+                key={similarData._id}
+                data={similarData}
+                loginToken={loginToken}
+              />
             ))}
           </div>
         </div>

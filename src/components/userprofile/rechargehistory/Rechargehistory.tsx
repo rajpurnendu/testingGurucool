@@ -6,6 +6,7 @@ import clsx from "clsx";
 import ReactPaginate from "react-paginate";
 import { getUserprofile } from "@/lib/data";
 import "./style.css";
+import { TESTING_URL } from "@/lib/apilinks";
 
 function convertIst(date: string): string {
   const utcDate: Date = new Date(date);
@@ -40,7 +41,7 @@ const Rechargehistory = ({ loginToken }: { loginToken: string }) => {
 
         if (loginToken && userUid) {
           const response = await fetch(
-            `https://prod.gurucool.life/api/v1/user/getPaymentsDetails?uid=${userUid}`,
+            `${TESTING_URL}user/getPaymentsDetails?uid=${userUid}`,
             {
               method: "GET",
               headers: {

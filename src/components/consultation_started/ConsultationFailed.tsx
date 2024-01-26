@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import consultation_failed from "../../../public/assets/consultation_failed.webp";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const ConsultationFailed = () => {
   const handleNavigate = () => {
@@ -37,9 +38,11 @@ const ConsultationFailed = () => {
             completed at the moment due to some technical glitch, please try
             after sometime
           </p>
-          <button className="text-violet-600 md:text-[0.75rem] font-semibold mt-1 self-end">
-            Try Again
-          </button>
+          <Link href={"/call-to-astrologers"} className="self-end">
+            <button className="text-violet-600 md:text-[0.75rem] font-semibold mt-1 self-end">
+              Try Again
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -49,9 +52,14 @@ const ConsultationFailed = () => {
         </button>
       </div>
       <div className="w-full md:w-[20rem] ">
-        <button className="w-full rounded-[0.34rem] md:p-[0.54rem] bg-white text-[#3A3938] border border-[#3A3938] md:text-base font-medium text-center" onClick={handleNavigate}>
-          Go back to Home Page
-        </button>
+        <Link href={"/"} >
+          <button
+            className="w-full rounded-[0.34rem] md:p-[0.54rem] bg-white text-[#3A3938] border border-[#3A3938] md:text-base font-medium text-center"
+            // onClick={handleNavigate}
+          >
+            Go back to Home Page
+          </button>
+        </Link>
       </div>
     </>
   );

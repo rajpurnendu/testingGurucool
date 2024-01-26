@@ -19,9 +19,10 @@ const TrendingGod = ({ data1 }: any) => {
   return (
     <OwlCarousel
       loop
-      margin={50}
-      dots={false}
-      nav
+      margin={30}
+      center
+      dots
+      nav={true}
       navClass={["owl-prev", "owl-next"]}
       navText={["<--", "-->"]}
       className="owl-theme w-full h-[40%] flex items-start justify-start"
@@ -29,10 +30,17 @@ const TrendingGod = ({ data1 }: any) => {
       responsive={{
         0: {
           items: 1,
-          // margin: -10
+          nav: false,
+          center: true,
         },
         1024: {
+          nav: false,
           items: 2,
+          center: false,
+        },
+        1025: {
+          items: 2,
+          center: false,
         },
       }}
     >

@@ -1,9 +1,11 @@
 // components/Modal.js
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const Modal = ({ show, onClose, children, size }) => {
   const modalRef = useRef();
+  const location = usePathname();
 
   const getSize = (size) => {
     switch (size) {
@@ -54,7 +56,7 @@ const Modal = ({ show, onClose, children, size }) => {
     >
       <div className="flex items-center justify-center min-h-full">
         <div
-          ref={modalRef}
+          ref={location === "/call-consultation-started" ? null : modalRef}
           className="relative mx-auto p-4 border shadow-lg rounded-[0.625rem] bg-white animate__animated animate__zoomIn animate__faster"
           style={{
             width: modalWidth,

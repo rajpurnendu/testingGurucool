@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 
 const TopBar = ({ state, fn }: { state: boolean; fn: Function }) => {
@@ -21,9 +22,9 @@ const TopBar = ({ state, fn }: { state: boolean; fn: Function }) => {
             </div>
           </div>
           <div className="cursor-pointer  hover:shadow-lg">
-            <a
+            <Link
               target="_blank"
-              rel="noopener noreferrer"
+              // rel="noopener noreferrer"
               href="https://play.google.com/store/apps/details?id=com.gurucool&pcampaignid=web_share"
             >
               <svg
@@ -53,7 +54,7 @@ const TopBar = ({ state, fn }: { state: boolean; fn: Function }) => {
                   strokeOpacity="0.7"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </nav>
       </div>

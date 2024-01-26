@@ -11,10 +11,10 @@ const handleNavigate = (title: string) => {
 const TrendingBogCard = ({ blog }: any) => {
   return (
     <div className="items-center shadow border overflow-hidden p-[9.9px]  border-zinc-200 rounded-[13.97px]  max-w-[376px] flex flex-col md:p-[13.36px] gap-[11.18px] justify-start">
-      <div>
+      <div className="max-h-[155px] overflow-hidden ">
         <Link
           href={handleNavigate(blog?.title)}
-          className=" overflow-hidden h-[155px] w-[350px] rounded-[6px]"
+          className=" overflow-hidden max-h-[155px] w-[350px] rounded-[6px]"
         >
           <Image
             className=" w-full h-full"
@@ -34,8 +34,8 @@ text-base
 leading-none
 font-semibold"
       >
-        {blog?.title?.slice(0, 20)}...
-        {blog?.description?.slice(0, 50)}...
+        {/* {blog?.title?.slice(0, 20)}... */}
+        {blog?.description?.slice(0, 75)}...
       </Link>
       <div className="flex justify-between w-full items-center">
         <div className="flex items-center justify-center gap-[5.5px]">

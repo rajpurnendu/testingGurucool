@@ -4,7 +4,7 @@ import profileimg from "../../../public/assets/Balkrishna.jpg";
 import Image from "next/image";
 import Star from "./Star";
 import Link from "next/link";
-import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
 import { useRouter } from "next/navigation";
 
 const UserFeedBack = ({
@@ -26,7 +26,7 @@ const UserFeedBack = ({
   const [checkedState, setCheckedState] = useState<string[]>([]);
   const [feedbacktext, setFeedbacktext] = useState("");
   const [guruData, setGuruData] = useState<any>();
-  console.log(guruToken);
+  // console.log(guruToken);
   const router = useRouter();
   useEffect(() => {
     fetch(G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken))
@@ -34,10 +34,10 @@ const UserFeedBack = ({
       .then((data) => setGuruData(data.guru));
   }, []);
 
-  console.log(guruData);
-  console.log(callPurchasedId);
-  console.log(amount);
-  console.log(callDuration);
+  // console.log(guruData);
+  // console.log(callPurchasedId);
+  // console.log(amount);
+  // console.log(callDuration);
 
   const handleCheckboxChange = (feedback: any, isChecked: any) => {
     if (isChecked) {
@@ -89,26 +89,23 @@ const UserFeedBack = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://prod.gurucool.life/api/v1/guru/addFeedback",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // Include other headers if necessary
-          },
-          body: JSON.stringify({
-            user: userId,
-            astrologer: astroDetails?.user?._id,
-            rating: rating,
-            bad: rating <= 2 ? checkedState.join(", ") : "",
-            good: rating > 2 ? checkedState.join(", ") : "",
-            badFeedback: rating <= 2 ? feedbacktext : "",
-            goodFeedback: rating > 2 ? feedbacktext : "",
-            purchaseId: callPurchasedId,
-          }),
-        }
-      );
+      const response = await fetch(`${TESTING_URL}guru/addFeedback`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Include other headers if necessary
+        },
+        body: JSON.stringify({
+          user: userId,
+          astrologer: astroDetails?.user?._id,
+          rating: rating,
+          bad: rating <= 2 ? checkedState.join(", ") : "",
+          good: rating > 2 ? checkedState.join(", ") : "",
+          badFeedback: rating <= 2 ? feedbacktext : "",
+          goodFeedback: rating > 2 ? feedbacktext : "",
+          purchaseId: callPurchasedId,
+        }),
+      });
 
       if (response.ok) {
         setRating(0);
@@ -240,7 +237,7 @@ const UserFeedBack = ({
                 rating < 1 ||
                 !(checkedState.length > 0 || feedbacktext.length >= 2)
               }
-              className="text-white h-[2.5rem] w-[45%] rounded-[0.375rem] outline outline-transparent outline-offset-[2px] leading-[1.2] font-[600] bg-[#26c884] mt-[8px] hover:opacity-[0.9]"
+              className="text-white h-[2.5rem] w-[45%] rounded-[0.375rem] outline outline-transparent outline-offset-[2px] leading-[1.2] font-[600] bg-[#26c884] mt-[8px] hover:opacity-[0.9] cursor-pointer"
             >
               Submit
             </button>

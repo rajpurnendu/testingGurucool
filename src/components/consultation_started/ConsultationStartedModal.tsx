@@ -3,7 +3,15 @@ import Balkrishna from "../../../public/assets/Balkrishna.jpg";
 import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
 
-const ConsultationStartedModal = ({astroDetails, setRemainingTime, remainingTime}: {astroDetails:any, setRemainingTime:any, remainingTime:number}) => {
+const ConsultationStartedModal = ({
+  astroDetails,
+  setRemainingTime,
+  remainingTime,
+}: {
+  astroDetails: any;
+  setRemainingTime: any;
+  remainingTime: number;
+}) => {
   const consultationPoints = [
     {
       id: 1,
@@ -119,7 +127,9 @@ const ConsultationStartedModal = ({astroDetails, setRemainingTime, remainingTime
                     fill="#222222"
                   />
                 </svg>
-                <h5 className="text-base leading-none text-[#222222] ">{curr.name}</h5>
+                <h5 className="text-base leading-none text-[#222222] ">
+                  {curr.name}
+                </h5>
               </div>
             );
           })}
@@ -127,7 +137,11 @@ const ConsultationStartedModal = ({astroDetails, setRemainingTime, remainingTime
       </div>
       <div className="flex md:w-[18.31rem] md:mx-auto">
         <h3 className="text-[1.25rem] text-[#707070] leading-none">
-          Connecting you to Usha ji, First{" "}
+          Connecting you to{" "}
+          <span className="text-[1.25rem] font-semibold text-[#707070] leading-none">
+            {astroDetails?.user?.firstName} {astroDetails?.user?.lastName},
+          </span>{" "}
+          First{" "}
           <span className="text-[1.25rem] text-red-600 leading-none">
             60 seconds
           </span>{" "}
@@ -137,7 +151,7 @@ const ConsultationStartedModal = ({astroDetails, setRemainingTime, remainingTime
       <div className="w-full">
         <h3 className="text-[1.25rem] text-[#707070] leading-none">
           <span className="text-[1.25rem] text-green-600 leading-none">
-          {formatTime(remainingTime)}{" "}
+            {formatTime(remainingTime)}{" "}
           </span>
           Time Remaining
         </h3>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const page = () => {
   return (
     <div className="max-w-[72rem] mx-3 xl:mx-auto mt-[90px]">
@@ -24,22 +26,22 @@ const page = () => {
         <div className="border mt-[22px] border-[#ccc] rounded-[8px] p-[6px]">
           <p className="text-[16px]">Email:</p>
 
-          <a
+          <Link
             href="mailto:hi@gurucool.life"
             className="text-[16px] text-[#007BFF] hover:text-[#3b71ca] "
           >
             hi@gurucool.life
-          </a>
+          </Link>
 
           <p className="text-[16px]">Address:</p>
 
-          <a
+          <Link
             href="#"
             className="text-[16px] text-[#007BFF] hover:text-[#3b71ca]"
           >
             Nohata House 190-A Viduyth Nagar, Sarthi Marg, Jaipur, Rajasthan
             302021
-          </a>
+          </Link>
         </div>
         <p className="mt-[1rem] mb-[1rem]">{`We're here to help and will get back to you as soon as possible!`}</p>
       </div>

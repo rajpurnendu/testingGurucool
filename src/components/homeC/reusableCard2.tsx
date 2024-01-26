@@ -5,7 +5,7 @@ import { useState } from "react";
 const ReusableCard2 = ({ data }: any) => {
   const [descLength, setDescLength] = useState(220);
   return (
-    <div className="relative rounded-xl xl:rounded-lg shadow xl:shadow hover:xl:shadow-md transition duration-300 ease-in-out  xl:min-w-[281px] min-w-[247px] p-[1rem]">
+    <div className="relative rounded-xl bg-white xl:rounded-lg shadow xl:shadow hover:xl:shadow-md transition duration-300 ease-in-out  xl:min-w-[281px] min-w-[247px] p-[1rem]">
       <div className="flex flex-col items-center xl:gap-[0.81rem] gap-[23px]">
         <div className="flex flex-row w-full justify-end items-end">
           <svg

@@ -273,12 +273,12 @@ const page = () => {
           the event you have purchased in-app currency and are dissatisfied with
           the Services, you may contact the Company’s quality assurance
           representatives at{" "}
-          <a
+          <Link
             href="mailto:hi@gurucool.life"
             className="text-[16px] text-[#007BFF] hover:text-[#3b71ca] "
           >
             hi@gurucool.life
-          </a>{" "}
+          </Link>{" "}
           and lodge a complaint. For such complaints to be valid, the same has
           to be received within seven (7) days of the occurrence of the event
           giving rise to such dissatisfaction. Any requests for a refund shall
@@ -296,12 +296,12 @@ const page = () => {
           23. In case you have any other query or require support regarding the
           Services, you may contact the Company’s support representatives using
           the in-app customer support chat or write at{" "}
-          <a
+          <Link
             href="mailto:hi@gurucool.life"
             className="text-[16px] text-[#007BFF] hover:text-[#3b71ca] "
           >
             hi@gurucool.life
-          </a>
+          </Link>
           .
         </p>
         <p className="text-[16px] text-justify text-[#333] mb-[1rem]"></p>

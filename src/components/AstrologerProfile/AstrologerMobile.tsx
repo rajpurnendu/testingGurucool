@@ -33,13 +33,12 @@ import AstroCard from "../homeC/astroCard";
 import { FollowAstro, UnFollowAstro } from "@/lib/actions";
 import { Get_ASTROLOGER_FEEDBACK } from "@/lib/data";
 import ConsultationModalContent from "../consult_page/ConsultationModalContent";
-import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN } from "@/lib/apilinks";
+import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
 import Modal from "../ReusableModal/ReusableModal";
 import { BasicModal } from "../login/BasicModal";
 
 const AstrologerMobile = ({
   data,
-  data2,
   feedback,
   useraProfileId,
   loginToken,
@@ -98,8 +97,6 @@ const AstrologerMobile = ({
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const isMobile = window.innerWidth < 768;
-
   const {
     astroDetails,
     setAstroDetails,
@@ -115,21 +112,19 @@ const AstrologerMobile = ({
       if (loginToken) {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
-        console.log(data);
+        // console.log(data);
       }
     };
 
     userProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(userDetails);
+  // console.log(userDetails);
   const [callBtnClicked, setCallBtnClicked] = useState(false);
   const callClickedHandler = (guruToken: string) => {
     // userProfile();
     localStorage.setItem("guruToken", guruToken);
-    fetch(
-      `https://prod.gurucool.life/api/v1/guru/getSingleGuru?guruId=${guruToken}`
-    )
+    fetch(`${TESTING_URL}guru/getSingleGuru?guruId=${guruToken}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -148,10 +143,9 @@ const AstrologerMobile = ({
         console.error("Error fetching data:", error);
       });
   };
-  console.log(astroDetails);
-  console.log(data2);
+  // console.log(astroDetails);
 
-  const fee = getPrice(userDetails, data2);
+  const fee = getPrice(userDetails, data);
   function getPrice(userDetails: any, astroDetails: any) {
     if (userDetails?.consultationCount === 0 || !loginToken) {
       return astroDetails?.firstOfferPrice?.national?.fee;
@@ -162,7 +156,7 @@ const AstrologerMobile = ({
   const userWalletBalance: any = userDetails && userDetails?.wallet;
   // console.log(userWalletBalance);
   const minCallDuration = Math.floor(userWalletBalance / fee);
-  console.log(typeof minCallDuration);
+  // console.log(typeof minCallDuration);
 
   useEffect(() => {
     if (fee > 0) {
@@ -180,7 +174,7 @@ const AstrologerMobile = ({
   }, [astroDetails, userDetails]);
 
   // const guruToken: string | null = localStorage.getItem("guruToken");
-  const guruToken: string = localStorage.getItem("guruToken") || "";
+
   useEffect(() => {
     // console.log("fetchastrologerdata")
     const fetchDataforAstrologer = async () => {
@@ -239,7 +233,7 @@ const AstrologerMobile = ({
 
           setCallPurchasedId(responseData.purchaseId);
           // navigate("/callconsultationstarted");
-          console.log(responseData);
+          // console.log(responseData);
           // redirect("/Call-consultation-started");
           router.push("/call-consultation-started");
           // ('/dashboard', { scroll: false })
@@ -282,7 +276,7 @@ const AstrologerMobile = ({
     sort: string,
     userId: string | undefined
   ) => {
-    console.log(id, sort, userId);
+    // console.log(id, sort, userId);
     const feedbackAstro = await Get_ASTROLOGER_FEEDBACK(id, sort, userId);
     setFeedbackdata(feedbackAstro.feedback);
   };
@@ -290,12 +284,12 @@ const AstrologerMobile = ({
   useEffect(() => {
     if (Sort == "recent") {
       handleFeedback(data.gid, "recent", useraProfileId);
-      console.log("i am recent" + Sort);
-      console.log(feedbackData);
+      // console.log("i am recent" + Sort);
+      // console.log(feedbackData);
     } else {
       handleFeedback(data.gid, "mostPopular", useraProfileId);
-      console.log("i am most" + Sort);
-      console.log(feedbackData);
+      // console.log("i am most" + Sort);
+      // console.log(feedbackData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Sort]);
@@ -308,6 +302,31 @@ const AstrologerMobile = ({
     return `${month} ${year}`;
   }
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  // useEffect to set isMobile, runs only on client-side
+  useEffect(() => {
+    const checkIfMobile = () => window.innerWidth < 768;
+    setIsMobile(checkIfMobile());
+
+    // Optionally, to handle window resizing:
+    window.addEventListener("resize", () => {
+      setIsMobile(checkIfMobile());
+    });
+
+    // Cleanup listener
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
+  // const guruToken: string | null = localStorage.getItem("guruToken");
+  const [guruToken, setGuruToken] = useState("");
+
+  useEffect(() => {
+    // Access localStorage only when the component mounts on the client-side
+    const token = localStorage.getItem("guruToken") || "";
+    setGuruToken(token);
+
+    // ... other client-side only effects
+  }, []);
   const Specialities: any = {
     Love: { img: heart, desc: "Relationship" },
     Marriage: { img: marriage, desc: "Kids,Divorce" },
@@ -332,7 +351,7 @@ const AstrologerMobile = ({
         <div className="mx-aut0 relative w-full md:hidden flex flex-col mt-[90px] my-5">
           <div className="relative">
             <Image
-              src={data.backgroundBanner.image_Url}
+              src={data?.backgroundBanner?.image_Url}
               width="500"
               height="500"
               className="w-full h-[119px] md:h-[200px]"
@@ -347,7 +366,7 @@ const AstrologerMobile = ({
                 alt="profile"
               />
             </div>
-            {data.callAvailability === "online" ? (
+            {data?.callAvailability === "online" ? (
               <div className="absolute  top-[75%]  left-[23%] md:left-[13%]">
                 <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
                 <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
@@ -368,8 +387,8 @@ const AstrologerMobile = ({
 text-xl
 font-semibold"
                 >
-                  {data.user.firstName}
-                  {data.user.lastName}
+                  {data?.user.firstName}
+                  {data?.user.lastName}
                 </p>
                 <div className="flex gap-1 items-center">
                   <Image
@@ -384,7 +403,7 @@ font-semibold"
 text-xs
 font-medium leading-none"
                   >
-                    {data.languages.join(",")}
+                    {data?.languages.join(",")}
                   </p>
                   <p
                     className="text-neutral-500
@@ -397,7 +416,7 @@ font-medium leading-none"
                 <div className="flex gap-0.5">{starArray}</div>
               </div>
               <div className="flex flex-col items-center">
-                {data.mostTrusted == true ? (
+                {data?.mostTrusted == true ? (
                   <Image
                     src={mostchoice}
                     className="w-[80px] md:w-[100px] md:h-[100px] h-[80px]"
@@ -546,7 +565,7 @@ font-normal leading-loose
                 </div>
 
                 <div className="text-center text-neutral-700 text-lg font-semibold  leading-snug">
-                  {data.experience}+ Yrs
+                  {data?.experience}+ Yrs
                 </div>
               </div>
               <div className="min-w-[101.77px] h-[86px] px-2 py-[3px] bg-violet-500 bg-opacity-10 rounded-md shadow flex-col justify-start items-center inline-flex">
@@ -568,7 +587,7 @@ font-normal leading-loose
                   </p>
                 </div>
                 <div className="text-center text-neutral-700 text-lg font-semibold  leading-snug">
-                  {data.followersCount}
+                  {data?.followersCount}
                 </div>
               </div>
               <div className="min-w-[101.77px] h-[86px] px-2 py-[3px] bg-emerald-500 bg-opacity-10 rounded-md shadow flex-col justify-start items-center inline-flex">

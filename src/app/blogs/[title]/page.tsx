@@ -8,7 +8,7 @@ const Blogsinglepage = async ({ params }: { params: { title: string } }) => {
   // console.log(title)
   const formattedString = title.replace(/-/g, " ");
 
-  console.log(formattedString);
+  // console.log(formattedString);
   const data = await getSingleBlog(formattedString);
   const Blog = data?.blogs[0];
   // console.log(data);

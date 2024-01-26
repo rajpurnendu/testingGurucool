@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from 'next/server'
 const YOUR_INBUILT_API_URL = 'your_inbuilt_api_url';
 
 export async function POST(request:NextRequest) {
-  console.log("Exicuted..........");
+  // console.log("Exicuted..........");
   const data1=await request.json();
   try {
-    console.log("Exicuted..........",data1);
+    // console.log("Exicuted..........",data1);
     // Your API logic here
 
     return NextResponse.json(data1);
