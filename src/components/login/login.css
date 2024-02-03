@@ -1,21 +1,11 @@
-/* .loginComponent{
-    width: 100%;
-    height: 100vh;
-    background-color: transparent !important;
-    position: fixed;
-    backdrop-filter: blur(6px);
-    z-index: 9999;
-}
-.loginBox{
-    background-color: aquamarine;
-} */
+
 
 .phoneNumber  {
-    /* display: none !important; */
+
     width: 100px;
     height: 40px;
     cursor: pointer;
-    /* margin: 0 0 12px 0; */
+  
   }
 
   .countrycode {

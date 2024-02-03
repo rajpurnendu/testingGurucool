@@ -1,23 +1,54 @@
+"use client"
 import Image from "next/image";
 import god from "@/../public/assets/godImg.webp";
 import Link from "next/link";
+import dummyImage from "../../../public/assets/dummy_image.svg";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+
 const handleNavigate = (title: string) => {
   const formattedTitle = title.trim().replace(/%/g, "-").replace(/\s+/g, "-");
   const lowercaseformattedTitle = formattedTitle.toLowerCase();
   return `/blogs/${lowercaseformattedTitle}/`;
 };
-const GodCard = ({ data }: any) => {
+const GodCard = ({ data, loginToken }: {data:any, loginToken:any}) => {
   return (
-    <div className="mx-auto rounded-xl md:max-w-[300px] min-w-[201px] min-h-[237px] shadow hover:shadow-lg border transition duration-300 ease-in-out border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]">
+    <div className="mx-auto rounded-xl  min-w-[201px]  shadow hover:shadow-xl border transition duration-300 ease-in-out border-violet-500 border-opacity-40 bg-white p-2 flex flex-col items-center gap-[2.5px] xl:gap-[12px]"
+    onClick={() => {
+      if(loginToken) {
+        sendGTMEvent({ event: 'buttonClicked', value: 'Home_Blogs_' })
+        sendGAEvent({
+          event: "buttonClicked",
+          value: `Home_Blogs_${data?.title}`,
+        });
+      } else {
+        sendGTMEvent({ event: 'buttonClicked', value: 'Blogs_Enter_Nologin' })
+        sendGAEvent({
+          event: "buttonClicked",
+          value: `Blogs_Enter_Nologin_${data?.title}`,
+        });
+      }
+    }}
+    >
       <Link href={handleNavigate(data?.title)}>
-        <Image
-          src={data?.titleImage?.url}
-          className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[89px] xl:rounded-md rounded-[3px]"
-          alt="god"
-          width={500}
-          height={500}
-          priority
-        />
+        {data?.titleImage?.url ? (
+          <Image
+            src={data?.titleImage?.url}
+            className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[89px] xl:rounded-md rounded-[3px]"
+            alt="god"
+            width={500}
+            height={500}
+            priority
+          />
+        ) : (
+          <Image
+            src={dummyImage}
+            className="xl:w-[260px] md:w-[260px] md:h-[100px] xl:h-[133px] w-[185px] h-[89px] xl:rounded-md rounded-[3px]"
+            alt="god"
+            width={500}
+            height={500}
+            priority
+          />
+        )}
       </Link>
 
       <div className="flex gap-1 cursor-pointer items-center w-full">
@@ -48,18 +79,20 @@ w-max
           leading-0
           "
             >
-              {tag}
+              {tag.length > 7 ? `${tag.slice(0, 7)}..` : `${tag}`}
             </Link>
           ))}
         </div>
       </div>
-      <Link href={handleNavigate(data?.title)}>
+      <Link
+        href={handleNavigate(data?.title)}
+        className="w-full  overflow-hidden"
+      >
         <p
           className="text-neutral-700
 text-xs
 font-normal
 leading-[15px]
-
 opacity-60
 "
         >
@@ -69,7 +102,7 @@ opacity-60
 
       <div className="w-full flex justify-end">
         <div
-          className=" p-1 cursor-pointer xl:p-2 bg-amber-500 bg-opacity-20 xl:rounded-[30px] rounded-[15px] shadow justify-center items-center
+          className=" p-1 cursor-pointer xl:px-2 xl:py-1.5 bg-amber-500 bg-opacity-20 xl:rounded-[30px] rounded-[15px] shadow justify-center items-center
          flex  border "
         >
           <Link

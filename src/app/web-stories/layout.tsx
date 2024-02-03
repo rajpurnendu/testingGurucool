@@ -11,7 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Script async src="https://cdn.ampproject.org/v0.js"></Script>
+      {/* <Script async src="https://cdn.ampproject.org/v0.js"></Script>
       <Script
         async
         custom-element="amp-video"
@@ -21,7 +21,7 @@ export default function RootLayout({
         async
         custom-element="amp-story"
         src="https://cdn.ampproject.org/v0/amp-story-1.0.js"
-      ></Script>
+      ></Script> */}
       {children}
     </>
   );

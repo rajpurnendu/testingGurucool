@@ -16,7 +16,6 @@ const Userprofile = ({
   return (
     <>
       <Userdetails loginToken={loginToken?.value} edit={edit} />
-      {/* <Birtchart /> */}
       <Followingastrologers loginToken={loginToken?.value as string} />
       <Rechargehistory loginToken={loginToken?.value as string} />
       <Consultationhistory loginToken={loginToken?.value} />

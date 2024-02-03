@@ -18,3 +18,13 @@
     padding:17px !important;
   
  }  */
+
+ #blog-id .owl-carousel.owl-drag .owl-item {
+   display: flex;
+   justify-content: center;
+   
+   @media only screen and (min-width: 1024px) {
+      justify-content: start;
+    }
+
+}

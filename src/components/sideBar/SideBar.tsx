@@ -115,6 +115,26 @@ const SideBar = ({ isOpen, onClose }: { isOpen: boolean; onClose: any }) => {
   //   };
   // }, [drawerOpen]);
 
+  const sideDrawerRef = useRef<HTMLElement | null>(null);
+
+  // const toggelDrop = useCallback(() => {
+  //   setDrop(!drop);
+  // }, [drop]);
+
+  // const handleUserAvatarClickOutside = useCallback((event: any) => {
+  //   if (avatarRef.current && avatarRef.current.contains(event.target)) {
+  //     onClose();
+  //   }
+  // }, [avatarRef, setDrop]);
+
+  // useEffect(() => {
+  //   if (drop) {
+  //     document.addEventListener("mousedown", handleUserAvatarClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleUserAvatarClickOutside);
+  //   }
+  // }, [drop, handleUserAvatarClickOutside]);
+
   // useEffect(() => {}, [mainData]);
   // const handleApplyFunction = () => {
   //   // Create an object with selected filters
@@ -289,7 +309,7 @@ const SideBar = ({ isOpen, onClose }: { isOpen: boolean; onClose: any }) => {
     <div
       className={`fixed top-0 right-0 transition-all duration-500 ease-in-out  ${
         isOpen ? "visible" : "invisible"
-      } w-full h-full bg-[rgba(0,0,0,0.7)]  z-20`}
+      } w-full h-full bg-[rgba(0,0,0,0.7)]  z-[30]`}
       // ref={sideDrawerRef}
     >
       <div

@@ -8,14 +8,14 @@ const Faq = ({ searchParams }: { searchParams: any }) => {
   const filtername = searchParams.key || "";
   return (
     <div className="w-auto xl:w-[72rem] mx-auto xl:my-[2rem] px-5 md:px-[0px] flex flex-col items-center justify-center">
-      <h3 className="text-center xl:mb-[12px] mb-[4px] text-lg xl:text-[22px] font-semibold xl:leading-7">{`FAQ'S`}</h3>
+      <h3 className="text-center text-white xl:mb-[12px] mb-[4px] text-lg xl:text-[22px] font-semibold xl:leading-7">{`FAQ'S`}</h3>
       <Image
         src={line}
         className="w-[38px] h-[2.06px] xl:w-[139.40px] xl:h-[6.82px] mx-auto xl:mx-auto mb-[15px] xl:m-[12px]"
         alt="line"
       />
       <div className="">
-        <p className="text-center xl:text-xl text-base font-semibold mb-[6.8px]">
+        <p className="text-center  text-white xl:text-xl text-base font-semibold mb-[14px]">
           We are here to help you, with most frequent question asked by our
           users.
         </p>
@@ -32,16 +32,28 @@ const Faq = ({ searchParams }: { searchParams: any }) => {
             <div
               className={`xl:w-[41px] w-[25px] md:w-[35px] bg-violet-500 rounded-full`}
             >
-              {filtername == data.id ? (
-                <Link href={`?filter=${searchParams.filter}`} scroll={false}>
-                  <Image
-                    className="
+              {/* transform: !expand ? "rotate(-90deg)" : "rotate(0deg)", */}
+              {/* transition: "all 0.2s ease-in-out", */}
+              {/* {filtername == data.id ? ( */}
+              <Link
+                href={`?filter=${searchParams.filter}${
+                  filtername == data.id ? "" : "&key=" + data.id
+                }`}
+                scroll={false}
+              >
+                <Image
+                  className="
                  m-auto xl:w-4 w-2 md:w-3 py-[5.41px]"
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </Link>
-              ) : (
+                  style={{
+                    transform:
+                      filtername == data.id ? "rotate(90deg)" : "rotate(0deg)",
+                    transition: "all 0.4s ease-in-out",
+                  }}
+                  src={arrow}
+                  alt="arrow"
+                />
+              </Link>
+              {/* ) : (
                 <Link
                   href={`?filter=${searchParams?.filter}&key=${data.id}`}
                   scroll={false}
@@ -54,7 +66,7 @@ const Faq = ({ searchParams }: { searchParams: any }) => {
                     alt="arrow"
                   />
                 </Link>
-              )}
+              )} */}
             </div>
           </div>
 

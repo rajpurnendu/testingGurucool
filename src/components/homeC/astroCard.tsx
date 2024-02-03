@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getUserprofile } from "@/lib/data";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 
 function formatValue(value: number) {
   const formattedValue = (value / 1000).toFixed(1);
@@ -19,7 +20,7 @@ const AstroCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
           loginToken && (await getUserprofile(loginToken.value));
 
         setUserDetails(data.userDetails);
-        // console.log(data);
+        
       }
     };
 
@@ -40,7 +41,22 @@ const AstroCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
   return (
     <Link
       href={`/astrologers/${data?.userName}`}
-      className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-70 min-h-[259px] shadow hover:xl:shadow-lg transition duration-300 ease-in-out xl:min-h-[400.10px] relative bg-white rounded-lg"
+      className="xl:min-w-[288.46px] min-w-[180px] xl:rounded-[9.27px] border border-violet-500 border-opacity-40 min-h-[259px] shadow hover:xl:shadow-xl  transition duration-300 ease-in-out xl:min-h-[400.10px] relative bg-white rounded-lg"
+      onClick={() => {
+        if(loginToken) {
+          sendGTMEvent({ event: 'buttonClicked', value: 'Home_AstroProfile_Click' })
+          sendGAEvent({
+            event: "buttonClicked",
+            value: "Home_AstroProfile_Click",
+          });
+        } else {
+          sendGTMEvent({ event: 'buttonClicked', value: 'Astroprofile_homepage_nologin' })
+          sendGAEvent({
+            event: "buttonClicked",
+            value: "Astroprofile_homepage_nologin",
+          });
+        }
+      }}
     >
       <Image
         width="200"
@@ -123,7 +139,7 @@ leading-[17.50px]"
           xl:font-normal
           xl:leading-[18.98px]"'
         >
-          {data.specialization.slice(0, 4).join(",")}
+          {data.specialization.slice(0, 3).join(",")}
         </p>
       </div>
       <div

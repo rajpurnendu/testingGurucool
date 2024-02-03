@@ -6,33 +6,57 @@ import filter from "../../../public/assets/filter(2).svg";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
+import useFilterStore from "@/store/filterStore";
 import Image from "next/image";
 import SideBar from "../sideBar/SideBar";
 import { useEffect, useRef, useState } from "react";
+import { GET_Spec_Astrologer2 } from "@/lib/data";
 
 const Speciality = () => {
+  const {
+    name,
+    setName,
+    consultAstroData,
+    totalPage,
+    setTotalPage,
+    setConsultAstroData,
+  } = useFilterStore();
   const pathname = usePathname();
-  const modalRef = useRef<HTMLDivElement | null>(null);
+  // const modalRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleOutSide = (event: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-      setSidebarOpen(false);
-    }
+  // const handleOutSide = (event: MouseEvent) => {
+  //   if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+  //     setSidebarOpen(false);
+  //   }
+  // };
+
+  // useEffect(
+  //   ()=>{
+
+  //     const data =  GET_Spec_Astrologer2(spec);
+  //     setConsultAstroData(data?.guru?.docs);
+  //   }
+  // },[names])
+
+  const specFunction = async (n: string) => {
+    const data = await GET_Spec_Astrologer2(n);
+    setConsultAstroData(data?.guru?.docs);
+    console.log(data);
   };
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  useEffect(() => {
-    document.addEventListener("click", handleOutSide);
+  // useEffect(() => {
+  //   document.addEventListener("click", handleOutSide);
 
-    // Clean up the event listener on unmount
-    return () => {
-      document.removeEventListener("click", handleOutSide);
-    };
-  }, [modalRef]);
+  //   // Clean up the event listener on unmount
+  //   return () => {
+  //     document.removeEventListener("click", handleOutSide);
+  //   };
+  // }, [modalRef]);
 
   const colorMapping: { [key: string]: string } = {
     "/call-to-astrologers/Love": "text-red-500",
@@ -64,10 +88,12 @@ const Speciality = () => {
           })}
         />
       ),
+      names: "Love",
       url: "/call-to-astrologers/Love",
     },
     {
       id: 2,
+      names: "Marriage",
       name: (
         <p
           className={`text-[14px] md:text-[20px] font-semibold ${
@@ -92,6 +118,7 @@ const Speciality = () => {
     },
     {
       id: 3,
+      names: "career",
       name: (
         <p
           className={`text-[14px] md:text-[20px] font-semibold ${
@@ -116,6 +143,7 @@ const Speciality = () => {
     },
     {
       id: 4,
+      names: "Business",
       name: (
         <p
           className={`text-[14px] md:text-[20px] font-semibold ${
@@ -140,6 +168,8 @@ const Speciality = () => {
     },
     {
       id: 5,
+
+      names: "Life",
       name: (
         <p
           className={clsx(
@@ -163,6 +193,7 @@ const Speciality = () => {
     },
     {
       id: 6,
+      names: "Health",
       name: (
         <p
           className={clsx(
@@ -186,6 +217,7 @@ const Speciality = () => {
     },
     {
       id: 7,
+      names: "Tarot",
       name: (
         <p
           className={clsx(
@@ -225,8 +257,11 @@ const Speciality = () => {
             style={{}}
           >
             {/* 8d66d4 */}
-            <Link href={"/call-to-astrologers"}>
+            <Link href={"/call-to-astrologers"} scroll={false}>
               <div
+                onClick={() => {
+                  specFunction("All");
+                }}
                 className={clsx(
                   `text-sm md:text-[20px] text-gray-600 font-semibold border-[1px] border-gray-600 rounded-md px-2 py-1 md:border-0`,
                   {
@@ -240,8 +275,11 @@ const Speciality = () => {
 
             {Specialization.map((curr, index) => {
               return (
-                <Link href={curr.url} key={curr.id}>
+                <Link href={curr.url} key={curr.id} scroll={false}>
                   <div
+                    onClick={() => {
+                      specFunction(curr.names);
+                    }}
                     className={
                       "flex items-center cursor-pointer gap-[8px] border-[1px] md:border-0 border-gray-600 rounded-md px-2 py-1 md:gap-[8px] lg:gap-[10px]"
                     }

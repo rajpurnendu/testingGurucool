@@ -23,7 +23,7 @@ const Blogsinglepage = async ({ params }: { params: { title: string } }) => {
 
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-      <div className="container max-w-[72rem] mt-[72px] ps-[1rem] pe-[1rem] mx-auto md:mt-[72px]">
+      <div className="container max-w-[72rem] ps-[1rem] pe-[1rem] mx-auto mt-2.5">
         <div className="hidden md:flex mb-4"></div>
 
         <div className="flex flex-col justify-center items-start md:w-[1000px]">

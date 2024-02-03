@@ -17,10 +17,15 @@ const Services = () => {
   return (
     <div className=" w-auto xl:w-[72rem] mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="px-[20px]">
-        <h2 className="text-center xl:text-[2.125rem] text-base font-[500] xl:mb-[20px]">
+        <h2 className="text-center text-white xl:text-[2.125rem] text-base font-[500] xl:mb-[20px]">
           Services
         </h2>
-        <p className="text-center xl:leading-6  text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-{400]">
+        <p
+          className="text-center  text-[#d9d9d9]
+xl:text-xl
+font-normal
+xl:leading-[25px] text-sm  xl:mb-[1.87rem] mb-[1rem]"
+        >
           We provide all astrology-based services here at Gurucool, whether
           astrological consultations, gods and devotion, or blogs.
         </p>
@@ -28,10 +33,10 @@ const Services = () => {
 
       <div className="flex mx-auto pl-1 xl:pl-0 md:pl-0 justify-center xl:px-0 md:px-[0px]">
         <div
-          className="md:min-w-[220px] xl:w-[562px]   w-[100px]  px-[11.52px] xl:px-[65px] xl:py-[50px] py-[30px] bg-black bg-opacity-20 md:rounded-xl xl:rounded-xl rounded-[3.5px] gap-[15px] justify-center items-end xl:gap-[85px] flex flex-col bg-bottom xl:bg-center bg-cover md:bg-center"
+          className="md:min-w-[220px] xl:w-[562px] bg-blend-darken  w-[100px]  px-[11.52px] xl:px-[65px] xl:py-[50px] py-[30px] bg-black bg-opacity-20 md:rounded-xl xl:rounded-xl rounded-[3.5px] gap-[15px] justify-center items-end xl:gap-[85px] flex flex-col bg-bottom xl:bg-center bg-cover md:bg-center"
           style={{
             backgroundImage: `url(${cards[0].img.src})`,
-            backgroundBlendMode: "multiply",
+            // backgroundBlendMode: "multiply",
           }}
           onClick={() => {
             handleClick(0);

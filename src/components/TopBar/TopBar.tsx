@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
+import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google'
 
-const TopBar = ({ state, fn }: { state: boolean; fn: Function }) => {
+const TopBar = ({ state, fn, loginToken }: { state: boolean; fn: Function, loginToken:string }) => {
   return (
     <>
       <div
-        className={`bg-[#965EFB] ${
-          state == false ? "hidden" : "block"
-        } fixed top-0 left-0 right-0 z-20 border-b-[1px] border-opacity-40 border-black`}
+        // className={`bg-[#965EFB] ${
+        //   state == false ? "hidden" : "block"
+        // } fixed top-0 left-0 right-0 z-20 border-b-[1px] border-opacity-40 border-black`}
+        className={`bg-[#965EFB]  ${
+            state == false ? "hidden" : "block"
+          }`}
       >
         <nav className="max-w-6xl mx-auto flex justify-between items-center px-[30px] xl:px-[90px] py-1">
           <div className="flex gap-[1rem] items-center text-white">
@@ -26,6 +30,21 @@ const TopBar = ({ state, fn }: { state: boolean; fn: Function }) => {
               target="_blank"
               // rel="noopener noreferrer"
               href="https://play.google.com/store/apps/details?id=com.gurucool&pcampaignid=web_share"
+              onClick={() => {
+                if(loginToken) {
+                  sendGTMEvent({ event: 'buttonClicked', value: 'AppDownload_Header_Click' })
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: "Get_Consultation",
+                  });
+                } else {
+                  sendGTMEvent({ event: 'buttonClicked', value: 'AppDownload_Header_Click' })
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: "Get_Consultation",
+                  });
+                }
+              }}
             >
               <svg
                 className="xl:w-[130px] cursor-pointer w-[90px] md:w-[130px]"

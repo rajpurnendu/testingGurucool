@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import Model from "./Model";
+import { useRouter } from "next/navigation";
 import useFilterStore from "@/store/filterStore";
 import { IoCall } from "react-icons/io5";
 import { getUserprofile } from "@/lib/data";
@@ -9,16 +10,8 @@ import follow1 from "../../../public/assets/AstrologerProfileIcons/follow1.svg";
 import follow2 from "../../../public/assets/AstrologerProfileIcons/follow2.svg";
 import follow3 from "../../../public/assets/AstrologerProfileIcons/follow3.png";
 import mostchoice from "../../../public/assets/AstrologerProfileIcons/mostchoice.png";
-import bg from "../../../public/assets/AstrologerProfileIcons/astroImg.webp";
-import ProfileImg from "../../../public/assets/AstrologerProfileIcons/profileImg.webp";
-import AstroImg from "../../../public/assets/AstrologerProfileIcons/bg.png";
-import star from "../../../public/assets/AstrologerProfileIcons/Star.webp";
 import language from "../../../public/assets/AstrologerProfileIcons/Language.webp";
-import clock from "../../../public/assets/AstrologerProfileIcons/time.webp";
-import user from "../../../public/assets/AstrologerProfileIcons/user.webp";
-import star2 from "../../../public/assets/AstrologerProfileIcons/start2.webp";
 import star4 from "../../../public/assets/AstrologerProfileIcons/start4.webp";
-import messge from "../../../public/assets/AstrologerProfileIcons/message.webp";
 import call from "../../../public/assets/AstrologerProfileIcons/call.webp";
 import heart from "../../../public/assets/AstrologerProfileIcons/heart.webp";
 import marriage from "../../../public/assets/AstrologerProfileIcons/ring.webp";
@@ -27,7 +20,6 @@ import career from "../../../public/assets/AstrologerProfileIcons/career.webp";
 import life from "../../../public/assets/AstrologerProfileIcons/life.webp";
 import business from "../../../public/assets/AstrologerProfileIcons/ruppee.webp";
 import star3 from "../../../public/assets/AstrologerProfileIcons/start3.webp";
-// import { profile } from "console";
 import Link from "next/link";
 import AstroCard from "../homeC/astroCard";
 import { FollowAstro, UnFollowAstro } from "@/lib/actions";
@@ -36,6 +28,8 @@ import ConsultationModalContent from "../consult_page/ConsultationModalContent";
 import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
 import Modal from "../ReusableModal/ReusableModal";
 import { BasicModal } from "../login/BasicModal";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+import toast, { Toaster } from "react-hot-toast";
 
 const AstrologerMobile = ({
   data,
@@ -66,7 +60,7 @@ const AstrologerMobile = ({
       setCurrentIndex(currentIndex - 12);
     }
   };
-
+  const [count, setCount] = useState<number>(0);
   const [userDetails, setUserDetails] = useState<UserDetails>();
   const [insufficientBalance, setInsufficientBalance] = useState(false);
   // const [callAvailability, setCallAvailability] = useState("");
@@ -108,17 +102,17 @@ const AstrologerMobile = ({
   } = useFilterStore();
 
   useEffect(() => {
-    const userProfile = async () => {
-      if (loginToken) {
+    if (loginToken && count === 0) {
+      const userProfile = async () => {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
-        // console.log(data);
-      }
-    };
+      };
+      setCount(1);
 
-    userProfile();
+      userProfile();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loginToken]);
   // console.log(userDetails);
   const [callBtnClicked, setCallBtnClicked] = useState(false);
   const callClickedHandler = (guruToken: string) => {
@@ -336,6 +330,48 @@ const AstrologerMobile = ({
     Business: { img: business, desc: "Legal Matter" },
   };
 
+  const [clickedImg, setClickedImg] = useState<any>(null);
+  const [imgCurrentIndex, setImgCurrentIndex] = useState<any>();
+
+  const handleClick = (item: any, index: any) => {
+    setImgCurrentIndex(index);
+    setClickedImg(item.url);
+  };
+
+  const handelRotationRight = () => {
+    const totalLength = data.images.length;
+    if (imgCurrentIndex + 1 >= totalLength) {
+      setImgCurrentIndex(0);
+      const newUrl = data.images[0].url;
+      setClickedImg(newUrl);
+      return;
+    }
+    const newIndex = imgCurrentIndex + 1;
+    const newUrl = data.images.filter((item: any) => {
+      return data.images.indexOf(item) === newIndex;
+    });
+    const newItem = newUrl[0].url;
+    setClickedImg(newItem);
+    setImgCurrentIndex(newIndex);
+  };
+
+  const handelRotationLeft = () => {
+    const totalLength = data.images.length;
+    if (imgCurrentIndex === 0) {
+      setImgCurrentIndex(totalLength - 1);
+      const newUrl = data.images[totalLength - 1].url;
+      setClickedImg(newUrl);
+      return;
+    }
+    const newIndex = imgCurrentIndex - 1;
+    const newUrl = data.images.filter((item: any) => {
+      return data.images.indexOf(item) === newIndex;
+    });
+    const newItem = newUrl[0].url;
+    setClickedImg(newItem);
+    setImgCurrentIndex(newIndex);
+  };
+
   const toggleImgLength = () => {
     setimgLength(data.images.length);
   };
@@ -348,7 +384,7 @@ const AstrologerMobile = ({
     <>
       {login && <BasicModal setLogin={setLogin} />}
       <div>
-        <div className="mx-aut0 relative w-full md:hidden flex flex-col mt-[90px] my-5">
+        <div className="mx-auto relative w-full md:hidden flex flex-col">
           <div className="relative">
             <Image
               src={data?.backgroundBanner?.image_Url}
@@ -357,7 +393,7 @@ const AstrologerMobile = ({
               className="w-full h-[119px] md:h-[200px]"
               alt="backgroundImg"
             />
-            <div className="overflow-hidden absolute md:top-[75%] top-[70%]  border-2 border-emerald-500 md:left-[4%] left-[8%] w-[80px] md:w-[100px] md:h-[100px] h-[80px] rounded-full">
+            <div className="overflow-hidden absolute md:top-[75%] top-[60%]  border-2 border-emerald-500 md:left-[4%] left-[8%] w-[80px] md:w-[100px] md:h-[100px] h-[80px] rounded-full">
               <Image
                 className="relative w-20 h-20"
                 width="100"
@@ -367,12 +403,12 @@ const AstrologerMobile = ({
               />
             </div>
             {data?.callAvailability === "online" ? (
-              <div className="absolute  top-[75%]  left-[23%] md:left-[13%]">
+              <div className="absolute  top-[60%]  left-[23%] md:left-[13%]">
                 <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  animate-ping shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
                 <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  shadow-lg shadow-black absolute bg-emerald-500 rounded-full" />
               </div>
             ) : (
-              <div className="absolute  top-[75%]  left-[23%] md:left-[13%]">
+              <div className="absolute  top-[60%]  left-[23%] md:left-[13%]">
                 <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  animate-ping shadow-lg shadow-black absolute bg-red-500 rounded-full" />
                 <div className="w-[18.54px] h-[18.54px]  left-[45%] top-[-2%]  shadow-lg shadow-black absolute bg-red-500 rounded-full" />
               </div>
@@ -384,6 +420,7 @@ const AstrologerMobile = ({
               <div className="flex flex-col gap-0.5">
                 <p
                   className="text-neutral-800
+                  w-[183px]
 text-xl
 font-semibold"
                 >
@@ -452,12 +489,28 @@ font-medium leading-none"
                         />
                       </div>
                       <div
-                        onClick={() => FollowAstro(loginToken, data.user.guru)}
-                        className=" h-[26px] px-3 py-1 bg-violet-500 relative rounded-lg justify-center items-center gap-3 flex"
+                        onClick={() => {
+                          FollowAstro(loginToken, data.user.guru);
+                          sendGTMEvent({
+                            event: "buttonClicked",
+                            value: `Astro_Follow_${data.user.firstName}${data.user.lastName}`,
+                          });
+                          sendGAEvent({
+                            event: "buttonClicked",
+                            value: `Astro_Follow_${data.user.firstName}${data.user.lastName}`,
+                          });
+                          toast.promise(
+                            FollowAstro(loginToken, data?.user.guru),
+                            {
+                              loading: "Saving...",
+                              success: <b>Followed</b>,
+                              error: <b>Error in Follow</b>,
+                            }
+                          )
+                        }}
+                        className=" h-[26px] px-3 py-1 text-white text-sm cursor-pointer font-medium leading-[17.50px] bg-violet-500 relative rounded-lg justify-center items-center gap-3 flex"
                       >
-                        <div className="text-white text-sm font-medium leading-[17.50px]">
-                          Follow
-                        </div>
+                        follow
                       </div>
                     </div>
                   ) : (
@@ -482,14 +535,28 @@ font-medium leading-none"
                         />
                       </div>
                       <div
-                        onClick={() =>
-                          UnFollowAstro(loginToken, data.user.guru)
-                        }
-                        className="h-[26px] px-3 py-1 bg-red-500 relative rounded-lg justify-center items-center gap-3 flex"
+                        onClick={() => {
+                          UnFollowAstro(loginToken, data.user.guru);
+                          sendGTMEvent({
+                            event: "buttonClicked",
+                            value: `Astro_Unfollow_${data.user.firstName}${data.user.lastName}`,
+                          });
+                          sendGAEvent({
+                            event: "buttonClicked",
+                            value: `Astro_Unfollow_${data.user.firstName}${data.user.lastName}`,
+                          });                        
+                          toast.promise(
+                            UnFollowAstro(loginToken, data?.user.guru),
+                            {
+                              loading: "Saving...",
+                              success: <b>Unfollowed</b>,
+                              error: <b>Error in UnFollow</b>,
+                            }
+                          )
+                        }}
+                        className="h-[26px] px-3 py-1 bg-violet-500 cursor-pointer text-white text-sm font-medium leading-[17.50px] relative rounded-lg justify-center items-center gap-3 flex"
                       >
-                        <div className="text-white text-sm font-medium leading-[17.50px]">
-                          Unfollow
-                        </div>
+                        Unfollow
                       </div>
                     </div>
                   )
@@ -498,19 +565,19 @@ font-medium leading-none"
                     <div className="w-[42px] h-[18px] relative">
                       <Image
                         className="w-[18px] h-[18px] left-[15%] top-0 absolute rounded-full border border-white"
-                        src={ProfileImg}
+                        src={follow1}
                         alt="img"
                       />
 
                       <Image
                         className="w-[18px] h-[18px] left-[40%] top-0 absolute rounded-full border border-white"
-                        src={ProfileImg}
+                        src={follow2}
                         alt="img"
                       />
 
                       <Image
                         className="w-[18px] h-[18px] left-[65%] top-0 absolute rounded-full border border-white"
-                        src={ProfileImg}
+                        src={follow3}
                         alt="img"
                       />
                     </div>
@@ -526,7 +593,30 @@ font-medium leading-none"
           </div>
 
           <div className="w-full my-5 mx-auto justify-center flex gap-[30px] items-center">
-            <Link href="#about">
+            <Link
+              href="#about"
+              onClick={() => {
+                if (loginToken) {
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: `AstroProfile_About_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: `AstroProfile_About_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                } else {
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: `Unlogin_Astroprofile_About_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: `Unlogin_Astroprofile_About_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                }
+              }}
+            >
               <div className="w-[97px] md:w-[150px] h-[34px] md:h-[60px] px-10 py-2.5 bg-stone-300 hover:bg-emerald-500 rounded-md md:rounded-lg justify-center items-center gap-2.5 inline-flex">
                 <div className="text-center text-white text-base md:text-xl md:font-bold font-semibold">
                   About
@@ -534,7 +624,30 @@ font-medium leading-none"
               </div>
             </Link>
 
-            <Link href="#review">
+            <Link
+              href="#review"
+              onClick={() => {
+                if (loginToken) {
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: `AstroProfile_Review_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: `AstroProfile_Review_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                } else {
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: `Unlogin_Astroprofile_Review_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: `Unlogin_Astroprofile_Review_${data?.user.firstName}_${data?.user.lastName}`,
+                  });
+                }
+              }}
+            >
               <div className="w-[97px] md:w-[150px] h-[34px] md:h-[60px] px-10 py-2.5 bg-stone-300 hover:bg-emerald-500 rounded-md md:rounded-lg justify-center items-center gap-2.5 inline-flex">
                 <div className="text-center text-white md:text-xl md:font-bold  text-base font-semibold">
                   Review
@@ -724,13 +837,14 @@ font-semibold
                 Images
               </p>
               <div className="overflow-auto  no-scrollbar w-full p-2 flex gap-2 items-start">
-                {data.images.map((data: any) => (
+                {data.images.map((data: any, index: number) => (
                   <Image
                     key={data._id}
                     src={data.url}
+                    onClick={() => handleClick(data, index)}
                     className="w-[82px] h-[84px] rounded-[5px]"
-                    width="100"
-                    height="100"
+                    width="1000"
+                    height="1000"
                     alt="profile"
                   />
                 ))}
@@ -812,7 +926,7 @@ font-semibold"
                   </div>
                 </div>
               </div>
-              <div className="h-[332px] flex flex-col gap-5 overflow-y-scroll no-scrollbar">
+              <div className="h-[332px] flex flex-col gap-5 overflow-y-scroll overflow-x-hidden no-scrollbar">
                 {feedbackData?.docs.map((datas: any) => (
                   <div
                     key={datas._id}
@@ -903,13 +1017,13 @@ font-semibold"
                   </div>
                 ))}
               </div>
-              <p
+              {/* <p
                 className="text-center block w-full text-violet-500
 text-base
 font-semibold"
               >
                 Read More
-              </p>
+              </p> */}
             </div>
           </div>
 
@@ -962,15 +1076,16 @@ font-semibold"
               href="/call-to-astrologers"
               className="text-neutral-800
             flex w-full items-end justify-end
-text-xs
+text-[14px]
 font-medium
-mb-1
+mb-4
+underline
 leading-[15px] text-right"
             >
               See all
             </Link>
           </div>
-          <div className="overflow-x-scroll flex gap-5 no-scrollbar px-2">
+          <div className="overflow-x-scroll flex gap-5 no-scrollbar px-10 mb-5">
             {similar.recommendedAstrologers.map((similarData: any) => (
               <AstroCard
                 key={similarData._id}
@@ -987,8 +1102,25 @@ leading-[15px] text-right"
                     if (data?.callAvailability === "online") {
                       callClickedHandler(data?.user?.guru);
                     }
+
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: `AstroProfile_Call_Inititated_${data.user.firstName}${data.user.lastName}`,
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: `AstroProfile_Call_Inititated_${data.user.firstName}${data.user.lastName}`,
+                    });
                   } else {
                     setLogin(true);
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: `Unlogin_Astroprofile_Call_${data.user.firstName}${data.user.lastName}`,
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: `Unlogin_Astroprofile_Call_${data.user.firstName}${data.user.lastName}`,
+                    });
                   }
                 }}
                 className="w-[95%] flex justify-between items-center px-[18px] py-[9.5px] h-[60px] fixed bottom-2 left-2 mx-auto bg-emerald-500 rounded hover:shadow-lg"
@@ -1024,33 +1156,66 @@ font-semibold"
                   ) : null}
                 </div>
               </div>
-            ) : (
-              <div className="w-[95%] cursor-not-allowed flex justify-between items-center px-[18px] py-[9.5px] h-[60px] fixed bottom-2 left-2 mx-auto bg-zinc-300 rounded hover:shadow-lg">
+            ) : data?.callAvailability === "busy" ? (
+              <div className="w-[95%] cursor-not-allowed flex justify-between items-center px-[18px] py-[9.5px] h-[60px] fixed bottom-2 left-2 mx-auto bg-red-500 rounded hover:shadow-lg">
                 <div className="gap-5 flex items-center">
                   <Image src={call} className="w-[25px] h-[25px]" alt="call" />
                   <p
-                    className="text-white
-text-base
-font-semibold"
+                    className="text-white 
+  text-base
+  font-semibold"
                   >
-                    Call Now
+                    Busy
                   </p>
                 </div>
                 <div className="flex items-center flex-col">
                   <p
                     className="text-white
-                text-base
-                font-semibold"
+                  text-base
+                  font-semibold"
                   >
                     ₹{fee}/min
                   </p>
                   {data.cutfee > 0 ? (
                     <p
                       className="text-white
-              text-xs
-              font-medium
-              line-through
-              leading-[15px]"
+                text-xs
+                font-medium
+                line-through
+                leading-[15px]"
+                    >
+                      ₹{data.cutfee}/min
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            ) : (
+              <div className="w-[95%] cursor-not-allowed flex justify-between items-center px-[18px] py-[9.5px] h-[60px] fixed bottom-2 left-2 mx-auto bg-zinc-300 rounded hover:shadow-lg">
+                <div className="gap-5 flex items-center">
+                  <Image src={call} className="w-[25px] h-[25px]" alt="call" />
+                  <p
+                    className="text-white
+  text-base
+  font-semibold"
+                  >
+                    Offline
+                  </p>
+                </div>
+                <div className="flex items-center flex-col">
+                  <p
+                    className="text-white
+                  text-base
+                  font-semibold"
+                  >
+                    ₹{fee}/min
+                  </p>
+                  {data.cutfee > 0 ? (
+                    <p
+                      className="text-white
+                text-xs
+                font-medium
+                line-through
+                leading-[15px]"
                     >
                       ₹{data.cutfee}/min
                     </p>
@@ -1147,6 +1312,15 @@ font-semibold"
           </div>
         </Modal>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
+      {clickedImg && (
+        <Model
+          clickedImg={clickedImg}
+          handelRotationRight={handelRotationRight}
+          setClickedImg={setClickedImg}
+          handelRotationLeft={handelRotationLeft}
+        />
+      )}
     </>
   );
 };

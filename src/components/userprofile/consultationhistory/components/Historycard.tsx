@@ -1,3 +1,4 @@
+"use client";
 import clsx from "clsx";
 import Image from "next/image";
 import React from "react";
@@ -36,8 +37,9 @@ const Historycard = ({ item }: { item: any }) => {
               alt="guruimg"
               width={55}
               height={55}
-              className="rounded-full mt-[10px]"
+              className="rounded-full mt-[10px] h-[55px] w-[55px]"
             />
+
             <p className="text-[14px] font-semibold w-[120px] md:text-[20px]">
               {item?.guruName}
             </p>
@@ -77,16 +79,15 @@ const Historycard = ({ item }: { item: any }) => {
                 }
               )}
               //   status={consultationstatus}
-              //   onClick={() => {
-              //     if (consultationstatus) {
-              //       logEvent(analytics, "rec_click");
-              //       window.open(item.RecordingUrl, "_blank");
-              //     }
-              //   }}
+              onClick={() => {
+                if (consultationstatus) {
+                  window.open(item.RecordingUrl, "_blank");
+                }
+              }}
             >
               {consultationstatus ? "Recording" : "No Recording"}
             </button>
-            <button
+            {/* <button
               className="text-[10px] align-middle outline-none leading-tight rounded-md font-semibold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 ... h-10 min-w-10 px-4 border border-solid border-[#e2e8f0] text-[#fff] w-[188px] bg-[#8d66d4] md:text-[14px]"
               //   onClick={() => {
               //     setGetRemedies(item?.Remedies);
@@ -106,7 +107,7 @@ const Historycard = ({ item }: { item: any }) => {
               //   }}
             >
               {item.feedback ? "Submitted" : "Share Feedback"}
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

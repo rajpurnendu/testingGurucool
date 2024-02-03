@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import icon from "../../../public/assets/webstoriesIcons/material-symbols-light_web-stories-outline.svg";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function convertUtcToIst(utcTimeString: any) {
   const utcTime = new Date(utcTimeString);
@@ -21,15 +23,30 @@ function convertUtcToIst(utcTimeString: any) {
 }
 
 const WebStoriesCard = ({ data }: any) => {
-  console.log(data);
+  const router = useRouter();
+  const handleNavigation = (link: string) => {
+    router.push(`/web-stories/${link}`);
+  };
+  // console.log(data);
+
+  // useEffect(() => {
+  //   // Set overflow hidden when the component mounts
+  //   document.body.style.overflow = "scroll";
+
+  //   // Return a function to reset overflow when the component unmounts
+  //   return () => {
+  //     document.body.style.overflowY = "hidden";
+  //   };
+  // }, []);
   return (
     <div
-      className="md:w-[269px]  bg-[length:149px_221px] md:bg-[length:269px_361px] w-[149px] rounded-[11.07px]  flex flex-col items-end justify-between overflow-hidden h-[221px] md:h-[361px] p-[11.7px] md:p-[10px]"
+      className="md:w-[269px]  bg-[length:149px_221px] md:bg-[length:269px_361px] w-[149px] rounded-[11.07px]  flex flex-col items-end justify-between overflow-hidden h-[221px] md:h-[361px] p-[11.7px] md:p-[10px] bg-gray-300 md:cursor-pointer"
       style={{
         backgroundImage: `url(${data?.webStoryImage?.url})`,
 
         backgroundBlendMode: "multiply",
       }}
+      onClick={() => handleNavigation(data?.webStoryTitle)}
     >
       <Link href={`/web-stories/${data?.webStoryTitle}`}>
         <Image

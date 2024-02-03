@@ -14,15 +14,16 @@ const page = ({
   params: { filtername: string[] };
   searchParams?: { filter?: string; id?: string };
 }) => {
-
+  const cookieStore = cookies();
+  const loginToken = cookieStore.get("loginToken") || "";
 
   return (
     <>
-      <Banner />
+      <Banner loginToken={typeof loginToken === "object" ? loginToken.value : loginToken} />
       <Services />
       <Testmonial />
       <TopRated_astrologer searchParam={searchParams} />
-      <ReaderSection />
+      <ReaderSection loginToken={typeof loginToken === "object" ? loginToken.value : loginToken} />
       <ContentSection />
       <Faq searchParams={searchParams} />
     </>

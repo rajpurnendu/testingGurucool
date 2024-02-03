@@ -12,9 +12,20 @@ import facebook from "../../../../public/assets/footericons/Facebook.svg";
 import Whatsapp from "../../../../public/assets/footericons/Whatsapp.svg";
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const FooterMobile = () => {
   const [expand, setExpand] = useState(false);
+  const pathname = usePathname();
+  const webStoriesSubpathRegex = /^\/web-stories\/.+$/;
+
+  // Check if the current path matches the regex pattern
+  const isWebStoriesSubpath = webStoriesSubpathRegex.test(pathname);
+
+  if (isWebStoriesSubpath) {
+    // Return null or any other fallback UI when the path is a subpath of '/web-stories/'
+    return null;
+  }
   return (
     <div className="main-tool-bar h-auto w-[100%] bg-[#965efb] m-auto flex justify-center items-center md:hidden">
       <div className="h-[90%] w-[85%]">
@@ -169,8 +180,8 @@ const FooterMobile = () => {
             />
           </div>
         </div>
-        <p className="mt-[80px] text-[10px] font-normal text-center text-white mb-5">
-          © 2023 GuruCool.life. All rights reserved
+        <p className="mt-[10px] text-[10px] font-normal text-center text-white mb-2">
+          © {new Date().getFullYear()} GuruCool.life. All rights reserved
         </p>
       </div>
     </div>

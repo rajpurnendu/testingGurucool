@@ -4,12 +4,16 @@ import useFilterStore from "@/store/filterStore";
 import { FaSearch } from "react-icons/fa";
 import { TESTING_URL } from "@/lib/apilinks";
 
-const Searchbar = ({ data }: { data: any }) => {
+const Searchbar = ({ data, page }: { data: any; page: number }) => {
   const { name, setName, consultAstroData, setConsultAstroData } =
     useFilterStore();
 
   const [debounceName, setDebounceName] = useState(name);
-
+  const [pageN, setPageN] = useState(1);
+  useEffect(() => {
+   
+    setPageN(page);
+  }, [page]);
   useEffect(() => {
     // Set a timeout to update debounceName after a delay
     const handler = setTimeout(() => {
@@ -24,17 +28,18 @@ const Searchbar = ({ data }: { data: any }) => {
     // Define a function to fetch data from the API
     const fetchData = async () => {
       try {
+        
         if (debounceName === "") {
           // Call the first API when name is empty
-          // const firstApiUrl = `${TESTING_URL}guru/astrologersDetails?perPage=300`;
-          //         const response = await fetch(firstApiUrl);
-          //         if (!response.ok) {
-          //           throw new Error("Network response was not ok");
-          //         }
-          //         const jsonData = await response.json();
-          //         console.log(jsonData);
+          const firstApiUrl = `${TESTING_URL}guru/astrologersDetails?page=${pageN}`;
+          const response = await fetch(firstApiUrl);
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const jsonData = await response.json();
+        
 
-          setConsultAstroData(data);
+          setConsultAstroData(jsonData.guru.docs);
         } else {
           // Call the second API when name is not empty
           const secondApiUrl = `${TESTING_URL}guru/homePageSearchBar?Name=${debounceName}&allowedPlatform=web`;
@@ -43,7 +48,7 @@ const Searchbar = ({ data }: { data: any }) => {
             throw new Error("Network response was not ok");
           }
           const jsonData = await response.json();
-          setConsultAstroData(jsonData?.guru?.docs);
+          // setConsultAstroData(jsonData?.guru?.docs);
         }
       } catch (error) {
         console.error("Fetch error:", error);
@@ -56,9 +61,9 @@ const Searchbar = ({ data }: { data: any }) => {
     if (debounceName !== "") {
       fetchData();
     }
-  }, [debounceName]);
+  }, [debounceName, pageN]);
 
-  console.log(">>>>>>>>>>>>>", consultAstroData);
+  // console.log(">>>>>>>>>>>>>", consultAstroData);
 
   return (
     <div className="relative mx-auto max-w-lg">

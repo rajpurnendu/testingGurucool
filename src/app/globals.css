@@ -5,13 +5,13 @@
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
- /* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-}
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 :root {
@@ -38,58 +38,51 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
+    overflow-y: auto !important;  
 }
 
-.owl-dots{
+.owl-dots {
   margin-top: 10px !important;
   display: flex;
-padding-top:30px ;
+  padding-top: 30px;
   justify-content: center;
   align-items: center;
 }
 .owl-dot.active span {
   width: 18px !important;
-  height:18px !important;
+  height: 18px !important;
   opacity: 70;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  background-color: #965EFB !important;
+  background-color: #965efb !important;
 }
 .owl-dot span {
-  
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
- opacity: 70;
+  opacity: 70;
 }
 /* .owl-dots :active */
 
-
 .owl-prev {
-position:absolute;
-bottom: 0;
-left: -6%;
+  position: absolute;
+  bottom: 0;
+  left: -6%;
 }
 .owl-next {
-position:absolute;
-bottom: 0;
-right: -4%;
+  position: absolute;
+  bottom: 0;
+  right: -4%;
 }
 
-.owl-carousel .owl-nav button.owl-prev{
-    
+.owl-carousel .owl-nav button.owl-prev {
   font-size: 22px !important;
-  
+
   background: black !important;
   color: white !important;
   border-radius: 50% !important;
   /* padding: 17px !important; */
- 
-
-} 
-.owl-carousel .owl-nav button.owl-next{ 
- 
-  font-size:22px !important;
+}
+.owl-carousel .owl-nav button.owl-next {
+  font-size: 22px !important;
   background: black !important;
   color: white !important;
   border-radius: 50% !important;
-
-} 
-
+}

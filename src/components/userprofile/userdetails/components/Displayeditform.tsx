@@ -1,5 +1,8 @@
+"use client";
 import { updateUser } from "@/lib/actions";
-import React, { FormEvent } from "react";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+import React from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const Displayeditform = ({
   userDetails,
@@ -9,8 +12,17 @@ const Displayeditform = ({
   loginToken: string | undefined;
 }) => {
   const updateUseraction = updateUser.bind(null, loginToken as string);
+
+  function updateUserAction(formData: FormData) {
+    toast.promise(updateUseraction(formData), {
+      loading: "Saving...",
+      success: <b>Profile Updated!</b>,
+      error: <b>Could not save.</b>,
+    });
+  }
+
   return (
-    <form className="text-center" action={updateUseraction}>
+    <form className="text-center" action={updateUserAction}>
       <label className="text-center mt-5">Edit User Details</label>
       {/* 1  */}
       <div className="flex flex-col items-start">
@@ -100,10 +112,15 @@ const Displayeditform = ({
         <button
           type="submit"
           className="bg-[#965efb] text-[16px] py-2 px-4 border-none rounded-[5px] cursor-pointer mb-[10px] text-white font-medium md:w-[180px]"
+          onClick={() => {
+            sendGTMEvent({ event: 'buttonClicked', value: 'Profile_Save' });
+            sendGAEvent({ event: 'buttonClicked', value: 'Profile_Save' });
+          }}
         >
           Save
         </button>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </form>
   );
 };

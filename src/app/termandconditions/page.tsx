@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <div className="max-w-[72rem] mx-auto px-3 mt-[90px]">
+    <div className="max-w-[72rem] mx-auto px-3 mt-2.5">
       <h1 className="text-[28px] font-[700] text-center mb-[22px] mt-[24px] xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
         Terms & Conditions
       </h1>

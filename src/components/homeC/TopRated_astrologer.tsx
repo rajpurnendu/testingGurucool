@@ -12,6 +12,7 @@ import Link from "next/link";
 import AstroCard from "./astroCard";
 import { GET_Spec_Astrologer } from "@/lib/data";
 import { cookies } from "next/headers";
+import { sendGTMEvent } from '@next/third-parties/google'
 
 const TopRated_astrologer = async ({
   searchParam,
@@ -40,10 +41,18 @@ const TopRated_astrologer = async ({
   return (
     <div className="xl:w-[72rem] w-auto mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="p-[20px]">
-        <h3 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
+        <h3 className="text-center text-white xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
           Top-rated astrologers
         </h3>
-        <p className="text-center text-sm xl:text-[1.25rem] xl:mb-[1.87rem] mb-[1rem] font-normal">
+        <p
+          className="text-center
+        text-white
+        xl:text-[20px]
+      
+       
+        leading-[25px]
+         text-sm  xl:mb-[1.87rem] mb-[1rem] font-[400]"
+        >
           Choose top-rated astrologers from Gurukool and get real solutions to
           all your challenges and problems.
         </p>
@@ -66,7 +75,7 @@ const TopRated_astrologer = async ({
                 className={`${
                   filtername === `${data.name}`
                     ? "text-violet-500"
-                    : "text-black"
+                    : "text-white"
                 } text-xs xl:text-xl font-semibold`}
               >
                 {data.name}

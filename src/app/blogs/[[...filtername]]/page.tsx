@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import BlogCards from "@/components/blogs/BlogCards";
 import Pagination from "@/components/ui/pagination";
 import TrendingGod from "@/components/trendingCardCrousel/trendingGod";
+import Filtertagbutton from "@/components/blogs/Filtertagbutton";
 
 const Blogmain = async ({
   params,
@@ -61,14 +62,14 @@ const Blogmain = async ({
   }
 
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <>
       <div
-        className="max-w-6xl gap-5 mb-5 overflow-hidden mx-auto px-4 flex flex-col md:flex-row  md:px-0 box-border"
-        style={{ marginTop: "80px" }}
+        className="max-w-6xl gap-5 mb-5 overflow-hidden mx-auto px-4 flex flex-col md:flex-row  md:px-0 box-border mt-5"
+       
       >
         {/* <div> */}
         {/* Filter Section  */}
-        <div className="  flex md:flex-col h-fit items-[self-end]  md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
+        <div className="  flex md:flex-col h-fit items-[self-end]  md:pb-20  md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">
           <h1
             className="text-neutral-800
 text-[22px]
@@ -89,16 +90,7 @@ leading-7"
                   scroll={false}
                   href={index === 0 ? "/blogs" : `/blogs/category/${text}`}
                 >
-                  <p
-                    className={clsx(
-                      "flex appearance-none items-center justify-center md:justify-start select-none relative whitespace-nowrap align-middle rounded-full border md:border-none leading-tight transition-all duration-200 px-2 md:px-4 min-w-24 h-8 w-auto  font-semibold text-xs hover:bg-purple-400 hover:text-white",
-                      {
-                        "bg-purple-500 text-white": filtername === text,
-                      }
-                    )}
-                  >
-                    {text}
-                  </p>
+                  <Filtertagbutton filtername={filtername} text={text} />
                 </Link>
               </div>
             );
@@ -114,17 +106,21 @@ font-semibold"
           >
             Trending Blogs
           </h2>
-          <div className="xl:w-[90%] w-full mx-auto flex items-start justify-center">
+          <div
+            id="blog-id"
+            className="xl:w-[90%] w-full mx-auto flex items-start justify-center"
+          >
             <TrendingGod data1={data1} />
           </div>
           <h2
+            id="related_blogs"
             className="text-neutral-800
 text-[26px]
 font-semibold"
           >
             Related Blog
           </h2>
-          <div className="flex flex-wrap gap-x-[0px] xl:gap-x-[97px] gap-y-[40px] w-fit justify-start items-start">
+          <div className="flex flex-wrap gap-x-[0px] xl:gap-x-[97px] gap-y-[40px] w-fit justify-center items-center lg:justify-start lg:items-start">
             {filteredData
               .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
               .map((blog: any, index) => (
@@ -161,7 +157,7 @@ font-semibold"
         unravel the secrets of your aura and reveal your hidden potentials.`}
         </p>
       </div>
-    </Suspense>
+    </>
   );
 };
 

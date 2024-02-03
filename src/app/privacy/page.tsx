@@ -3,7 +3,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="max-w-[72rem] mx-auto mt-[90px] mb-[55px] px-3">
+    <div className="max-w-[72rem] mx-auto mt-2.5 mb-[55px] px-3">
       <div className="flex justify-center">
         <div className="flex justify-center xl:mb-[70px] mb-2 ">
           <h1 className="text-[24px]  xl:text-[36px] font-[700] text-center">

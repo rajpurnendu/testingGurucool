@@ -1,6 +1,8 @@
+"use client"
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 import Link from "next/link";
 
-const Displayuserinfo = ({ userDetails }: { userDetails: any }) => {
+const Displayuserinfo = ({ userDetails, loginToken }: { userDetails: any, loginToken:any }) => {
   return (
     <>
       <div className="flex flex-row justify-center items-center rounded-lg mt-2 md:rounded-[18px] md:mt-3">
@@ -8,7 +10,18 @@ const Displayuserinfo = ({ userDetails }: { userDetails: any }) => {
           {userDetails?.user?.firstName} {userDetails?.user?.lastName}
         </h2>
         <Link href={"?edit=true"}>
-          <button className="w-[35px] h-[35px] flex items-center justify-center bg-[#8d66d4] rounded-full ml-[10px] cursor-pointer hover:bg-[#a35a20] md:w-[40px] md:h-[40px]">
+          <button className="w-[35px] h-[35px] flex items-center justify-center bg-[#8d66d4] rounded-full ml-[10px] cursor-pointer hover:bg-[#a35a20] md:w-[40px] md:h-[40px]" onClick={() => {
+            if (loginToken) {
+              sendGTMEvent({
+                event: "buttonClicked",
+                value: `Profile_Edit_${userDetails?.user?.firstName} ${userDetails?.user?.lastName}`,
+              });
+              sendGAEvent({
+                event: "buttonClicked",
+                value: `Profile_Edit_${userDetails?.user?.firstName} ${userDetails?.user?.lastName}`,
+              });
+            } 
+          }}>
             <svg
               width="24"
               height="24"

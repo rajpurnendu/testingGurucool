@@ -6,7 +6,6 @@ import OTPInput from "react-otp-input";
 import "./login.css";
 import Image from "next/image";
 import gurucoolLogo from "../../../public/assets/footericons/New Logo 1.svg";
-// import PhoneCodeSelect from "./PhoneCodeSelect";
 import loginBanner1 from "../../../public/assets/banners/loginBanner1.png";
 import loginBanner2 from "../../../public/assets/banners/loginBannerDesktop.jpeg";
 import loginBanner3 from "../../../public/assets/banners/loginBanner3.png";
@@ -89,7 +88,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
           }),
         {
           loading: "Sending...",
-          success: <b>Succesfully Send OTP!</b>,
+          success: <b>OTP Sent!!</b>,
           error: <b>Could not send OTP.</b>,
         }
       );
@@ -111,7 +110,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
             //TODO: New User Logic and OLd use Logic here
             if (result.newUser) {
               //TODO: New User Logic
-              router.push("/register");
+              router.push("/registration");
               setLogin(false);
             } else {
               toast.success("Successfully Login!");
@@ -132,6 +131,16 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
       }
     );
   };
+
+  const handleOtpChange = (e: any) => {
+    setOtp(e);
+  };
+  useEffect(() => {
+    console.log(otp, otp.length);
+    if (otp.length === 6) {
+      verifyOtphandler();
+    }
+  }, [otp]);
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 top-0 w-full h-full backdrop-blur-sm  bg-[rgba(0,0,0,0.7)] ">
@@ -187,7 +196,7 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
                       <div className="flex items-center justify-center text-[red] text-[14px] md:text-[16px]">
                         {errorMsg}
                       </div>
-                      <div className="flex items-center justify-center text-green-600 text-[14px] md:text-[16px]">
+                      <div className="flex items-center justify-center text-white text-[14px] md:text-[16px]">
                         {otpsendMsg}
                       </div>
                       <form className="w-[100%] relative pb-[12px]">
@@ -197,10 +206,10 @@ export function BasicModal({ setLogin }: { setLogin: Function }) {
                               {/* OTP Input Component  */}
                               <OTPInput
                                 value={otp}
-                                onChange={setOtp}
+                                onChange={(e: any) => handleOtpChange(e)}
                                 numInputs={6}
                                 renderSeparator={<span></span>}
-                                renderInput={(props) => (
+                                renderInput={(props: any) => (
                                   <input {...props} inputMode="numeric" />
                                 )}
                                 containerStyle="login-otp-container"

@@ -6,6 +6,7 @@ import Star from "./Star";
 import Link from "next/link";
 import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserFeedBack = ({
   astroDetails,
@@ -111,7 +112,8 @@ const UserFeedBack = ({
         setRating(0);
         setCheckedState([]);
         setFeedbacktext("");
-        alert("Feedback submitted!!!");
+        // alert("Feedback submitted!!!");
+        toast.success("Feedback Submitted!!!");
         router.push("/");
       } else {
         // Handle non-200 responses
@@ -127,6 +129,7 @@ const UserFeedBack = ({
 
   return (
     <div className="max-w-[72rem] mx-auto flex justify-between xl:flex-row flex-col mt-[90px] my-[20px]">
+      <Toaster/>
       <div className="xl:w-[50%] w-full px-5 py-[5px]">
         <div className="mb-[30px]">
           <div className="rounded-full h-[140px] overflow-hidden flex items-center justify-center w-[140px] text-white m-auto">
@@ -149,7 +152,7 @@ const UserFeedBack = ({
               Consultaion Charge
             </p>
             <p className="text-[rgb(20,164,0)] text-[25px] font-[600]">
-              {Math.round(amount)} ₹
+              ₹ {amount ? parseFloat(amount.toString()).toFixed(2) : "0"}
             </p>
           </div>
           <div className="w-[48%] flex flex-col items-center justify-center">

@@ -64,8 +64,8 @@ const Coupons = ({
   // console.log("====================================");
   return (
     <div
-      className="max-w-6xl mx-auto px-4 md:px-0 box-border"
-      style={{ marginTop: "80px", marginBottom: "50px" }}
+      className="max-w-6xl mx-auto px-4 md:px-0 mt-2.5 box-border"
+      style={{ marginBottom: "50px" }}
     >
       <div className="md:w-[614px] m-auto">
         {/* Tab Section  */}

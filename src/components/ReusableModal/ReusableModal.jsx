@@ -16,7 +16,7 @@ const Modal = ({ show, onClose, children, size }) => {
       case "md":
         return "28rem";
       case "lg":
-        return "36rem";
+        return "34rem";
       case "4xl":
         return "56rem";
       case "auto":
@@ -57,7 +57,7 @@ const Modal = ({ show, onClose, children, size }) => {
       <div className="flex items-center justify-center min-h-full">
         <div
           ref={location === "/call-consultation-started" ? null : modalRef}
-          className="relative mx-auto p-4 border shadow-lg rounded-[0.625rem] bg-white animate__animated animate__zoomIn animate__faster"
+          className={`relative mx-auto p-3 border shadow-lg rounded-[0.625rem] bg-white animate__animated animate__zoomIn animate__faster w-[${getSize("xs")}] md: w-[${getSize("md")}]`}
           style={{
             width: modalWidth,
             boxShadow:

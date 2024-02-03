@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import Logo from "../../../../public/assets/footericons/New Logo 1.svg";
 import razorpay from "../../../../public/assets/footericons/Group 51457.svg";
@@ -8,11 +9,22 @@ import instagram from "../../../../public/assets/footericons/Instagram.svg";
 import facebook from "../../../../public/assets/footericons/Facebook.svg";
 import Whatsapp from "../../../../public/assets/footericons/Whatsapp.svg";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footerweb = () => {
+  const pathname = usePathname();
+  const webStoriesSubpathRegex = /^\/web-stories\/.+$/;
+
+  // Check if the current path matches the regex pattern
+  const isWebStoriesSubpath = webStoriesSubpathRegex.test(pathname);
+
+  if (isWebStoriesSubpath) {
+    // Return null or any other fallback UI when the path is a subpath of '/web-stories/'
+    return null;
+  }
   return (
-    <div className="main-tool-bar w-[100%] h-fit bg-[#965efb] pt-[3.5%] pb-[3.5%] flex-col justify-between main-tool-bar hidden text-[white] md:flex">
-      <div className="mx-auto my-0 max-w-[72rem] box-border px-[1rem]">
+    <div className="main-tool-bar w-[100%] h-fit bg-[#965efb] pt-[1%] pb-[0.5%] flex-col justify-between main-tool-bar hidden text-[white] md:flex">
+      <div className="mx-auto my-0 max-w-[72rem] box-border px-[1rem] ">
         <div className="flex flex-col justify-between h-[80%]">
           <div className="flex justify-between mb-[20px]">
             <div className="w-[40%]">
@@ -138,8 +150,8 @@ const Footerweb = () => {
           </div>
         </div>
       </div>
-      <p className="font-normal text-[15px] text-center text-white mt-20">
-        © 2023 GuruCool.life. All rights reserved
+      <p className="font-normal text-[15px] text-center text-white mt-3">
+        © {new Date().getFullYear()} GuruCool.life. All rights reserved
       </p>
     </div>
   );

@@ -1,3 +1,4 @@
+import Solar from "@/components/solar/Solar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -14,5 +15,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <Solar />
+      {children}
+    </div>
+  );
 }

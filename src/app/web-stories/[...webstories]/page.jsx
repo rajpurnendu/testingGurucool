@@ -2,56 +2,78 @@
 // import dog from "../../../../public/assets/web-stories-assets/dog.jpg";
 // import cover from "../../../../public/assets/web-stories-assets/cover.jpg";
 // import rabbit from "../../../../public/assets/web-stories-assets/rabbit.jpg";
+"use client";
 import Image from "next/image";
 import { getAllWebstoriesq, getSingleStory } from "@/lib/data";
 // import { Suspense, useEffect, useState } from "react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { GET_SINGLE_WEB_STORY } from "@/lib/apilinks";
+import Script from "next/script";
 
-export const config = { amp: true };
-
-const WebStoryPage = async ({ params }) => {
-  // const [webStory, setWebStory] = useState();
+const WebStoryPage = ({ params }) => {
+  const [webStory, setWebStory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const { webstories } = params;
   const decodedString = decodeURIComponent(webstories);
-  const webStory = await getAllWebstoriesq(decodedString);
-  console.log(webStory);
+  // const webStory = await getAllWebstoriesq(decodedString);
+  // console.log(webStory);
 
   //   const data = getSingleStory(decodedString);
   // console.log(data);
-  // useEffect(() => {
-  //   const getSingleStory = async (query) => {
-  //     // const requestOptions = {
-  //     //   method: 'GET',
-  //     //   headers: {
-  //     //     'Content-Type': 'application/json',
-  //     //   },
-  //     // };
+  useEffect(() => {
+    // Set overflow to hidden with !important when the component mounts or when decodedString changes
+    document.body.style.setProperty("overflow", "hidden", "important");
 
-  //     try {
-  //       // console.log("Start");
-  //       // console.log(query);
-  //       const response = await fetch(GET_SINGLE_WEB_STORY(query));
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setWebStory(data?.webStory?.webStorySlides);
-  //         console.log(".....|",data);
-  //       } else {
-  //         throw new Error(
-  //           `Error fetching data: ${response.status} ${response.statusText}`
-  //         );
-  //       }
-  //     } catch (error) {
-  //       throw new Error(`Failed to fetch Single blog data: ${error}`);
-  //     }
-  //   };
+    const getSingleStory = async () => {
+      try {
+        const response = await fetch(GET_SINGLE_WEB_STORY(decodedString), {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        if (!data?.webStory?.webStorySlides) {
+          throw new Error("Missing webStorySlides in response data");
+        }
+        setWebStory(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   // console.log("............");
+    getSingleStory();
 
-  //   getSingleStory(decodedString);
-  // }, [decodedString]);
-  // console.log("Web stories",webStory);
+    // Reset overflow when the component unmounts
+    // return () => {
+    //   document.body.style.overflow = "";
+    // };
+
+    return () => {
+      document.body.style.setProperty("overflow", "scroll", "important");
+      // document.documentElement.style.setProperty("overflow", "scroll", "important");
+      // Logic to remove specific script tags
+      const scriptURLs = [
+        "https://cdn.ampproject.org/v0.js",
+        "https://cdn.ampproject.org/v0/amp-video-0.1.js",
+        "https://cdn.ampproject.org/v0/amp-story-1.0.js",
+      ];
+
+      scriptURLs.forEach((url) => {
+        const script = document.querySelector(`script[src="${url}"]`);
+        if (script) {
+          script.remove();
+        }
+      });
+    };
+  }, [decodedString]);
+
+  console.log("Web stories>>>>>>>>>>>>>", webStory);
 
   // console.log(webStory);
   // const webStories = [
@@ -78,7 +100,16 @@ const WebStoryPage = async ({ params }) => {
   // ];
   // console.log(webStory);
 
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>Error: {error}</h1>;
+  }
+
   return (
+    // <Suspense fallback={<h1>Loading...</h1>}>
     <div>
       <amp-story
         standalone
@@ -88,7 +119,7 @@ const WebStoryPage = async ({ params }) => {
         // poster-portrait-src={webStories[0].img}
       >
         {webStory &&
-          webStory?.map((curr, index) => {
+          webStory?.webStory?.webStorySlides.map((curr, index) => {
             // console.log(curr?.backgroundImages?.url);
             return (
               <amp-story-page key={index} id={index}>
@@ -134,7 +165,19 @@ const WebStoryPage = async ({ params }) => {
           </amp-story-grid-layer>
         </amp-story-page> */}
       </amp-story>
+      <Script async src="https://cdn.ampproject.org/v0.js"></Script>
+      <Script
+        async
+        custom-element="amp-video"
+        src="https://cdn.ampproject.org/v0/amp-video-0.1.js"
+      ></Script>
+      <Script
+        async
+        custom-element="amp-story"
+        src="https://cdn.ampproject.org/v0/amp-story-1.0.js"
+      ></Script>
     </div>
+    // </Suspense>
   );
 };
 

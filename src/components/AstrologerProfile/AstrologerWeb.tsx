@@ -31,6 +31,9 @@ import ConsultationModalContent from "../consult_page/ConsultationModalContent";
 import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
 import Modal from "../ReusableModal/ReusableModal";
 import { BasicModal } from "../login/BasicModal";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+import toast, { Toaster } from "react-hot-toast";
+import Model from "./Model";
 
 const AstrologerWeb = ({
   data,
@@ -88,6 +91,7 @@ const AstrologerWeb = ({
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+  const [count, setCount] = useState<number>(0);
 
   // const isMobile = window.innerWidth < 768;
 
@@ -102,16 +106,17 @@ const AstrologerWeb = ({
   } = useFilterStore();
 
   useEffect(() => {
-    const userProfile = async () => {
-      if (loginToken) {
+    if (loginToken && count === 0) {
+      const userProfile = async () => {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
-      }
-    };
+      };
+      setCount(1);
 
-    userProfile();
+      userProfile();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loginToken]);
 
   const [callBtnClicked, setCallBtnClicked] = useState(false);
   const callClickedHandler = (guruToken: string) => {
@@ -268,6 +273,47 @@ const AstrologerWeb = ({
     setdescLength(data.description.length);
   };
 
+  const [clickedImg, setClickedImg] = useState<any>();
+  const [imgCurrentIndex, setImgCurrentIndex] = useState<any>();
+  const handleClick = (item: any, index: any) => {
+    setImgCurrentIndex(index);
+    setClickedImg(item.url);
+  };
+
+  const handelRotationRight = () => {
+    const totalLength = data.images.length;
+    if (imgCurrentIndex + 1 >= totalLength) {
+      setImgCurrentIndex(0);
+      const newUrl = data.images[0].url;
+      setClickedImg(newUrl);
+      return;
+    }
+    const newIndex = imgCurrentIndex + 1;
+    const newUrl = data.images.filter((item: any) => {
+      return data.images.indexOf(item) === newIndex;
+    });
+    const newItem = newUrl[0].url;
+    setClickedImg(newItem);
+    setImgCurrentIndex(newIndex);
+  };
+
+  const handelRotationLeft = () => {
+    const totalLength = data.images.length;
+    if (imgCurrentIndex === 0) {
+      setImgCurrentIndex(totalLength - 1);
+      const newUrl = data.images[totalLength - 1].url;
+      setClickedImg(newUrl);
+      return;
+    }
+    const newIndex = imgCurrentIndex - 1;
+    const newUrl = data.images.filter((item: any) => {
+      return data.images.indexOf(item) === newIndex;
+    });
+    const newItem = newUrl[0].url;
+    setClickedImg(newItem);
+    setImgCurrentIndex(newIndex);
+  };
+
   const handleFeedback = async (
     id: number,
     sort: string,
@@ -314,7 +360,7 @@ const AstrologerWeb = ({
     <>
       {login && <BasicModal setLogin={setLogin} />}
 
-      <div className="my-[90px] mx-auto max-w-[72rem] hidden  md:flex items-st flex-col justify-start gap-10">
+      <div className="mb-[90px] mx-auto max-w-[72rem] hidden  md:flex items-st flex-col justify-start gap-10">
         <div className="bg-gradient-to-r  xl:max-w-[72rem] from-violet-100 via-white to-white rounded-md shadow-md  items-end md:flex md:gap-[20px] xl:gap-[64.33px] p-[20px] lg:p-[18.38px] mx-auto">
           <div className="flex flex-col items-center relative gap-[18.38px]">
             <div className="overflow-hidden  w-[183px] h-[183px] rounded-full flex items-center justify-center">
@@ -354,15 +400,46 @@ font-semibold"
             {loginToken ? (
               !isFollowing ? (
                 <div
-                  onClick={() => FollowAstro(loginToken, data?.user.guru)}
+                  onClick={() => { 
+                    FollowAstro(loginToken, data?.user.guru)
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: `Astro_Follow_${data.user.firstName}${data.user.lastName}`,
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: `Astro_Follow_${data.user.firstName}${data.user.lastName}`,
+                    });
+                 
+                    toast.promise(FollowAstro(loginToken, data?.user.guru), {
+                      loading: "Saving...",
+                      success: <b>Followed</b>,
+                      error: <b>Error in Follow</b>,
+                    })
+                  }}
                   className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
                 >
                   Follow
                 </div>
               ) : (
                 <div
-                  onClick={() => UnFollowAstro(loginToken, data?.user.guru)}
-                  className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-red-500 rounded-md"
+                  onClick={() => { 
+                    UnFollowAstro(loginToken, data?.user.guru)
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: `Astro_Unfollow_${data.user.firstName}${data.user.lastName}`,
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: `Astro_Unfollow_${data.user.firstName}${data.user.lastName}`,
+                    });
+                    toast.promise(UnFollowAstro(loginToken, data?.user.guru), {
+                      loading: "Saving...",
+                      success: <b>Unfollowed</b>,
+                      error: <b>Error in UnFollow</b>,
+                    })
+                  }}
+                  className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
                 >
                   UnFollow
                 </div>
@@ -551,6 +628,39 @@ text-sm
                   </p>
                 </div>
               </div>
+            ) : data?.callAvailability === "busy" ? (
+              <div className="cursor-not-allowed hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-red-500 rounded-tl-[6.89px] rounded-bl-[6.89px]">
+                <Image
+                  src={call}
+                  className="text-white w-25 h-25 lg:w-29 lg:h-29"
+                  alt="messge"
+                  width="29"
+                  height="29"
+                />
+                <div>
+                  <p
+                    className="text-white
+                lg:text-lg
+                text-left
+                text-sm
+font-medium
+leading-relaxed"
+                  >
+                    Busy
+                  </p>
+                  <p
+                    className="
+                  text-white
+              lg:text-lg
+text-sm
+              font-medium
+            
+              leading-relaxed"
+                  >
+                    ₹{data.fee}/min
+                  </p>
+                </div>
+              </div>
             ) : (
               <div className="cursor-not-allowed hover:shadow-lg gap-[18px] w-[140px] lg:w-[183.4px] py-[9px] px-[17px] flex items-center justify-start bg-neutral-200 rounded-tl-[6.89px] rounded-bl-[6.89px]">
                 <Image
@@ -599,7 +709,9 @@ font-semibold"
             >
               About Me
             </h2>
-            <p className={` text-stone-600 text-base font-medium leading-snug`}>
+            <p
+              className={` text-neutral-500 text-base font-medium leading-snug`}
+            >
               {`${data.description.slice(0, descLength)} `}
               {descLength == data.description.length ? (
                 <span
@@ -626,36 +738,18 @@ font-medium"
               )}
             </p>
             <div className="flex items-center justify-center gap-4 overflow-x-scroll no-scrollbar">
-              {data.images.slice(0, imgLength).map((data: any) => (
+              {data.images.map((data: any, index: number) => (
                 <Image
                   key={data._id}
                   src={data.url}
                   width="107"
+                  onClick={() => handleClick(data, index)}
                   className="w-[107px] h-[107px]"
                   height="117"
                   alt="astroImg"
                 />
               ))}
             </div>
-            {data.images.length == imgLength ? (
-              <p
-                className="cursor-pointer underline hover:text-blue-500 w-full text-right text-neutral-800
-text-lg
-font-semibold"
-                onClick={() => setimgLength(4)}
-              >
-                See less
-              </p>
-            ) : (
-              <p
-                className="cursor-pointer underline hover:text-blue-500 w-full text-right text-neutral-800
-text-lg
-font-semibold"
-                onClick={toggleImgLength}
-              >
-                See all
-              </p>
-            )}
           </div>
         </div>
 
@@ -733,7 +827,7 @@ font-semibold"
             >
               Reviews
             </h3>
-            <div className="py-8 px-16 border border-zinc-200 scrollbar-thin scrollbar-webkit max-w-[792px] overflow-y-scroll sticky overflow-x-hidden max-h-[1502px] bg-white rounded-[10px] shadow justify-start flex-col items-start gap-10 flex">
+            <div className="py-8 px-16 border border-zinc-200 scrollbar-thin scrollbar-webkit max-w-[792px] overflow-y-scroll overflow-x-hidden max-h-[1502px] bg-white rounded-[10px] shadow justify-start flex-col items-start gap-10 flex">
               <div className="border-b pb-3 border-gray-200 w-full flex  gap-[195px] items-center">
                 <div className="flex items-center gap-3">
                   <Image src={star3} width="30" height="30" alt="star" />
@@ -991,7 +1085,17 @@ font-semibold"
             </div>
           </div>
         </Modal>
+        {clickedImg && (
+          <Model
+            clickedImg={clickedImg}
+            handelRotationRight={handelRotationRight}
+            setClickedImg={setClickedImg}
+            handelRotationLeft={handelRotationLeft}
+          />
+        )}
       </div>
+
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 };

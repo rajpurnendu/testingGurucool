@@ -1,11 +1,28 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ReusableCard2 = ({ data }: any) => {
-  const [descLength, setDescLength] = useState(220);
+  const [descLength, setDescLength] = useState(226);
+  const [isExpanded, setIsExpanded] = useState(false);
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (isExpanded && !event.target.closest(`${data.name}`)) {
+        setIsExpanded(false);
+        setDescLength(226);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isExpanded]);
   return (
-    <div className="relative rounded-xl bg-white xl:rounded-lg shadow xl:shadow hover:xl:shadow-md transition duration-300 ease-in-out  xl:min-w-[281px] min-w-[247px] p-[1rem]">
+    <div
+      className={`relative rounded-xl ${data.name} bg-white xl:rounded-lg shadow xl:shadow hover:xl:shadow-xl transition duration-300 ease-in-out  xl:min-w-[281px] border border-gray-100 min-w-[247px] p-[1rem]`}
+    >
       <div className="flex flex-col items-center xl:gap-[0.81rem] gap-[23px]">
         <div className="flex flex-row w-full justify-end items-end">
           <svg
@@ -35,16 +52,19 @@ const ReusableCard2 = ({ data }: any) => {
           </svg>
 
           <p className="text-neutral-500 xl:font-semibold xl:text-base text-xs font-normal leading-[18px] xl:leading-[17.44px]">
-            7th May 23
+            {data.date}
           </p>
         </div>
         {data.desc.length > descLength ? (
           <div className="px-2">
-            <p className="xl:text-[1rem] text-justify text-xs font-normal leading-[1.2rem]">
+            <p className="xl:text-[1rem] text-[#3A3938] text-justify tracking-tight text-xs font-normal leading-[1.2rem]">
               {`${data.desc.slice(0, descLength)}...`}
             </p>
             <p
-              onClick={() => setDescLength(data.desc.length)}
+              onClick={() => {
+                setDescLength(data.desc.length);
+                setIsExpanded(!isExpanded);
+              }}
               className="text-[#965EFB] cursor-pointer font-semibold text-xs leading-[25px] xl:text-[1.125rem]"
             >
               View More
@@ -52,11 +72,14 @@ const ReusableCard2 = ({ data }: any) => {
           </div>
         ) : (
           <div className="px-2">
-            <p className="xl:text-[1rem] text-justify text-xs font-normal leading-[1.2rem]">
+            <p className="xl:text-[1rem] text-[#3A3938] text-justify text-xs font-normal leading-[1.2rem]">
               {`${data.desc.slice(0, descLength)}`}
             </p>
             <p
-              onClick={() => setDescLength(220)}
+              onClick={() => {
+                setDescLength(220);
+                setIsExpanded(!isExpanded);
+              }}
               className="text-[#965EFB] cursor-pointer font-semibold text-xs leading-[25px] xl:text-[1.125rem]"
             >
               View Less

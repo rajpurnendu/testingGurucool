@@ -19,7 +19,7 @@ const Userdetails = async ({
   return (
     <div
       className="max-w-6xl my-0 pr-4 pl-4 pt-8 box-border border border-solid border-[#965efb] rounded-[10px] mb-[15px] mt-[15px] ml-4 mr-4 md:mx-auto"
-      style={{ marginTop: "90px" }}
+      
     >
       {/* User Image  */}
       <div>
@@ -28,7 +28,7 @@ const Userdetails = async ({
             src={userDetails?.user?.avatar?.url}
             width={100}
             height={100}
-            className="text-center m-auto rounded-full md:w-[160px] md:h-[160px]"
+            className="text-center m-auto rounded-full w-[100px] h-[100px] md:w-[160px] md:h-[160px]"
             alt="User Profile Image"
           />
         ) : (
@@ -41,7 +41,7 @@ const Userdetails = async ({
       {edit ? (
         <Displayeditform userDetails={userDetails} loginToken={loginToken} />
       ) : (
-        <Displayuserinfo userDetails={userDetails} />
+        <Displayuserinfo userDetails={userDetails} loginToken={loginToken} />
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <div className="max-w-[72rem] mx-3 xl:mx-auto mt-[90px]">
+    <div className="max-w-[72rem] mx-3 xl:mx-auto mt-2.5">
       <h1 className="text-[24px] font-[700] mb-[30px]  xl:text-[36px] xl:mb-[35px] xl:mt-[35px]">
         Gurucool
       </h1>

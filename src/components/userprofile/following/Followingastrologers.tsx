@@ -4,6 +4,7 @@ import React from "react";
 import iconnotFollwing from "../../../../public/assets/Follwing.svg";
 import Astroprofile from "./components/Astroprofile";
 import { getUserfollowingAstrologers } from "@/lib/data";
+import Link from "next/link";
 
 const Followingastrologers = async ({ loginToken }: { loginToken: string }) => {
   const data = await getUserfollowingAstrologers(loginToken);
@@ -25,9 +26,11 @@ const Followingastrologers = async ({ loginToken }: { loginToken: string }) => {
             notified once the following astrologer online
           </h1>
           <div className="w-full flex justify-center items-center">
-            <h2 className="inline-flex cursor-pointer appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight font-semibold h-[52px] min-w-10 text-[1rem] px-4 text-white bg-[#8d66d4] rounded-md mt-[15px] md:w-[244px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-[#7740de] duration-300 ...">
-              Follow Now
-            </h2>
+            <Link href={"/call-to-astrologers"}>
+              <h2 className="inline-flex cursor-pointer appearance-none items-center justify-center select-none relative whitespace-nowrap align-middle outline-none leading-tight font-semibold h-[52px] min-w-10 text-[1rem] px-4 text-white bg-[#8d66d4] rounded-md mt-[15px] md:w-[244px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-[#7740de] duration-300 ...">
+                Follow Now
+              </h2>
+            </Link>
           </div>
         </div>
       ) : (

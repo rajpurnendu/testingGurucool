@@ -1,17 +1,13 @@
 "use client";
 import { G_GET_SINGLE_ASTROLOGER_BY_TOKEN, TESTING_URL } from "@/lib/apilinks";
-
 import { getUserprofile } from "@/lib/data";
 import useFilterStore from "@/store/filterStore";
-
 import { usePathname, useRouter } from "next/navigation";
-
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Modal from "../ReusableModal/ReusableModal";
 import ConsultationFailed from "./ConsultationFailed";
 import ConsultationStartedModal from "./ConsultationStartedModal";
-
 
 const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   const {
@@ -35,7 +31,6 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   const [callMsg, setCallMsg] = useState("");
   const [userDetails, setUserDetails] = useState<any>();
   const guruToken: string = localStorage.getItem("guruToken") || "";
-  //   console.log(guruToken);
   const purchaseId: string = localStorage.getItem("purchaseId") || "";
 
   const router = useRouter();
@@ -47,72 +42,52 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
         let data = await getUserprofile(loginToken);
         setUserDetails(data.userDetails);
         setUserId(data.user._id);
-        // console.log(data);
       }
     };
 
     userProfile();
   }, []);
-  // console.log(userDetails);
 
   async function fetchCallStartedData() {
+    console.log('inside fetchCallStartedData')
     try {
       const response1 = await fetch(
         `${TESTING_URL}consultations/consultationReceipt?purchaseId=${purchaseId}`
       );
       const data1 = await response1.json();
-      // console.log(data1.purchase.callStatus);
+      console.log(data1);
 
       setCallStatus(data1.purchase.callStatus);
       const response2 = await fetch(
         G_GET_SINGLE_ASTROLOGER_BY_TOKEN(guruToken)
       );
       const data2 = await response2.json();
-      // console.log(data2);
+      console.log(data2);
 
       setAstroDetails(data2.guru);
       if (data1.purchase.callStatus === "completed") {
         // logEvent(analytics, "Call_Success_For", {
         //   item_name: `${astroDetails?.user?.firstName} ${astroDetails?.user?.lastName}`,
         // });
-
+        console.log('inside completed callStatus condition')
         setCallPurchasedId(purchaseId);
-        // dispatch(
-        //   callConsultationEndedDetailsAction.setCallDuration(
-        //     response.data.purchase.timeDuration
-        //   )
-        // );
+
         setCallDuration(data1.purchase.timeDuration);
-        // dispatch(
-        //   callConsultationEndedDetailsAction.setAmount(
-        //     response.data.purchase.amount
-        //   )
-        // );
+
         setAmount(data1.purchase.amount);
         localStorage.removeItem("purchaseId");
         router.push("/call-consultation-ended");
-      } else if (callStatus === "started") {
-        setCallMsg("Your Call has been Started");
-      } else if (callStatus === "failed") {
-        setCallMsg(
-          "Your Call connecting has been failed please restart the process"
-        );
-        // logEvent(analytics, "call_fail");
-        // logEvent(analytics, "Call_Failure_for", {
-        //   item_name: `${astroDetails?.user?.firstName} ${astroDetails?.user?.lastName}`,
-        // });
-      }
+      } 
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   }
 
-  // console.log(astroDetails);
+  console.log(callStatus);
 
   const [eventName, setEventName] = useState();
   useEffect(() => {
     if (loginToken && userDetails?.uid) {
-      // console.log(userDetails);
 
       const uid = userDetails.uid.toString();
       const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -123,21 +98,24 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
       setEventName(encodedStr);
     }
   }, [loginToken, userDetails]);
-  // console.log(eventName);
 
   useEffect(() => {
     if (eventName) {
-      // console.log("EVENT>>>>>>>>>>>>>>>>>>>>>>>>>", eventName);
-      const newSocket = io("https://prod.gurucool.life");
+      console.log("EVENT>>>>>>>>>>>>>>>>>>>>>>>>>", eventName);
+      const newSocket = io("https://test.gurucool.life");
 
       newSocket.on("connect", () => {
-        // console.log("Connected to the server");
       });
 
       newSocket.on(eventName, (data: any) => {
-        // // //console.log("Socket Event>>>>>>>>>>>>>>>>>>>>>>>>>");
-        // console.log("Socket Event DATA>>>>>>>>>>>>>>>>>>>>>>>>>", data);
-        fetchCallStartedData();
+        console.log("Socket Event>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log("Socket Event DATA>>>>>>>>>>>>>>>>>>>>>>>>>", data);
+        if(data === "Call End"){
+          //setTimeout is used to delay of the call of the function as the status to update in backend server taking some time
+          setTimeout(()=>{
+            fetchCallStartedData();
+          },3000)
+        }
       });
 
       // Clean up the socket connection when the component unmounts
@@ -148,9 +126,16 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
     }
   }, [eventName]);
 
+  // useEffect(() => {
+  //   setTimeout(fetchCallStartedData, 0);
+  // }, [eventName]);
+
   useEffect(() => {
-    setTimeout(fetchCallStartedData, 0);
-  }, [eventName]);
+    fetchCallStartedData();
+    if (callStatus === "completed") {
+      router.push("/call-consultation-ended");
+    }
+  }, [callStatus]);
 
   const [remainingTime, setRemainingTime] = useState(60);
 
@@ -161,8 +146,6 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
 
   const isMobile = window.innerWidth < 768;
 
-  console.log(location);
-
   useEffect(() => {
     if (location === "/call-consultation-started") {
       setShowModal(true);
@@ -172,15 +155,22 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   return (
     <div>
       <Modal
-        size={isMobile ? "xs" : "md"}
+        size={
+          isMobile
+            ? "xs"
+            : callStatus === "busy" ||
+              callStatus === "failed" ||
+              callStatus === "no-answer"
+            ? "md"
+            : "md"
+        }
         show={showModal}
         onClose={closeModal}
-        //
       >
         <div className="w-full flex flex-col items-center gap-4 md:gap-6">
           {callStatus === "busy" ||
           callStatus === "failed" ||
-          callStatus === "no-answer" ? (
+          callStatus === "no-answer" || callStatus === "incomplete" ? (
             <ConsultationFailed />
           ) : (
             <ConsultationStartedModal

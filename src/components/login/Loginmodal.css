@@ -1,0 +1,44 @@
+/* .PhoneInput {
+     border: 1px solid gray; 
+ } */
+
+.PhoneInputInput {
+    width: 182.69px;
+    height: 28.729px;
+    padding: 5.04px;
+    justify-content: center;
+    align-items: center;
+    gap: 5.04px;
+    border-radius: 5.04px;
+    box-shadow: 0px 0px 1.008px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 0px rgba(0, 0, 0, 0.11);
+    background:#FEFEFE;
+}
+
+.PhoneInputCountry{
+    width: 60px;
+    height: 28.743px;
+    border-radius: 5.04px;
+    box-shadow: 0px 0px 1.008px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 0px rgba(0, 0, 0, 0.11);
+    background:#FEFEFE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+.embla {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    /* border: 1px solid rebeccapurple; */
+  }
+  .embla__container {
+    display: flex;
+    height: 100%;
+    /* border: 1px solid red; */
+  }
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }

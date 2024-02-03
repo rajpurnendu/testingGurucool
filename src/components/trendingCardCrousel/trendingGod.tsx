@@ -21,7 +21,7 @@ const TrendingGod = ({ data1 }: any) => {
       loop
       margin={30}
       center
-      dots
+      dotsEach
       nav={true}
       navClass={["owl-prev", "owl-next"]}
       navText={["<--", "-->"]}
@@ -29,16 +29,18 @@ const TrendingGod = ({ data1 }: any) => {
       items={2}
       responsive={{
         0: {
+          items: 1.1,
+          nav: false,
+          center: false,
+          margin: 8
+        },
+        600: {
           items: 1,
           nav: false,
           center: true,
         },
-        1024: {
-          nav: false,
-          items: 2,
-          center: false,
-        },
-        1025: {
+        1000: {
+          nav: true,
           items: 2,
           center: false,
         },

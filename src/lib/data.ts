@@ -153,30 +153,6 @@ export async function GET_Spec_Astrologer2 (query:string):Promise<any | undefine
 
 
 
-// export async function getAllConsultAstrologers() {
-
-//     try {
-//       const response = await fetch(
-//         G_GET_ALL_CONSULT_ASTROLOGERS(), { next: { revalidate: 0 } }
-//       );
-//       if (response.ok) {
-//         const data = await response.json(); 
-//         // console.log(data);
-
-//         // setCookie('loginToken', 'kkkkkkkkk');
-//         return data;
-//       } else {
-//         console.error(
-//           "Error fetching data:",
-//           response.status,
-//           response.statusText
-//         );
-//         return undefined;
-//       }
-//     } catch (error) {
-//         throw new Error('Failed to fetch Single blog data.');
-//     }
-// }
 
 export async function getUserfollowingAstrologers(loginToken:string):Promise<any | undefined> {
   try {
@@ -239,8 +215,7 @@ export async function getUserAllConsultations(loginToken:string,uid:number,consu
 export async function Get_Single_Astrologer(params:string) {
   try {
     const response = await fetch(
-      Get_SINGLE_ASTRO(params),
-      { next: { revalidate: 0 }}
+      Get_SINGLE_ASTRO(params)
     );
     if (response.ok) {
       const data = await response.json(); 

@@ -11,7 +11,7 @@ const Consultationhistory = ({
   loginToken: string | undefined;
 }) => {
   const [items, setItems] = useState([]);
-  const [tabstatus, setTabstatus] = useState("");
+  const [tabstatus, setTabstatus] = useState("Call");
   const handleChange = (e: React.MouseEvent<HTMLButtonElement>) => {
     setTabstatus(e.currentTarget.value);
   };
@@ -39,7 +39,7 @@ const Consultationhistory = ({
 
   return (
     <Accordian title="Consultations History">
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <button
           className={clsx(
             "w-[92px] text-base outline-none flex justify-center items-center pt-2 pb-2 px-4 font-semibold rounded-tl-[6px] rounded-bl-[6px]",
@@ -79,7 +79,7 @@ const Consultationhistory = ({
         >
           CHAT
         </button>
-      </div>
+      </div> */}
       {items.length > 0 && <PaginatedItems itemsPerPage={4} items={items} />}
     </Accordian>
   );

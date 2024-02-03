@@ -5,13 +5,16 @@ import { FaUserCircle } from "react-icons/fa"; // Assuming you have react-icons 
 import Gurucool_Logo from "../../../public/assets/GurucoolNewWebLogo.svg";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useCallback, useEffect, useState } from "react";
+import { LegacyRef, useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { BasicModal } from "../login/BasicModal";
 import { logout } from "@/lib/actions";
 import { getUserprofile } from "@/lib/data";
 import TopBar from "../TopBar/TopBar";
+import "./Header.css";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+
 
 const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [menuState, setMenuState] = useState("menu");
@@ -22,6 +25,16 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [walletbal, setWalletbal] = useState(0);
   const [drop, setDrop] = useState(false);
 
+
+  // Check if the current path is exactly '/web-stories/...'
+  // Regex pattern to match paths that start with '/web-stories/' and have additional segments
+  const webStoriesSubpathRegex = /^\/web-stories\/.+$/;
+
+  // Check if the current path matches the regex pattern
+  const isWebStoriesSubpath = webStoriesSubpathRegex.test(pathname);
+
+
+  // const avatarRef = useRef<HTMLElement | null>(null);
   const ToggelOpen = useCallback(() => {
     setOpen(!open);
   }, [open]);
@@ -29,17 +42,55 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const toggelDrop = useCallback(() => {
     setDrop(!drop);
   }, [drop]);
+  const dropdownRef = useRef<any>(null);
+
+  const handleClickOutside = (event: Event) => {
+    // Use type assertion to treat event.target as an HTMLElement
+    const target = event.target as HTMLElement;
+
+    if (dropdownRef.current && !dropdownRef.current.contains(target)) {
+      setDrop(false);
+    }
+  };
+  useEffect(() => {
+    // Attach the listeners on component mount.
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    // Detach the listeners on component unmount.
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
+  // const handleUserAvatarClickOutside = useCallback(
+  //   (event: any) => {
+  //     if (avatarRef.current && avatarRef.current.contains(event.target)) {
+  //       setDrop(false);
+  //     }
+  //   },
+  //   [avatarRef, setDrop]
+  // );
+
+  // useEffect(() => {
+  //   if (drop) {
+  //     document.removeEventListener("mousedown", handleUserAvatarClickOutside);
+  //   } else {
+  //     document.addEventListener("mousedown", handleUserAvatarClickOutside);
+  //   }
+  // }, [drop, handleUserAvatarClickOutside]);
 
   useEffect(() => {
-    const userProfile = async () => {
-      if (loginToken) {
+    if (loginToken) {
+      const userProfile = async () => {
         let data = await getUserprofile(loginToken);
 
         setWalletbal(data?.wallet_balance);
         setUserDetails(data.user);
-      }
-    };
-    userProfile();
+      };
+      userProfile();
+    }
 
     ToggelOpen();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,21 +98,69 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const onToggleMenu = () => {
     setMenuState((prevState) => (prevState === "menu" ? "close" : "menu"));
   };
+
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setMenuState("menu");
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [menuState]);
+
+  // const [isSticky, setIsSticky] = useState(true);
+
+  
+  if (isWebStoriesSubpath) {
+    // Return null or any other fallback UI when the path is a subpath of '/web-stories/'
+    return null;
+  }
+
   return (
     <>
       {login && <BasicModal setLogin={setLogin} />}
-
+      <TopBar loginToken={loginToken ?? ""} state={open} fn={ToggelOpen} />
       <div
-        className={`bg-[#965EFB] fixed ${
-          open == false ? "top-0" : "top-12"
-        }  left-0 right-0 z-20`}
+        ref={sidebarRef}
+        // className={`bg-[#965EFB] fixed ${
+        //   open == false ? "top-0" : "top-12"
+        // }  left-0 right-0 z-20`}
+        className="bg-[#965EFB]"
+        id="header"
       >
         <nav className="relative max-w-[72rem] h-[4rem] mx-auto flex justify-between items-center px-2 py-2">
           <div className="max-h-full flex gap-2">
             {menuState === "menu" ? (
               <Bars3Icon
                 className="w-6 text-blue-50 cursor-pointer md:hidden"
-                onClick={onToggleMenu}
+                onClick={() => {
+                  onToggleMenu();
+                  if (loginToken) {
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu",
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu",
+                    });
+                  } else {
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu_Nologin",
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu_Nologin",
+                    });
+                  }
+                }}
               />
             ) : (
               <></>
@@ -78,11 +177,12 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             {/* </div> */}
           </div>
           <div
-            className={`md:static absolute ${
+            className={`z-20 md:static absolute ${
               menuState === "menu"
                 ? "translate-x-[-100vh] xl:translate-x-[0] md:translate-x-0"
                 : "translate-x-[0vh]"
             } md:translate-y-[0vh] bg-[#965EFB] md:min-h-full min-h-[100vh] left-0 top-[0] xl:w-full  flex md:justify-center px-5  border-white md:border-none transition  duration-200 ease-in-out`}
+            style={{ transition: "transform 0.7s ease-in-out" }}
           >
             <ul className="flex py-4 md:py-0 md:flex-row flex-col md:items-center md:gap-[3vw] gap-8">
               <div className="flex gap-4">
@@ -101,7 +201,28 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
 
               <li>
                 <Link
-                  onClick={onToggleMenu}
+                  onClick={() => {
+                    onToggleMenu();
+                    if (loginToken) {
+                      sendGTMEvent({
+                        event: "buttonClicked",
+                        value: "Home_Menu",
+                      });
+                      sendGAEvent({
+                        event: "buttonClicked",
+                        value: "Home_Menu",
+                      });
+                    } else {
+                      sendGTMEvent({
+                        event: "buttonClicked",
+                        value: "HomeMenu_Unlogin_Home",
+                      });
+                      sendGAEvent({
+                        event: "buttonClicked",
+                        value: "HomeMenu_Unlogin_Home",
+                      });
+                    }
+                  }}
                   className={clsx(
                     `py-1.5 px-4 text-[14px] lg:text-[16px] rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
@@ -115,9 +236,30 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               </li>
               <li>
                 <Link
-                  onClick={onToggleMenu}
+                  onClick={() => {
+                    onToggleMenu();
+                    if (loginToken) {
+                      sendGTMEvent({
+                        event: "buttonClicked",
+                        value: "Home_Menu_Consult_Now",
+                      });
+                      sendGAEvent({
+                        event: "buttonClicked",
+                        value: "Home_Menu_Consult_Now",
+                      });
+                    } else {
+                      sendGTMEvent({
+                        event: "buttonClicked",
+                        value: "HomeMenu_Unlogin_Consult_Now",
+                      });
+                      sendGAEvent({
+                        event: "buttonClicked",
+                        value: "HomeMenu_Unlogin_Consult_Now",
+                      });
+                    }
+                  }}
                   className={clsx(
-                    `py-1.5 px-4 rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
+                    `py-1.5 px-4 rounded-full text-[14px] lg:text-[16px] border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
                       "md:border-2 border-white border-b-2 text-[14px] lg:text-[16px]":
                         pathname?.includes(`/call-to-astrologers`),
@@ -130,7 +272,28 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
               </li>
               <li>
                 <Link
-                  onClick={onToggleMenu}
+                  onClick={() => {
+                    onToggleMenu();
+                    if (loginToken) {
+                      sendGTMEvent({
+                        event: "buttonClicked",
+                        value: "Home_Menu_Blogs",
+                      });
+                      sendGAEvent({
+                        event: "buttonClicked",
+                        value: "Home_Menu_Blogs",
+                      });
+                    } else {
+                      sendGTMEvent({
+                        event: "buttonClicked",
+                        value: "HomeMenu_Unlogin_Blogs",
+                      });
+                      sendGAEvent({
+                        event: "buttonClicked",
+                        value: "HomeMenu_Unlogin_Blogs",
+                      });
+                    }
+                  }}
                   className={clsx(
                     `py-1.5 px-4 text-[14px] lg:text-[16px] rounded-full border-2 border-transparent hover:border-2 hover:border-white transition duration-300 ease-in-out text-white font-medium`,
                     {
@@ -145,7 +308,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             </ul>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div ref={dropdownRef} className="flex items-center gap-3">
             <Link href={"/wallet/pricelist"}>
               <div
                 className={`flex ${
@@ -176,8 +339,8 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                   />
                 </svg>
 
-                <p className="text-[14px] lg:text-[16px] font-medium text-white">
-                  ₹{Math.round(walletbal)}
+                <p className="text-[14px] lg:text-[16px] w-max font-medium text-white">
+                  ₹ {(walletbal && Math.floor(walletbal)) || 0}
                 </p>
               </div>
             </Link>
@@ -203,8 +366,18 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             {loginToken ? (
               userDetails?.avatar?.url ? (
                 <div
-                  onClick={toggelDrop}
-                  className="cursor-pointer overflow-hidden  inline-block w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center  mx-auto xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
+                onClick={() => {
+                  toggelDrop();
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: "Home_ProfileClick",
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: "Home_ProfileClick",
+                  });
+                }}
+                  className="cursor-pointer overflow-hidden flex justify-center items-center w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center  mx-auto xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
                 >
                   <Image
                     className=" rounded-full"
@@ -216,8 +389,18 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                 </div>
               ) : (
                 <div
-                  onClick={toggelDrop}
-                  className="cursor-pointer relative flex justify-center  overflow-hidden w-[30px] h-[30px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4]  items-center mx-auto my-2 xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
+                  onClick={() => {
+                    toggelDrop();
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: "Home_ProfileClick",
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: "Home_ProfileClick",
+                    });
+                  }}
+                  className="cursor-pointer relative flex justify-center items-center overflow-hidden w-[30px] h-[30px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] mx-auto my-2 xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
                 >
                   {userDetails?.firstName?.charAt(0).toUpperCase()}
                   {userDetails?.lastName?.charAt(0).toUpperCase()}
@@ -228,6 +411,14 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                 className="block text-[25px] xl:text-[40px] text-[#c4c4c4] cursor-pointer"
                 onClick={() => {
                   setLogin(true);
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: "Unlogin_Profile_Enter",
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: "Unlogin_Profile_Enter",
+                  });
                 }}
               />
             )}
@@ -236,6 +427,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                 className={`animate__animated animate__bounceIn absolute top-[101.5%] right-0 ${
                   drop ? "block" : "hidden"
                 } bg-white shadow-lg p-[10px] z-[1000] w-[214px] h-auto rounded-[4px] transition-all duration-500 ease-in-out`}
+                // ref={avatarRef as LegacyRef<HTMLDivElement>}
               >
                 <div className="flex flex-col items-start gap-2">
                   <Link
@@ -266,7 +458,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             ) : null}
           </div>
         </nav>
-        <TopBar state={open} fn={ToggelOpen} />
+        {/* <TopBar state={open} fn={ToggelOpen} /> */}
       </div>
     </>
   );

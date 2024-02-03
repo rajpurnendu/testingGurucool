@@ -103,8 +103,8 @@ const ConsultationStartedModal = ({
         </div>
       </div>
 
-      <div className="w-[11.875rem] md:w-full py-[0.66rem]">
-        <h3 className="text-center md:text-[1.625rem] font-semibold leading-tight">
+      <div className="w-full md:w-full py-[0.66rem]">
+        <h3 className="text-center text-[0.875rem] md:text-[1.625rem] font-semibold leading-tight">
           Your consultation is starting...
         </h3>
         <div className="md:p-2 md:mt-[0.16rem] flex justify-evenly flex-wrap">
@@ -112,7 +112,7 @@ const ConsultationStartedModal = ({
             return (
               <div
                 key={curr.id}
-                className="flex justify-center items-center gap-2 md:p-2"
+                className="flex justify-center items-center gap-2 p-2 md:p-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@ const ConsultationStartedModal = ({
                     fill="#222222"
                   />
                 </svg>
-                <h5 className="text-base leading-none text-[#222222] ">
+                <h5 className="text-xs md:text-base leading-none text-[#222222] ">
                   {curr.name}
                 </h5>
               </div>
@@ -136,9 +136,9 @@ const ConsultationStartedModal = ({
         </div>
       </div>
       <div className="flex md:w-[18.31rem] md:mx-auto">
-        <h3 className="text-[1.25rem] text-[#707070] leading-none">
+        <h3 className="text-[0.875rem] md:text-[1.25rem] text-[#707070] leading-none">
           Connecting you to{" "}
-          <span className="text-[1.25rem] font-semibold text-[#707070] leading-none">
+          <span className="text-[0.875rem] md:text-[1.25rem] font-semibold text-[#707070] leading-none">
             {astroDetails?.user?.firstName} {astroDetails?.user?.lastName},
           </span>{" "}
           First{" "}

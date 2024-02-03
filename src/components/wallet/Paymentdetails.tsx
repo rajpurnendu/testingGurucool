@@ -7,6 +7,7 @@ import BankIcon from "../../../public/images/wallet/bankIcon.svg";
 import UpiIcon from "../../../public/images/wallet/upi-icon-1.svg";
 import Walleticon from "../../../public/images/wallet/wallet-1.png";
 import AtmcardIcon from "../../../public/images/wallet/atm-card-1.svg";
+import Phonepeicon from "../../../public/images/wallet/phonepe.svg";
 import Loading from "../../../public/images/wallet/Pulse-1s-200px.svg";
 import logo from "../../../public/favicon-32x32.png";
 import Image from "next/image";
@@ -17,7 +18,7 @@ import {
 } from "@/lib/data";
 import Link from "next/link";
 import useRazorpay, { RazorpayOptions } from "react-razorpay";
-import { razorpayCheckoutHandler } from "@/lib/actions";
+import { phonePeCheckoutHandler, razorpayCheckoutHandler } from "@/lib/actions";
 import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
 import { TESTING_URL } from "@/lib/apilinks";
 
@@ -56,7 +57,6 @@ const Paymentdetailscomponent = ({
           data?.userDetails.totalRecharge === 0 &&
             !data?.userDetails?.offers?.firstConsultaionUsed
         );
-        // console.log(data);
       };
       getUserDetails();
     }
@@ -79,7 +79,6 @@ const Paymentdetailscomponent = ({
   };
 
   const handleChangePaymentMethod = (e: any) => {
-    // console.log(e.target.value);
     setPaymentMethod(e.target.value);
   };
 
@@ -100,10 +99,6 @@ const Paymentdetailscomponent = ({
         couponCode,
         couponType
       );
-      // console.log("====================================");
-      // console.log(data);
-      // console.log("====================================");
-
       const options: RazorpayOptions = {
         key: data?.key,
         amount: data?.checkout?.amount,
@@ -112,8 +107,7 @@ const Paymentdetailscomponent = ({
         description: "Test Transaction",
         // image:
         //   "https://gurucool.life/static/media/GurucoolNewWebLogo.7044d1e41f0ae5cc0426c727085ab32d.svg",
-        callback_url:
-        `${TESTING_URL}payments/payment-verification`,
+        callback_url: `${TESTING_URL}payments/payment-verification`,
         order_id: data?.checkout?.orderId,
         prefill: {
           name: userDetails?.firstName + " " + userDetails?.lastName,
@@ -149,18 +143,36 @@ const Paymentdetailscomponent = ({
       };
 
       const rzpay = new Razorpay(options);
-      // rzpay.on("payment.failed", function (response: any) {
-      //   alert(response.error.code);
-      //   alert(response.error.description);
-      //   alert(response.error.source);
-      //   alert(response.error.step);
-      //   alert(response.error.reason);
-      //   alert(response.error.metadata.order_id);
-      //   alert(response.error.metadata.payment_id);
-      // });
       rzpay.open();
     },
     [Razorpay, paymentMethod, userDetails, firstUser]
+  );
+  // console.log(data);
+
+  const handlePhonepePayment = useCallback(
+    async (
+      loginToken: string,
+      amount: string | number,
+      gst: string | number,
+      totalAmount: string | number,
+      couponCode: string,
+      couponType: string
+    ) => {
+      const data = await phonePeCheckoutHandler(
+        loginToken,
+        amount == 1 && firstUser ? 100 : amount,
+        gst,
+        totalAmount,
+        couponCode,
+        couponType
+      );
+
+      if (data) {
+        window.location.assign(data);
+      }
+      // console.log(data);
+    },
+    [firstUser]
   );
 
   return (
@@ -172,7 +184,7 @@ const Paymentdetailscomponent = ({
       ) : (
         <div
           className="max-w-6xl mx-auto px-4 md:px-0 box-border"
-          style={{ marginTop: "80px", marginBottom: "50px" }}
+          style={{ marginTop: "10px", marginBottom: "50px" }}
         >
           <div className="md:w-[70%] md:m-auto">
             {/* Coupon Section  */}
@@ -420,16 +432,59 @@ const Paymentdetailscomponent = ({
                   onChange={handleChangePaymentMethod}
                 />
               </div>
+              <div className=" w-full border-dashed border-[1px] border-black" />
+              <div className="py-[6px] px-1 flex justify-between w-full items-center">
+                <label htmlFor="phonepe" className="flex items-center">
+                  <Image
+                    src={Phonepeicon}
+                    alt="Debit/Card Icon"
+                    height={30}
+                    width={30}
+                    className="w-[40px] h-[40px] md:h-[60px] md:w-[60px]"
+                  />
+                  <p className="pl-[15px] text-[14px] text-[#222] md:text-[18px]">
+                    Phonepe
+                  </p>
+                </label>
+                <input
+                  id="phonepe"
+                  type="radio"
+                  value="phonepe"
+                  checked={paymentMethod === "phonepe"}
+                  name="payment-method"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 md:h-[30px] md:w-[30px]"
+                  onChange={handleChangePaymentMethod}
+                />
+              </div>
             </div>
 
             {/* Pay Now Button  */}
             <div className="flex justify-center">
-              {data?.[2]?.razorPay && (
+              {data?.[2]?.razorPay && paymentMethod !== "phonepe" && (
                 <button
                   className="w-full p-[10px] rounded-lg bg-[#965efbb2] text-white text-[16px] font-semibold md:w-[320px] md:h-[54px]"
                   onClick={() => {
                     if (loginToken) {
                       handlePayment(
+                        loginToken,
+                        data?.[1]?.amount,
+                        data?.[1]?.gst,
+                        data?.[1]?.totalAmount,
+                        data?.[0]?.couponCode,
+                        data?.[0]?.couponType
+                      );
+                    }
+                  }}
+                >
+                  Proceed To Pay
+                </button>
+              )}
+              {data?.[2]?.phonePay && paymentMethod === "phonepe" && (
+                <button
+                  className="w-full p-[10px] rounded-lg bg-[#965efbb2] text-white text-[16px] font-semibold md:w-[320px] md:h-[54px]"
+                  onClick={() => {
+                    if (loginToken) {
+                      handlePhonepePayment(
                         loginToken,
                         data?.[1]?.amount,
                         data?.[1]?.gst,

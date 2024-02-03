@@ -27,12 +27,12 @@ const Balance_required = feeNumber * 5;
     <>
       <div className="flex flex-col items-center gap-[0.5rem]">
         <h3
-          className="text-[0.875rem] md:text-[1.625rem] leading-normal font-semibold text-gray-900"
+          className="text-[0.875rem] md:text-[1.125rem] leading-normal font-semibold text-gray-900"
           id="modal-title"
         >
           Insufficient Balance
         </h3>
-        <div className="w-[9rem] md:w-[20rem] h-[5.68rem] md:h-[12.5rem]">
+        <div className="w-[9rem] md:w-[13.83rem] h-[5.68rem] md:h-[8.64rem]">
           <Image
             src={Insufficient_balance}
             width={100}
@@ -43,50 +43,50 @@ const Balance_required = feeNumber * 5;
         </div>
       </div>
 
-      <div className="w-full py-[0.66rem] md:py-8 border-t-[0.196px] border-b-[0.196px] border-gray-700 ">
+      <div className="w-full py-[0.66rem] md:py-[1.38rem] border-t-[0.196px] border-b-[0.196px] border-gray-700 ">
         <div className="w-full flex justify-center">
-          <div className="flex flex-col items-center gap-[0.5rem]  md:gap-6 p-[0.17rem]">
-            <h3 className="text-[0.75rem] md:text-[1.25rem] font-normal">
+          <div className="flex flex-col items-center gap-[0.5rem]  md:gap-4 p-[0.17rem] md:p-[0.35rem]">
+            <h3 className="text-[0.75rem] md:text-[0.875rem] font-normal">
               Available Balance
             </h3>
-            <h4 className="text-[0.875rem] md:text-[2.125rem] font-semibold text-red-600 ">
+            <h4 className="text-[0.875rem] md:text-[1.375rem] font-semibold text-red-600 ">
               ₹{Math.round(userWalletBalance)}
             </h4>
           </div>
           <div className="w-[0.196px] bg-gray-700 mx-[0.91rem] md:mx-8"></div>
-          <div className="flex flex-col items-center gap-[0.5rem]  md:gap-6 p-[0.17rem]">
-            <h3 className="text-[0.75rem] md:text-[1.25rem] font-normal">
+          <div className="flex flex-col items-center gap-[0.5rem]  md:gap-4 p-[0.17rem] md:p-[0.35rem]">
+            <h3 className="text-[0.75rem]  md:text-[0.875rem] font-normal">
               Balance required
             </h3>
 
-            <h4 className="text-[0.875rem]  md:text-[2.125rem] font-semibold text-green-500 ">
+            <h4 className="text-[0.875rem]  md:text-[1.375rem] font-semibold text-green-500 ">
               {" "}
               ₹{Balance_required}
             </h4>
           </div>
         </div>
-        <h5 className="text-center text-[0.75rem] md:text-[1.375rem] font-medium text-gray-700 mt-[0.66rem] md:mt-8">
+        <h5 className="text-center text-[0.75rem] md:text-[1rem] font-medium text-gray-700 mt-[0.66rem] md:mt-[1.38rem]">
           Astrologer&apos;s consultation charge:
-          <span className="text-violet-400 text-[0.75rem] md:text-[1.375rem] font-medium">
+          <span className="text-violet-400 text-[0.75rem] md:text-[1rem] font-medium">
             {" "}
             ₹{fee}/min
           </span>
         </h5>
       </div>
-      <div className="w-full bg-[#26C884] p-[0.38rem] md:p-4 rounded-[0.17rem] ">
-        <h6 className="font-normal leading-tight text-[0.75rem] md:text-[1.25rem] text-white text-justify">
+      <div className="w-full bg-[#26C884] p-[0.38rem] md:p-[0.69rem] rounded-[0.17rem] ">
+        <h6 className="font-normal leading-tight text-[0.75rem] md:text-[0.875rem] text-white text-justify">
          {` Minimum balance of 5 minutes ₹${Balance_required} is required to start call
-          with Y astrologer.`}
+          with ${astroDetails?.user?.firstName} ${astroDetails?.user?.lastName} astrologer.`}
         </h6>
       </div>
       <div className="flex w-full">
         <div>
-          <h6 className="text-[0.75rem] md:text-[1.375rem] font-medium leading-normal ">
+          <h6 className="text-[0.75rem] md:text-[1rem] font-medium leading-normal ">
             Note:{" "}
           </h6>
         </div>
         <div className="w-full ml-[0.27rem] ">
-          <h5 className="text-left text-[0.75rem] md:text-[1.25rem] font-normal">
+          <h5 className="text-left text-[0.75rem] md:text-[0.875rem] font-normal">
             A note pushing for pushing the user to do a recharge in order to
             recharge the wallet.
           </h5>

@@ -1,6 +1,6 @@
 const page = () => {
   return (
-    <div className="h-full flex flex-col items-center justify-center xl:mx-auto mt-20 max-w-[72rem] mx-3">
+    <div className="h-full flex flex-col items-center justify-center xl:mx-auto mt-2.5 max-w-[72rem] mx-3">
       <h1 className="xl:text-[36px] text-[24px] font-[700] xl:mb-[0px] mb-[0px]">
         About Us
       </h1>

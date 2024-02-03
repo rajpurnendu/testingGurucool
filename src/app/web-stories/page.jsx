@@ -3,14 +3,15 @@ import Link from "next/link";
 import { getAllWebstories } from "@/lib/data";
 import WebStoriesCard from "@/components/web-stories/WebStoriesCard";
 import clsx from "clsx";
+import Script from "next/script";
 
 const page = async () => {
   const data = await getAllWebstories();
   const AllWebStories = data?.webStories?.docs;
-  console.log(AllWebStories);
+  // console.log(AllWebStories);
 
   return (
-    <div className="max-w-6xl  mb-5  mx-auto mt-20  ">
+    <div className="max-w-6xl  mb-5  mx-auto mt-2.5">
       <h2
         className="text-neutral-800
 text-opacity-10
@@ -184,14 +185,15 @@ md:block
             </Link>
           </div>
         </div> */}
-        <div className="flex items-center justify-center">
-          <div className="w-fit  lg:gap-[43px] gap-5 mx-auto flex-wrap flex justify-start items-center xl:justify-start xl:items-start">
-            {AllWebStories.map((curr, index) => (
-              <WebStoriesCard key={index} data={curr} />
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center justify-center w-full  lg:gap-[43px] gap-5">
+          {/* <div className="w-full  lg:gap-[43px] gap-5 mx-auto flex-wrap flex justify-center items-center xl:justify-center xl:items-center"> */}
+          {AllWebStories.map((curr, index) => (
+            <WebStoriesCard key={index} data={curr} />
+          ))}
+          {/* </div> */}
         </div>
       </div>
+     
     </div>
   );
 };

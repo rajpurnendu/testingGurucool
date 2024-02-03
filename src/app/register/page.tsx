@@ -1,4 +1,5 @@
 "use client";
+//This is Unused Page,new route is "/registration"
 import { registerNewUser } from "@/lib/actions";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -61,9 +62,10 @@ const Register = () => {
     }
 
     // TODO: Registration process
-    registerNewUser({ ...formData, file: null, email: "" })
-      .then((result) => {
+    console.log(formData)
+    registerNewUser({ ...formData, file: null, email: "" }).then((result) => {
         console.log(result);
+        toast.success("Registered Successfully")
         if (result?.success) {
           toast.success(result.message);
           router.push("/");
@@ -79,7 +81,7 @@ const Register = () => {
     <div className="max-w-6xl mx-auto px-4 md:px-0 box-border">
       {/* Image Box  */}
       <div
-        className="w-[100%] relative bg-[rgba(150, 94, 251, 0.7)] pt-8 pr-0 pb-[15px] pl-0 text-center flex flex-col items-center mt-10"
+        className="w-[100%] relative bg-[rgba(150, 94, 251, 0.7)] pt-8 pr-0 pb-[15px] pl-0 text-center flex flex-col items-center"
         // style={{ marginTop: "100px" }}
       >
         {formData.file ? (
