@@ -12,7 +12,7 @@ import Link from "next/link";
 import AstroCard from "./astroCard";
 import { GET_Spec_Astrologer } from "@/lib/data";
 import { cookies } from "next/headers";
-import { sendGTMEvent } from '@next/third-parties/google'
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const TopRated_astrologer = async ({
   searchParam,
@@ -41,15 +41,15 @@ const TopRated_astrologer = async ({
   return (
     <div className="xl:w-[72rem] w-auto mx-auto mt-[36px] xl:mt-[3.75rem]">
       <div className="p-[20px]">
-        <h3 className="text-center text-white xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
+        <h3 className="text-center xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
           Top-rated astrologers
         </h3>
         <p
           className="text-center
-        text-white
+       
         xl:text-[20px]
       
-       
+        text-neutral-500
         leading-[25px]
          text-sm  xl:mb-[1.87rem] mb-[1rem] font-[400]"
         >
@@ -75,7 +75,7 @@ const TopRated_astrologer = async ({
                 className={`${
                   filtername === `${data.name}`
                     ? "text-violet-500"
-                    : "text-white"
+                    : "text-black"
                 } text-xs xl:text-xl font-semibold`}
               >
                 {data.name}
@@ -93,7 +93,7 @@ const TopRated_astrologer = async ({
         </Link>
       </div>
       <div className="flex gap-[12.53px] xl:overflow-visible no-scrollbar overflow-x-auto mx-auto xl:justify-center md:justify-center  items-center px-[20px] xl:px-0">
-        {data.guru.docs.slice(0, 4).map((data: any, index: number) => (
+        {data?.guru?.docs?.slice(0, 4).map((data: any, index: number) => (
           <AstroCard data={data} key={index} loginToken={loginToken} />
         ))}
       </div>

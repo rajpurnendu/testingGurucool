@@ -4,6 +4,7 @@ import { getAllWebstories } from "@/lib/data";
 import WebStoriesCard from "@/components/web-stories/WebStoriesCard";
 import clsx from "clsx";
 import Script from "next/script";
+import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
 
 const page = async () => {
   const data = await getAllWebstories();
@@ -11,18 +12,20 @@ const page = async () => {
   // console.log(AllWebStories);
 
   return (
-    <div className="max-w-6xl  mb-5  mx-auto mt-2.5">
-      <h2
-        className="text-neutral-800
+    <>
+      <BreadCrumb />
+      <div className="max-w-6xl  mb-5  mx-auto">
+        <h2
+          className="
 text-opacity-10
 text-[34px]
 text-center
 font-semibold"
-      >
-        WebStories
-      </h2>
-      <div className="mx-auto w-auto gap-5  flex flex-col md:flex-row px-4 box-border mt-[20px] md:mt-[45px] overflow-hidden md:px-0">
-        {/* <div className=" pr-2 flex md:flex-col h-fit items-[self-end]  md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar ">
+        >
+          WebStories
+        </h2>
+        <div className="mx-auto w-auto gap-5  flex flex-col md:flex-row px-4 box-border mt-[20px] md:mt-[45px] overflow-hidden md:px-0">
+          {/* <div className=" pr-2 flex md:flex-col h-fit items-[self-end]  md:pb-20 mt-47 md:overflow-visible overflow-scroll no-scrollbar ">
           <div className="w-full mx-1 flex items-center  justify-start mb  py-3">
             <h1
               className="
@@ -185,16 +188,16 @@ md:block
             </Link>
           </div>
         </div> */}
-        <div className="flex flex-wrap items-center justify-center w-full  lg:gap-[43px] gap-5">
-          {/* <div className="w-full  lg:gap-[43px] gap-5 mx-auto flex-wrap flex justify-center items-center xl:justify-center xl:items-center"> */}
-          {AllWebStories.map((curr, index) => (
-            <WebStoriesCard key={index} data={curr} />
-          ))}
-          {/* </div> */}
+          <div className="flex flex-wrap items-center justify-center w-full  lg:gap-[43px] gap-5">
+            {/* <div className="w-full  lg:gap-[43px] gap-5 mx-auto flex-wrap flex justify-center items-center xl:justify-center xl:items-center"> */}
+            {AllWebStories.map((curr, index) => (
+              <WebStoriesCard key={index} data={curr} />
+            ))}
+            {/* </div> */}
+          </div>
         </div>
       </div>
-     
-    </div>
+    </>
   );
 };
 

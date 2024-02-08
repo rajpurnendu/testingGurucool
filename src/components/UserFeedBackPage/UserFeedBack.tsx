@@ -125,11 +125,11 @@ const UserFeedBack = ({
     }
   };
 
-  console.log(astroDetails);
+  // console.log(astroDetails);
 
   return (
     <div className="max-w-[72rem] mx-auto flex justify-between xl:flex-row flex-col mt-[90px] my-[20px]">
-      <Toaster/>
+      <Toaster />
       <div className="xl:w-[50%] w-full px-5 py-[5px]">
         <div className="mb-[30px]">
           <div className="rounded-full h-[140px] overflow-hidden flex items-center justify-center w-[140px] text-white m-auto">

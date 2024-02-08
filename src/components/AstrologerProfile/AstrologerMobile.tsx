@@ -30,6 +30,7 @@ import Modal from "../ReusableModal/ReusableModal";
 import { BasicModal } from "../login/BasicModal";
 import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 import toast, { Toaster } from "react-hot-toast";
+import BreadCrumb from "../BreadCrumb/BreadCrumb";
 
 const AstrologerMobile = ({
   data,
@@ -506,7 +507,7 @@ font-medium leading-none"
                               success: <b>Followed</b>,
                               error: <b>Error in Follow</b>,
                             }
-                          )
+                          );
                         }}
                         className=" h-[26px] px-3 py-1 text-white text-sm cursor-pointer font-medium leading-[17.50px] bg-violet-500 relative rounded-lg justify-center items-center gap-3 flex"
                       >
@@ -544,7 +545,7 @@ font-medium leading-none"
                           sendGAEvent({
                             event: "buttonClicked",
                             value: `Astro_Unfollow_${data.user.firstName}${data.user.lastName}`,
-                          });                        
+                          });
                           toast.promise(
                             UnFollowAstro(loginToken, data?.user.guru),
                             {
@@ -552,7 +553,7 @@ font-medium leading-none"
                               success: <b>Unfollowed</b>,
                               error: <b>Error in UnFollow</b>,
                             }
-                          )
+                          );
                         }}
                         className="h-[26px] px-3 py-1 bg-violet-500 cursor-pointer text-white text-sm font-medium leading-[17.50px] relative rounded-lg justify-center items-center gap-3 flex"
                       >

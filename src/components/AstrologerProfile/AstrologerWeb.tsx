@@ -34,6 +34,7 @@ import { BasicModal } from "../login/BasicModal";
 import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 import toast, { Toaster } from "react-hot-toast";
 import Model from "./Model";
+import BreadCrumb from "../BreadCrumb/BreadCrumb";
 
 const AstrologerWeb = ({
   data,
@@ -400,8 +401,8 @@ font-semibold"
             {loginToken ? (
               !isFollowing ? (
                 <div
-                  onClick={() => { 
-                    FollowAstro(loginToken, data?.user.guru)
+                  onClick={() => {
+                    FollowAstro(loginToken, data?.user.guru);
                     sendGTMEvent({
                       event: "buttonClicked",
                       value: `Astro_Follow_${data.user.firstName}${data.user.lastName}`,
@@ -410,12 +411,12 @@ font-semibold"
                       event: "buttonClicked",
                       value: `Astro_Follow_${data.user.firstName}${data.user.lastName}`,
                     });
-                 
+
                     toast.promise(FollowAstro(loginToken, data?.user.guru), {
                       loading: "Saving...",
                       success: <b>Followed</b>,
                       error: <b>Error in Follow</b>,
-                    })
+                    });
                   }}
                   className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
                 >
@@ -423,8 +424,8 @@ font-semibold"
                 </div>
               ) : (
                 <div
-                  onClick={() => { 
-                    UnFollowAstro(loginToken, data?.user.guru)
+                  onClick={() => {
+                    UnFollowAstro(loginToken, data?.user.guru);
                     sendGTMEvent({
                       event: "buttonClicked",
                       value: `Astro_Unfollow_${data.user.firstName}${data.user.lastName}`,
@@ -437,7 +438,7 @@ font-semibold"
                       loading: "Saving...",
                       success: <b>Unfollowed</b>,
                       error: <b>Error in UnFollow</b>,
-                    })
+                    });
                   }}
                   className="cursor-pointer hover:shadow-lg text-[23.92px] font-semibold py-[4px] px-[16.75px] text-white bg-emerald-500 rounded-md"
                 >

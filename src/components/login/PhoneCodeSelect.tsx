@@ -1,5 +1,4 @@
 // import React from "react";
-// import Select from "react-select";
 // import "./login.css";
 // import Image from "next/image";
 // const options = [

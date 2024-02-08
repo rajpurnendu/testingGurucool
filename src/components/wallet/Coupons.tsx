@@ -18,6 +18,7 @@ import {
 } from "@/lib/data";
 import Link from "next/link";
 import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
+import BreadCrumb from "../BreadCrumb/BreadCrumb";
 
 const Coupons = ({
   forAmount,
@@ -63,43 +64,45 @@ const Coupons = ({
   // console.log(data);
   // console.log("====================================");
   return (
-    <div
-      className="max-w-6xl mx-auto px-4 md:px-0 mt-2.5 box-border"
-      style={{ marginBottom: "50px" }}
-    >
-      <div className="md:w-[614px] m-auto">
-        {/* Tab Section  */}
-        <div className="flex justify-between w-[90%] m-auto">
-          <h2
-            className={clsx(
-              "text-[16px] cursor-pointer font-semibold text-[#707070]",
-              {
-                "border-b-[6px] border-[#965EFB] pb-1":
-                  selectedtab === "Available",
-              }
-            )}
-            onClick={() => {
-              setSelectedtab("Available");
-            }}
-          >
-            Available
-          </h2>
-          <div className=" border-r-[2px]" />
-          <h2
-            className={clsx(
-              "text-[16px] cursor-pointer font-semibold text-[#707070]",
-              {
-                "border-b-[6px] border-[#965EFB] pb-1":
-                  selectedtab === "Used/Expire",
-              }
-            )}
-            onClick={() => {
-              setSelectedtab("Used/Expire");
-            }}
-          >
-            Used/Expire
-          </h2>
-        </div>
+    <>
+      <BreadCrumb />
+      <div
+        className="max-w-6xl mx-auto px-4 md:px-0 box-border"
+        style={{ marginBottom: "50px" }}
+      >
+        <div className="md:w-[614px] m-auto">
+          {/* Tab Section  */}
+          <div className="flex justify-between w-[90%] m-auto">
+            <h2
+              className={clsx(
+                "text-[16px] cursor-pointer font-semibold text-[#707070]",
+                {
+                  "border-b-[6px] border-[#965EFB] pb-1":
+                    selectedtab === "Available",
+                }
+              )}
+              onClick={() => {
+                setSelectedtab("Available");
+              }}
+            >
+              Available
+            </h2>
+            <div className=" border-r-[2px]" />
+            <h2
+              className={clsx(
+                "text-[16px] cursor-pointer font-semibold text-[#707070]",
+                {
+                  "border-b-[6px] border-[#965EFB] pb-1":
+                    selectedtab === "Used/Expire",
+                }
+              )}
+              onClick={() => {
+                setSelectedtab("Used/Expire");
+              }}
+            >
+              Used/Expire
+            </h2>
+          </div>
 
         {/* Coupon Code Input Section  */}
         <div className="mt-[20px] w-[95%] m-auto">
@@ -176,7 +179,7 @@ const Coupons = ({
                         <Link
                           href={
                             forAmount
-                              ? `/wallet/paymentdetails?pmt=${encryptData(
+                              ? `/wallet/paymentDetails?pmt=${encryptData(
                                   forAmount
                                 )}&coupon=${encryptData(coupon?.couponCode)}`
                               : `/wallet/pricelist?coupon=${encryptData(
@@ -189,7 +192,7 @@ const Coupons = ({
                           </button>
                         </Link>
                       </div>
-                      <p className="text-[12px] font-normal md:text-[20px]">
+                      <p className="text-[12px] font-normal md:text-[20px] text-[#707070]">
                         Valid up to {convertToIstDateTime(coupon?.expireAt)}
                       </p>
                     </div>
@@ -238,165 +241,24 @@ const Coupons = ({
                           />
                         </p>
 
-                        <button className="h-[30px] w-[65px] text-[#707070] bg-[#D9D9D9] py-[11px] px-[13.5px] flex justify-center items-center rounded md:h-[51px] md:w-[139px] md:rounded-lg border-[#707070] border">
-                          Apply
-                        </button>
+                          <button className="h-[30px] w-[65px] text-[#707070] bg-[#D9D9D9] py-[11px] px-[13.5px] flex justify-center items-center rounded md:h-[51px] md:w-[139px] md:rounded-lg border-[#707070] border">
+                            Apply
+                          </button>
+                        </div>
+                        <p className="text-[12px] font-normal md:text-[20px] text-[#707070]">
+                          Valid up to {convertToIstDateTime(coupon?.expireAt)}
+                        </p>
                       </div>
-                      <p className="text-[12px] font-normal md:text-[20px] text-[#707070]">
-                        Valid up to {convertToIstDateTime(coupon?.expireAt)}
-                      </p>
                     </div>
                   </div>
-                </div>
-              ))}
-            </>
-          )}
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Coupons;
-
-{
-  /* 2  */
-}
-{
-  /* <div className="flex">
-          <div className="h-[100px] bg-cover relative w-[15%]">
-            <Image
-              src={Discounticon}
-              height={50}
-              width={50}
-              alt="Discount Icon"
-              className="h-[95px] w-[100%]"
-            />
-          </div>
-          <div className="h-[100px] bg-cover relative w-[85%]">
-            <Image
-              src={background}
-              alt="Background Image"
-              width={300}
-              height={100}
-              className="h-[100px] w-[100%]"
-              objectFit="cover"
-            />
-            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
-              <p className=" text-[14px] font-semibold">For ₹200 and above</p>
-              <div className="flex justify-between items-center">
-                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
-                  60% Off{" "}
-                  <Image
-                    src={Iconapplycoupon}
-                    height={22}
-                    width={22}
-                    alt="Discount Icon"
-                    className="ml-1"
-                  />
-                </p>
-                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
-                  Apply
-                </button>
-              </div>
-              <p className="text-[12px] font-normal">
-                Valid up to 12th dec 2024
-              </p>
-            </div>
-          </div>
-        </div> */
-}
-{
-  /* 3  */
-}
-{
-  /* <div className="flex">
-          <div className="h-[100px] bg-cover relative w-[15%]">
-            <Image
-              src={Discounticon}
-              height={50}
-              width={50}
-              alt="Discount Icon"
-              className="h-[95px] w-[100%]"
-            />
-          </div>
-          <div className="h-[100px] bg-cover relative w-[85%]">
-            <Image
-              src={background}
-              alt="Background Image"
-              width={300}
-              height={100}
-              className="h-[100px] w-[100%]"
-              objectFit="cover"
-            />
-            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
-              <p className=" text-[14px] font-semibold">For ₹200 and above</p>
-              <div className="flex justify-between items-center">
-                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
-                  60% Off{" "}
-                  <Image
-                    src={Iconapplycoupon}
-                    height={22}
-                    width={22}
-                    alt="Discount Icon"
-                    className="ml-1"
-                  />
-                </p>
-                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
-                  Apply
-                </button>
-              </div>
-              <p className="text-[12px] font-normal">
-                Valid up to 12th dec 2024
-              </p>
-            </div>
-          </div>
-        </div> */
-}
-{
-  /* 4  */
-}
-{
-  /* <div className="flex">
-          <div className="h-[100px] bg-cover relative w-[15%]">
-            <Image
-              src={Discounticon}
-              height={50}
-              width={50}
-              alt="Discount Icon"
-              className="h-[95px] w-[100%]"
-            />
-          </div>
-          <div className="h-[100px] bg-cover relative w-[85%]">
-            <Image
-              src={background}
-              alt="Background Image"
-              width={300}
-              height={100}
-              className="h-[100px] w-[100%]"
-              objectFit="cover"
-            />
-            <div className="absolute top-2 left-5 h-[85%] w-[89%] flex flex-col justify-between">
-              <p className=" text-[14px] font-semibold">For ₹200 and above</p>
-              <div className="flex justify-between items-center">
-                <p className="text-[16px] font-semibold text-[#26C884] flex items-center">
-                  60% Off{" "}
-                  <Image
-                    src={Iconapplycoupon}
-                    height={22}
-                    width={22}
-                    alt="Discount Icon"
-                    className="ml-1"
-                  />
-                </p>
-                <button className="h-[30px] w-[65px] text-white bg-[#26C884] py-[11px] px-[13.5px] flex justify-center items-center rounded">
-                  Apply
-                </button>
-              </div>
-              <p className="text-[12px] font-normal">
-                Valid up to 12th dec 2024
-              </p>
-            </div>
-          </div>
-        </div> */
-}

@@ -28,7 +28,6 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   } = useFilterStore();
 
   const [callStatus, setCallStatus] = useState();
-  const [callMsg, setCallMsg] = useState("");
   const [userDetails, setUserDetails] = useState<any>();
   const guruToken: string = localStorage.getItem("guruToken") || "";
   const purchaseId: string = localStorage.getItem("purchaseId") || "";
@@ -49,7 +48,7 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   }, []);
 
   async function fetchCallStartedData() {
-    console.log('inside fetchCallStartedData')
+    console.log('3. inside fetchCallStartedData')
     try {
       const response1 = await fetch(
         `${TESTING_URL}consultations/consultationReceipt?purchaseId=${purchaseId}`
@@ -66,9 +65,6 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
 
       setAstroDetails(data2.guru);
       if (data1.purchase.callStatus === "completed") {
-        // logEvent(analytics, "Call_Success_For", {
-        //   item_name: `${astroDetails?.user?.firstName} ${astroDetails?.user?.lastName}`,
-        // });
         console.log('inside completed callStatus condition')
         setCallPurchasedId(purchaseId);
 
@@ -85,10 +81,11 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
 
   console.log(callStatus);
 
-  const [eventName, setEventName] = useState();
+  const [eventName, setEventName] = useState<string>("");
   useEffect(() => {
+  console.log('1. inside useeffect encoding uid')
     if (loginToken && userDetails?.uid) {
-
+      console.log('3. inside if uid and logintoken present')
       const uid = userDetails.uid.toString();
       const alphabet = "abcdefghijklmnopqrstuvwxyz";
       const encodedStr = uid
@@ -100,18 +97,20 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   }, [loginToken, userDetails]);
 
   useEffect(() => {
-    if (eventName) {
-      console.log("EVENT>>>>>>>>>>>>>>>>>>>>>>>>>", eventName);
+    console.log('2. inside useffect of setting connection with sockets')
+
+    // if (eventName) {
+      console.log('6. if event name is present', eventName)
+
       const newSocket = io("https://test.gurucool.life");
 
       newSocket.on("connect", () => {
+        console.log('7. inside the connect socket event')
       });
 
       newSocket.on(eventName, (data: any) => {
-        console.log("Socket Event>>>>>>>>>>>>>>>>>>>>>>>>>");
-        console.log("Socket Event DATA>>>>>>>>>>>>>>>>>>>>>>>>>", data);
+        console.log("8. eventName event name scoekt inside with settimeout>", data);
         if(data === "Call End"){
-          //setTimeout is used to delay of the call of the function as the status to update in backend server taking some time
           setTimeout(()=>{
             fetchCallStartedData();
           },3000)
@@ -123,16 +122,14 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
         newSocket.off(eventName);
         newSocket.disconnect();
       };
-    }
+    // }
   }, [eventName]);
-
-  // useEffect(() => {
-  //   setTimeout(fetchCallStartedData, 0);
-  // }, [eventName]);
 
   useEffect(() => {
     fetchCallStartedData();
+    console.log('4. inside the useeffect of callStatus completed check')
     if (callStatus === "completed") {
+      console.log('4.1. inside if callstatus is completed')
       router.push("/call-consultation-ended");
     }
   }, [callStatus]);
@@ -147,7 +144,9 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
   const isMobile = window.innerWidth < 768;
 
   useEffect(() => {
+    console.log('5. useffect of rouyther call-consultation-started')
     if (location === "/call-consultation-started") {
+      console.log('5.1 if condition if location === "/call-consultation-started')
       setShowModal(true);
     }
   }, [router]);
@@ -186,3 +185,4 @@ const ConsultationStarted = ({ loginToken }: { loginToken: string }) => {
 };
 
 export default ConsultationStarted;
+

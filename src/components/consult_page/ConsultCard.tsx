@@ -39,7 +39,7 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
     consultAstroData,
     setConsultAstroData,
     name,
-    
+
     sePerPage,
   } = useFilterStore();
   const [userDetails, setUserDetails] = useState<UserDetails>();
@@ -65,9 +65,9 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
 
   useEffect(() => {
     if (responseData?.guru?.docs.length) {
-      setTotalPage
+      setTotalPage;
       setConsultAstroData(responseData?.guru?.docs);
-      console.log(responseData)
+      console.log(responseData);
     } else {
       setConsultAstroData(data); // Make sure 'data' is defined or imported
     }
@@ -315,141 +315,142 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
                 />
               )}
 
-            <div className="flex justify-center gap-4 md:gap-9">
-              <Link href={"/wallet/pricelist"}>
-                <button
-                  className={`w-[5.5rem] md:w-[9.14rem] flex justify-center items-center gap-[0.21rem] md:gap-[0.43rem] py-[0.33rem] md:py-3 px-[0.46rem] md:px-[0.96rem] rounded md:rounded-xl ${
-                    insufficientBalance ? "bg-[#965efbb2]" : "bg-[#26C884] "
-                  } text-white text-[0.75rem] md:text-[1.125rem] font-semibold leading-tight`}
-                >
-                  Recharge
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    // width="40"
-                    // height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                    className="w-[0.83rem] md:w-[1.7rem] md:h-[1.7rem] h-[0.83rem]"
+              <div className="flex justify-center gap-4 md:gap-9">
+                <Link href={"/wallet/pricelist"}>
+                  <button
+                    className={`w-[5.5rem] md:w-[9.14rem] flex justify-center items-center gap-[0.21rem] md:gap-[0.43rem] py-[0.33rem] md:py-3 px-[0.46rem] md:px-[0.96rem] rounded md:rounded-xl ${
+                      insufficientBalance ? "bg-[#965efbb2]" : "bg-[#26C884] "
+                    } text-white text-[0.75rem] md:text-[1.125rem] font-semibold leading-tight`}
                   >
-                    <path
-                      d="M25 13.75H37.5V11.25C37.5 9.5924 36.8415 8.00269 35.6694 6.83058C34.4973 5.65848 32.9076 5 31.25 5H8.75C7.0924 5 5.50269 5.65848 4.33058 6.83058C3.15848 8.00269 2.5 9.5924 2.5 11.25V28.75C2.5 30.4076 3.15848 31.9973 4.33058 33.1694C5.50269 34.3415 7.0924 35 8.75 35H31.25C32.9076 35 34.4973 34.3415 35.6694 33.1694C36.8415 31.9973 37.5 30.4076 37.5 28.75V26.25H25C23.3424 26.25 21.7527 25.5915 20.5806 24.4194C19.4085 23.2473 18.75 21.6576 18.75 20C18.75 18.3424 19.4085 16.7527 20.5806 15.5806C21.7527 14.4085 23.3424 13.75 25 13.75ZM25 16.25C24.0054 16.25 23.0516 16.6451 22.3483 17.3483C21.6451 18.0516 21.25 19.0054 21.25 20C21.25 20.9946 21.6451 21.9484 22.3483 22.6517C23.0516 23.3549 24.0054 23.75 25 23.75H37.5V16.25H25ZM25 22.5C24.5055 22.5 24.0222 22.3534 23.6111 22.0787C23.2 21.804 22.8795 21.4135 22.6903 20.9567C22.5011 20.4999 22.4516 19.9972 22.548 19.5123C22.6445 19.0273 22.8826 18.5819 23.2322 18.2322C23.5819 17.8826 24.0273 17.6445 24.5123 17.548C24.9972 17.4516 25.4999 17.5011 25.9567 17.6903C26.4135 17.8795 26.804 18.2 27.0787 18.6111C27.3534 19.0222 27.5 19.5055 27.5 20C27.5 20.663 27.2366 21.2989 26.7678 21.7678C26.2989 22.2366 25.663 22.5 25 22.5Z"
-                      fill="#FEFEFE"
-                    />
-                    <path
-                      d="M37.4998 11.25V13.75H33.7498C33.4154 12.0331 32.8433 10.3713 32.0498 8.8125C31.3656 7.46927 30.5265 6.21071 29.5498 5.0625H31.2498C32.8966 5.06242 34.4769 5.71231 35.6473 6.87093C36.8176 8.02955 37.4833 9.60325 37.4998 11.25Z"
-                      fill="#FEFEFE"
-                    />
-                    <path
-                      d="M34.0874 16.25H37.4999V23.75H33.0374C33.8861 21.3455 34.2432 18.7951 34.0874 16.25Z"
-                      fill="#FEFEFE"
-                    />
-                    <path
-                      d="M31.9374 26.25H37.4999V28.75C37.4999 30.4076 36.8414 31.9973 35.6693 33.1694C34.4972 34.3415 32.9075 35 31.2499 35H22.3374C22.7999 34.8125 23.2624 34.6 23.7124 34.375C27.237 32.5944 30.1138 29.7525 31.9374 26.25Z"
-                      fill="#FEFEFE"
-                    />
-                  </svg>
-                </button>
-              </Link>
-              {insufficientBalance ? (
-                <button
-                  className={`w-[5.5rem] md:w-[9.14rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-3 px-[0.46rem] md:px-[0.96rem] rounded md:rounded-xl border-[0.55px] border-[#965efbb2] text-[0.75rem] md:text-[1.125rem] font-semibold leading-tight`}
-                  onClick={closeModal}
-                >
-                  Cancel
-                </button>
-              ) : (
-                <button
-                  className={`w-[5.5rem] md:w-[9.14rem] flex justify-center items-center gap-[0.21rem] md:gap-[0.43rem]  md:[0.43rem] py-[0.33rem]  md:py-3 px-[0.46rem] md:px-[0.96rem] rounded md:rounded-xl ${
-                    astroDetails?.callAvailability === "online"
-                      ? "cursor-pointer"
-                      : "cursor-no-drop"
-                  }  ${
-                    astroDetails?.callAvailability === "online"
-                      ? "bg-[#26C884]"
-                      : "bg-white"
-                  } ${
-                    astroDetails?.callAvailability === "online"
-                      ? "border-none"
-                      : "border border-[#3A3938]"
-                  } ${
-                    astroDetails?.callAvailability === "online"
-                      ? " text-white"
-                      : astroDetails?.callAvailability === "busy"
-                      ? "text-red-500"
-                      : "text-[#707070]"
-                  } text-[0.75rem] md:text-[1.125rem] font-semibold leading-tight`}
-                  // onClick={closeModal}
-                  onClick={(e) => {
-                    if (callAvailability === "online") {
-                      startConsultationHandler(e);
-                    }
-                  }}
-                >
-                  {callAvailability === "online" && "Call"}
-                  {callAvailability === "busy" && "Busy"}
-                  {callAvailability === "offline" && "Offline"}
-                  <IoCall
-                    className={`text-[0.8rem] md:text-[1.7rem] ${
+                    Recharge
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      // width="40"
+                      // height="40"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      className="w-[0.83rem] md:w-[1.7rem] md:h-[1.7rem] h-[0.83rem]"
+                    >
+                      <path
+                        d="M25 13.75H37.5V11.25C37.5 9.5924 36.8415 8.00269 35.6694 6.83058C34.4973 5.65848 32.9076 5 31.25 5H8.75C7.0924 5 5.50269 5.65848 4.33058 6.83058C3.15848 8.00269 2.5 9.5924 2.5 11.25V28.75C2.5 30.4076 3.15848 31.9973 4.33058 33.1694C5.50269 34.3415 7.0924 35 8.75 35H31.25C32.9076 35 34.4973 34.3415 35.6694 33.1694C36.8415 31.9973 37.5 30.4076 37.5 28.75V26.25H25C23.3424 26.25 21.7527 25.5915 20.5806 24.4194C19.4085 23.2473 18.75 21.6576 18.75 20C18.75 18.3424 19.4085 16.7527 20.5806 15.5806C21.7527 14.4085 23.3424 13.75 25 13.75ZM25 16.25C24.0054 16.25 23.0516 16.6451 22.3483 17.3483C21.6451 18.0516 21.25 19.0054 21.25 20C21.25 20.9946 21.6451 21.9484 22.3483 22.6517C23.0516 23.3549 24.0054 23.75 25 23.75H37.5V16.25H25ZM25 22.5C24.5055 22.5 24.0222 22.3534 23.6111 22.0787C23.2 21.804 22.8795 21.4135 22.6903 20.9567C22.5011 20.4999 22.4516 19.9972 22.548 19.5123C22.6445 19.0273 22.8826 18.5819 23.2322 18.2322C23.5819 17.8826 24.0273 17.6445 24.5123 17.548C24.9972 17.4516 25.4999 17.5011 25.9567 17.6903C26.4135 17.8795 26.804 18.2 27.0787 18.6111C27.3534 19.0222 27.5 19.5055 27.5 20C27.5 20.663 27.2366 21.2989 26.7678 21.7678C26.2989 22.2366 25.663 22.5 25 22.5Z"
+                        fill="#FEFEFE"
+                      />
+                      <path
+                        d="M37.4998 11.25V13.75H33.7498C33.4154 12.0331 32.8433 10.3713 32.0498 8.8125C31.3656 7.46927 30.5265 6.21071 29.5498 5.0625H31.2498C32.8966 5.06242 34.4769 5.71231 35.6473 6.87093C36.8176 8.02955 37.4833 9.60325 37.4998 11.25Z"
+                        fill="#FEFEFE"
+                      />
+                      <path
+                        d="M34.0874 16.25H37.4999V23.75H33.0374C33.8861 21.3455 34.2432 18.7951 34.0874 16.25Z"
+                        fill="#FEFEFE"
+                      />
+                      <path
+                        d="M31.9374 26.25H37.4999V28.75C37.4999 30.4076 36.8414 31.9973 35.6693 33.1694C34.4972 34.3415 32.9075 35 31.2499 35H22.3374C22.7999 34.8125 23.2624 34.6 23.7124 34.375C27.237 32.5944 30.1138 29.7525 31.9374 26.25Z"
+                        fill="#FEFEFE"
+                      />
+                    </svg>
+                  </button>
+                </Link>
+                {insufficientBalance ? (
+                  <button
+                    className={`w-[5.5rem] md:w-[9.14rem] flex justify-center items-center gap-[0.21rem] py-[0.33rem] md:py-3 px-[0.46rem] md:px-[0.96rem] rounded md:rounded-xl border-[0.55px] border-[#965efbb2] text-[0.75rem] md:text-[1.125rem] font-semibold leading-tight`}
+                    onClick={closeModal}
+                  >
+                    Cancel
+                  </button>
+                ) : (
+                  <button
+                    className={`w-[5.5rem] md:w-[9.14rem] flex justify-center items-center gap-[0.21rem] md:gap-[0.43rem]  md:[0.43rem] py-[0.33rem]  md:py-3 px-[0.46rem] md:px-[0.96rem] rounded md:rounded-xl ${
+                      astroDetails?.callAvailability === "online"
+                        ? "cursor-pointer"
+                        : "cursor-no-drop"
+                    }  ${
+                      astroDetails?.callAvailability === "online"
+                        ? "bg-[#26C884]"
+                        : "bg-white"
+                    } ${
+                      astroDetails?.callAvailability === "online"
+                        ? "border-none"
+                        : "border border-[#3A3938]"
+                    } ${
                       astroDetails?.callAvailability === "online"
                         ? " text-white"
                         : astroDetails?.callAvailability === "busy"
                         ? "text-red-500"
                         : "text-[#707070]"
-                    } `}
-                  />
-                </button>
-              )}
+                    } text-[0.75rem] md:text-[1.125rem] font-semibold leading-tight`}
+                    // onClick={closeModal}
+                    onClick={(e) => {
+                      if (callAvailability === "online") {
+                        startConsultationHandler(e);
+                      }
+                    }}
+                  >
+                    {callAvailability === "online" && "Call"}
+                    {callAvailability === "busy" && "Busy"}
+                    {callAvailability === "offline" && "Offline"}
+                    <IoCall
+                      className={`text-[0.8rem] md:text-[1.7rem] ${
+                        astroDetails?.callAvailability === "online"
+                          ? " text-white"
+                          : astroDetails?.callAvailability === "busy"
+                          ? "text-red-500"
+                          : "text-[#707070]"
+                      } `}
+                    />
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        </Modal>
-        <div className="flex flex-wrap gap-[15px] md:gap-[20px] mb-5 justify-center mt-[56px]">
-          {consultAstroData.map((datas: any, index: number) => (
-            <div
-              key={datas?._id}
-              className="w-full h-[9.125rem] rounded-[0.25rem] flex items-center justify-center border border-gray-300 md:w-[48%] lg:w-[32%] hover:border-violet-600 hover:shadow-lg transition delay-200 duration-200 ease-in-out cursor-pointer"
-              onClick={() => {
-                if (loginToken) {
-                  sendGTMEvent({
-                    event: "buttonClicked",
-                    value: `Consult_AstroProfile_Click_${datas.userName}`,
-                  });
-                  sendGAEvent({
-                    event: "buttonClicked",
-                    value: `Consult_AstroProfile_Click_${datas.userName}`,
-                  });
-                } else {
-                  sendGTMEvent({
-                    event: "buttonClicked",
-                    value: `Unlogin_Astroprofile_Consultpage_${datas.userName}`,
-                    
-                  });
-                  sendGAEvent({
-                    event: "buttonClicked",
-                    value: `Unlogin_Astroprofile_Consultpage_${datas.userName}`,
-                  });
-                }
-              }}
-            >
-              {/* left section of card */}
-              <div className="flex flex-col items-center justify-center w-[35%] h-[100%] border-r-[0.0625rem] border-dashed border-gray-300 bg-[#965efb0d] relative">
-                <Link href={`/astrologers/${datas.userName}`}>
-                  <div className="block  w-[4.01rem] h-[4.01rem] border-[1px] border-solid border-green-500 mb-[0.67rem] rounded-full">
-                    <Image
-                      src={datas?.user?.avatar?.url}
-                      alt="balkrishnaji"
-                      width={100}
-                      height={100}
-                      className="object-cover w-full h-full rounded-full"
-                    />
-                  </div>
-                  {datas?.mostTrusted == true ? (
-                    <Image
-                      src={Mostchoice}
-                      alt="mostchoice"
-                      className="absolute top-[46%] left-[50%] transform -translate-x-1/2"
-                    />
-                  ) : null}
-                </Link>
+          </Modal>
+          <div className="flex flex-wrap gap-[15px] md:gap-[20px] mb-5 justify-center mt-[56px]">
+            {consultAstroData.map((datas: any, index: number) => (
+              <div
+                key={datas?._id}
+                className="w-full h-[9.125rem] rounded-[0.25rem] flex items-center justify-center border border-gray-300 md:w-[48%] lg:w-[32%] hover:border-violet-600 hover:shadow-lg transition delay-200 duration-200 ease-in-out"
+              >
+                {/* left section of card */}
+                <div className="flex flex-col items-center justify-center w-[35%] h-[100%] border-r-[0.0625rem] border-dashed border-gray-300 bg-[#965efb0d] relative">
+                  <Link href={`/astrologers/${datas.userName}`}>
+                    <div
+                      onClick={() => {
+                        if (loginToken) {
+                          sendGTMEvent({
+                            event: "buttonClicked",
+                            value: `Consult_AstroProfile_Click_${datas.userName}`,
+                          });
+                          sendGAEvent({
+                            event: "buttonClicked",
+                            value: `Consult_AstroProfile_Click_${datas.userName}`,
+                          });
+                        } else {
+                          sendGTMEvent({
+                            event: "buttonClicked",
+                            value: `Unlogin_Astroprofile_Consultpage_${datas.userName}`,
+                          });
+                          sendGAEvent({
+                            event: "buttonClicked",
+                            value: `Unlogin_Astroprofile_Consultpage_${datas.userName}`,
+                          });
+                        }
+                      }}
+                      className="block  w-[4.01rem] h-[4.01rem] border-[1px] border-solid border-green-500 mb-[0.67rem] rounded-full"
+                    >
+                      <Image
+                        src={datas?.user?.avatar?.url}
+                        alt="balkrishnaji"
+                        width={100}
+                        height={100}
+                        className="object-cover w-full h-full rounded-full"
+                      />
+                    </div>
+                    {datas?.mostTrusted == true ? (
+                      <Image
+                        src={Mostchoice}
+                        alt="mostchoice"
+                        className="absolute top-[46%] left-[50%] transform -translate-x-1/2"
+                      />
+                    ) : null}
+                  </Link>
 
                   {/* Exp */}
                   <div className="flex items-center mb-[0.37rem] gap-[0.3rem]">
@@ -479,7 +480,30 @@ const ConsultCard = ({ data, loginToken }: { data: any; loginToken: any }) => {
                 <div className="flex flex-col items-center justify-between w-[65%] h-full">
                   <div className="flex flex-col items-baseline justify-start w-full h-[5.31rem] pl-[0.5rem] pt-[0.25rem]">
                     <Link href={`/astrologers/${datas.userName}`}>
-                      <h5 className="text-[0.875rem] font-semibold text-black mb-[0.25rem] text-left">
+                      <h5
+                        onClick={() => {
+                          if (loginToken) {
+                            sendGTMEvent({
+                              event: "buttonClicked",
+                              value: `Consult_AstroProfile_Click_${datas.userName}`,
+                            });
+                            sendGAEvent({
+                              event: "buttonClicked",
+                              value: `Consult_AstroProfile_Click_${datas.userName}`,
+                            });
+                          } else {
+                            sendGTMEvent({
+                              event: "buttonClicked",
+                              value: `Unlogin_Astroprofile_Consultpage_${datas.userName}`,
+                            });
+                            sendGAEvent({
+                              event: "buttonClicked",
+                              value: `Unlogin_Astroprofile_Consultpage_${datas.userName}`,
+                            });
+                          }
+                        }}
+                        className="text-[0.875rem] font-semibold text-black mb-[0.25rem] text-left"
+                      >
                         {` ${datas?.user.firstName} ${datas?.user.lastName}`}
                       </h5>
                     </Link>

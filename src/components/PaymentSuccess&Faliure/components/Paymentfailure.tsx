@@ -8,7 +8,7 @@ const Paymentfailure = ({ data }: { data: any }) => {
         <Image src={FailureIcon} height={80} width={150} alt="Succes Icon" />
       </div>
       <h2 className="font-bold text-red-500 leading-tight text-[1.25rem] mb-5">
-        Yeah! Payment Successfull
+        Sorry! Payment Failed
       </h2>
       <div className="flex">
         <div className="flex flex-col justify-center items-end mb-5 w-[48%]">

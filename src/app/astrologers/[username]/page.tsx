@@ -7,6 +7,7 @@ import {
 } from "@/lib/data";
 import AstrologerMobile from "@/components/AstrologerProfile/AstrologerMobile";
 import { cookies } from "next/headers";
+import BreadCrumb from "@/components/BreadCrumb/BreadCrumb";
 
 const page = async ({ params }: { params: { username: string } }) => {
   let param = params.username;
@@ -28,6 +29,8 @@ const page = async ({ params }: { params: { username: string } }) => {
   // console.log("..../");
   return (
     <div>
+      <BreadCrumb />
+
       <AstrologerWeb
         isFollowing={isFollowing}
         data={data?.guru}

@@ -5,13 +5,18 @@ import { FaSearch } from "react-icons/fa";
 import { TESTING_URL } from "@/lib/apilinks";
 
 const Searchbar = ({ data, page }: { data: any; page: number }) => {
-  const { name, setName, consultAstroData, setConsultAstroData } =
-    useFilterStore();
+  const {
+    name,
+    setName,
+    consultAstroData,
+    setTotalPage,
+    totalPage,
+    setConsultAstroData,
+  } = useFilterStore();
 
   const [debounceName, setDebounceName] = useState(name);
   const [pageN, setPageN] = useState(1);
   useEffect(() => {
-   
     setPageN(page);
   }, [page]);
   useEffect(() => {
@@ -28,7 +33,6 @@ const Searchbar = ({ data, page }: { data: any; page: number }) => {
     // Define a function to fetch data from the API
     const fetchData = async () => {
       try {
-        
         if (debounceName === "") {
           // Call the first API when name is empty
           const firstApiUrl = `${TESTING_URL}guru/astrologersDetails?page=${pageN}`;
@@ -37,7 +41,7 @@ const Searchbar = ({ data, page }: { data: any; page: number }) => {
             throw new Error("Network response was not ok");
           }
           const jsonData = await response.json();
-        
+          setTotalPage(jsonData?.guru?.pages);
 
           setConsultAstroData(jsonData.guru.docs);
         } else {
@@ -48,7 +52,8 @@ const Searchbar = ({ data, page }: { data: any; page: number }) => {
             throw new Error("Network response was not ok");
           }
           const jsonData = await response.json();
-          // setConsultAstroData(jsonData?.guru?.docs);
+          setConsultAstroData(jsonData?.guru?.docs);
+          setTotalPage(jsonData?.guru?.pages);
         }
       } catch (error) {
         console.error("Fetch error:", error);

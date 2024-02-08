@@ -132,18 +132,14 @@ const WebStoryPage = ({ params }) => {
                     alt={"asaasa"}
                   ></amp-img>
                 </amp-story-grid-layer>
-                <amp-story-grid-layer template="vertical">
-                  <h1 className="text-[2.875em] text-white font-bold leading-normal">
-                    {"asdffg"}
-                  </h1>
-                </amp-story-grid-layer>
+                
               </amp-story-page>
             );
           })}
 
         {/* Image with link */}
-        <amp-story-page id="dogs" style={{ background: "white" }}>
-          <amp-story-grid-layer template="fill">
+        {/* <amp-story-page id="dogs" style={{ background: "white" }}>
+          <amp-story-grid-layer template="fill"> */}
             {/* <amp-img
               src={"https://images.unsplash.com/photo-1704957234554-686d9e700e21?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
               width="360px"
@@ -151,8 +147,8 @@ const WebStoryPage = ({ params }) => {
               layout="responsive"
               alt="aaaaaaaaaaaa"
             ></amp-img> */}
-          </amp-story-grid-layer>
-        </amp-story-page>
+          {/* </amp-story-grid-layer>
+        </amp-story-page> */}
         {/* <amp-story-page id="dogs">
           <amp-story-grid-layer template="fill">
             <amp-img

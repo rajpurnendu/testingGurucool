@@ -2,6 +2,7 @@ import { getSingleBlog } from "@/lib/data";
 import Image from "next/image";
 import ReactHtmlParser from "html-react-parser";
 import { Suspense } from "react";
+import BreadCrumb from "@/components/BreadCrumb/BreadCrumb";
 
 const Blogsinglepage = async ({ params }: { params: { title: string } }) => {
   const { title } = params;
@@ -21,8 +22,13 @@ const Blogsinglepage = async ({ params }: { params: { title: string } }) => {
     return istDate.toLocaleString();
   }
 
+  
+  
+
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
+      <BreadCrumb />
+
       <div className="container max-w-[72rem] ps-[1rem] pe-[1rem] mx-auto mt-2.5">
         <div className="hidden md:flex mb-4"></div>
 

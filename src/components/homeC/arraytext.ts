@@ -16,12 +16,16 @@ import callImg from "@/../public/assets/imges/img1.webp";
 export const card = [
     {
         id: 0,
-        title: "On call consultation",
-        subtitle:"Get the best aarti collection only here at gurucool",
-        desc: "Quick information at your fingertips! On-call consultation to know answers to life's questions with our astrology experts.",
-        img: callImg,
-        btn:"Consult Now",
-        url:'/call-to-astrologers'
+        title: 'Blogs & readers section',
+        desc: "Welcome to our blog section. Find articles, informative blogs, and amazing stories.",
+        subtitle: 'Chat consulation with astrologers anytime anywhere',
+        img: blog,
+        btn:'Webstories',
+        btn2:'Blogs',
+        url2:'/blogs',
+        url:'/web-stories'
+
+       
     },
     {
         id: 1,
@@ -61,12 +65,12 @@ export const card = [
     },
     {
         id: 7,
-        title: 'Blogs & readers section',
-        desc: "Welcome to our blog section. Find articles, informative blogs, and amazing stories.",
-        subtitle: 'Chat consulation with astrologers anytime anywhere',
-        img: blog,
-        btn:'Read More',
-        url:'/blogs'
+        title: "On call consultation",
+        subtitle:"Get the best aarti collection only here at gurucool",
+        desc: "Quick information at your fingertips! On-call consultation to know answers to life's questions with our astrology experts.",
+        img: callImg,
+        btn:"Consult Now",
+        url:'/call-to-astrologers'
     }
 ]
 

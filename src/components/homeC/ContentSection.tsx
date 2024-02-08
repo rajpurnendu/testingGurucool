@@ -12,7 +12,7 @@ const ContentSection = () => {
       ref={contentRef}
     >
       <h3
-        className="text-center w-[86px] mx-auto xl:w-full text-white
+        className="text-center w-[86px] mx-auto xl:w-full text-neutral-700
 text-base
 xl:text-xl
 
@@ -23,7 +23,7 @@ mb-[14px]
         What is astrology ?
       </h3>
       <p
-        className="text-white
+        className="text-neutral-500
         w-[300px]
         xl:w-full
         mx-auto
@@ -35,7 +35,7 @@ font-semibold xl:mb-[1.88rem] mb-[10px]"
       </p>
       <div className="w-[341px] xl:w-[72rem] mx-auto md:w-[100%]">
         <p
-          className="text-justify text-white
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-4 mb-1
 leading-snug"
@@ -45,7 +45,7 @@ leading-snug"
 `}
         </p>
         <p
-          className="text-justify text-white
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-4 mb-1
 leading-snug"
@@ -53,7 +53,7 @@ leading-snug"
           {`If you're wondering, "Where can I find the best astrologers near me?" GuruCool has a team of highly skilled astrologers who are dedicated to assisting you. Whether you prefer to talk to an astrologer face-to-face or have an online consultation, we have the perfect solution for you.`}
         </p>
         <p
-          className="text-justify text-white
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-4 mb-1
 leading-snug"
@@ -61,7 +61,7 @@ leading-snug"
           {`With our personalized consultations, our astrologers delve into your birth chart[kundali], meticulously examining the positions of celestial bodies such as the Sun, Moon, and planets. We offer tailored guidance that aligns with your unique circumstances by analyzing their influences on various aspects of your life, including personality traits, relationships, and career prospects.`}
         </p>
         <p
-          className="text-justify text-white
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-4 mb-1
 leading-snug"
@@ -69,7 +69,7 @@ leading-snug"
           {`Astrology is a powerful tool that can help you gain clarity, make informed decisions, and navigate the ups and downs of life. Our comprehensive astrology services at GuruCool go beyond birth chart analysis. We delve into elements, moon signs, numerology, and even tarot to provide you with a holistic understanding of your life's journey.`}
         </p>
         <p
-          className="text-justify text-white
+          className="text-justify text-neutral-700
 text-xs xl:text-base
 font-medium xl:mb-4 mb-1
 leading-snug"
@@ -77,7 +77,7 @@ leading-snug"
           {`Astrology holds the key to transforming your life in profound ways. At GuruCool, we understand the immense benefits that astrology can bring to your journey of self-discovery and personal growth.`}
         </p>
         <p
-          className="text-justify text-white
+          className="text-justify text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 leading-snug"
@@ -90,21 +90,21 @@ leading-snug"
                 setExpand(true);
               }}
             >
-              &nbsp;&nbsp;&nbsp;Readmore
+              &nbsp;Read More
             </button>
           )}
         </p>
         {expand && (
           <div className="md:hidden">
             <p
-              className="text-white mb-1
+              className="text-neutral-700 mb-1
 text-xs xl:text-lg
 font-semibold"
             >
               {` Here's how astrology can benefit you:`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 leading-snug"
@@ -112,7 +112,7 @@ leading-snug"
               {`1 - Self-understanding: Astrology provides deep insights into your personality, strengths, and weaknesses. By understanding yourself better, you can make informed decisions and align your actions with your true nature.`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -124,7 +124,7 @@ leading-snug"
 `}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -134,7 +134,7 @@ leading-snug"
               {`3 - Relationship Compatibility: Astrology helps you understand your compatibility with others. By analyzing astrological compatibility, GuruCool's astrologers can provide valuable insights into your relationships, helping you foster harmony and navigate conflicts.`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -145,7 +145,7 @@ leading-snug"
 `}
             </p>
             <p
-              className=" text-white mb-4
+              className=" text-neutral-700 mb-4
 text-xs xl:text-base
 text-justify
 
@@ -156,7 +156,7 @@ leading-snug"
 `}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base
 text-justify
 mb-4
@@ -167,7 +167,7 @@ leading-snug"
 `}
             </p>
             <p
-              className="text-white mb-1
+              className="text-neutral-700 mb-1
 text-xs xl:text-lg
 text-justify
 font-semibold"
@@ -175,7 +175,7 @@ font-semibold"
               {`Our Astrology Service:-`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -185,7 +185,7 @@ leading-snug"
               {`At Gurucool, we offer a wide range of astrology services to provide you with insightful guidance and help you navigate through life's challenges. Our expert astrologers, who are considered the best in India, are dedicated to delivering accurate and reliable online astrology predictions. With a deep understanding of planetary configurations and constellations, our astrologers analyze the influence of celestial bodies on various aspects of human life.`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -195,7 +195,7 @@ leading-snug"
               {`Astrology, an ancient science and spiritual discipline, delves into the intricate connection between planetary movements and human behavior. Our esteemed gurus at Gurucool have honed their skills to offer you profound insights into your life's journey. Through their mastery of studying planetary movements and the subtle energies surrounding individuals, they can unravel the secrets of your aura and reveal your hidden potential.`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -208,7 +208,7 @@ leading-snug"
 `}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -221,7 +221,7 @@ leading-snug"
 `}
             </p>
             <p
-              className="text-white mb-1
+              className="text-neutral-700 mb-1
 text-xs xl:text-lg
 text-justify
 
@@ -231,7 +231,7 @@ font-semibold"
             </p>
 
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 text-justify
 
@@ -239,7 +239,7 @@ font-medium
 leading-snug"
             >
               <span
-                className="text-white
+                className="text-neutral-700
 text-xs xl:text-base
 text-justify
 
@@ -251,7 +251,7 @@ font-semibold"
             </p>
 
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -262,7 +262,7 @@ leading-snug"
             </p>
 
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -272,7 +272,7 @@ leading-snug"
               {` At Gurucool, we prioritize accuracy in our astrology services. Our experienced astrologers combine their expertise with advanced tools and techniques to provide you with precise predictions and guidance. Whether you are seeking clarity on relationships, careers, finances, health, or any other aspect of life, our astrology services are tailored to address your specific needs.`}
             </p>
             <p
-              className=" text-white
+              className=" text-neutral-700
 text-xs xl:text-base
 font-medium
 text-justify
@@ -293,21 +293,21 @@ leading-snug"
                   }
                 }}
               >
-                &nbsp;&nbsp;Readless
+                &nbsp;Read Less
               </button>
             </p>
           </div>
         )}
         <div className="hidden md:block">
           <p
-            className="text-white mb-1
+            className="text-neutral-700 mb-1
 text-xs xl:text-lg
 font-semibold"
           >
             {` Here's how astrology can benefit you:`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 leading-snug"
@@ -315,7 +315,7 @@ leading-snug"
             {`1 - Self-understanding: Astrology provides deep insights into your personality, strengths, and weaknesses. By understanding yourself better, you can make informed decisions and align your actions with your true nature.`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -327,7 +327,7 @@ leading-snug"
 `}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -337,7 +337,7 @@ leading-snug"
             {`3 - Relationship Compatibility: Astrology helps you understand your compatibility with others. By analyzing astrological compatibility, GuruCool's astrologers can provide valuable insights into your relationships, helping you foster harmony and navigate conflicts.`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -348,7 +348,7 @@ leading-snug"
 `}
           </p>
           <p
-            className=" text-white mb-4
+            className=" text-neutral-700 mb-4
 text-xs xl:text-base
 text-justify
 
@@ -359,7 +359,7 @@ leading-snug"
 `}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base
 text-justify
 mb-4
@@ -370,7 +370,7 @@ leading-snug"
 `}
           </p>
           <p
-            className="text-white mb-1
+            className="text-neutral-700 mb-1
 text-xs xl:text-lg
 text-justify
 font-semibold"
@@ -378,7 +378,7 @@ font-semibold"
             {`Our Astrology Service:-`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -388,7 +388,7 @@ leading-snug"
             {`At Gurucool, we offer a wide range of astrology services to provide you with insightful guidance and help you navigate through life's challenges. Our expert astrologers, who are considered the best in India, are dedicated to delivering accurate and reliable online astrology predictions. With a deep understanding of planetary configurations and constellations, our astrologers analyze the influence of celestial bodies on various aspects of human life.`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -398,7 +398,7 @@ leading-snug"
             {`Astrology, an ancient science and spiritual discipline, delves into the intricate connection between planetary movements and human behavior. Our esteemed gurus at Gurucool have honed their skills to offer you profound insights into your life's journey. Through their mastery of studying planetary movements and the subtle energies surrounding individuals, they can unravel the secrets of your aura and reveal your hidden potential.`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -411,7 +411,7 @@ leading-snug"
 `}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -424,7 +424,7 @@ leading-snug"
 `}
           </p>
           <p
-            className="text-white mb-1
+            className="text-neutral-700 mb-1
 text-xs xl:text-lg
 text-justify
 
@@ -434,7 +434,7 @@ font-semibold"
           </p>
 
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 text-justify
 
@@ -442,7 +442,7 @@ font-medium
 leading-snug"
           >
             <span
-              className="text-white
+              className="text-neutral-700
 text-xs xl:text-base
 text-justify
 
@@ -454,7 +454,7 @@ font-semibold"
           </p>
 
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -465,7 +465,7 @@ leading-snug"
           </p>
 
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base mb-4
 font-medium
 text-justify
@@ -475,7 +475,7 @@ leading-snug"
             {` At Gurucool, we prioritize accuracy in our astrology services. Our experienced astrologers combine their expertise with advanced tools and techniques to provide you with precise predictions and guidance. Whether you are seeking clarity on relationships, careers, finances, health, or any other aspect of life, our astrology services are tailored to address your specific needs.`}
           </p>
           <p
-            className=" text-white
+            className=" text-neutral-700
 text-xs xl:text-base
 font-medium
 text-justify

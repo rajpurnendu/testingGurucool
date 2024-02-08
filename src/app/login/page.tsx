@@ -44,7 +44,7 @@ export default function Page({ searchParams }: Props) {
       {/* <div className="bg-[purple] w-[100vw] h-[100vh] flex justify-center items-center"> */}
       {/* <Carousel slides={slides} /> */}
       <div className="max-w-6xl w-full aspect-[10/4] my-8 mx-auto">
-        <Carousel1 slides={slides} />
+        <Carousel1 slides={slides} bottom={"bottom-[10px]"} dot={true} icon={false}/>
       </div>
       {/* <Loginmodal /> */}
       {/* <Link

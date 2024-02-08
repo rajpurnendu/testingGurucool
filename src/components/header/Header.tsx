@@ -15,7 +15,6 @@ import TopBar from "../TopBar/TopBar";
 import "./Header.css";
 import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 
-
 const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [menuState, setMenuState] = useState("menu");
   const pathname = usePathname();
@@ -25,14 +24,12 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
   const [walletbal, setWalletbal] = useState(0);
   const [drop, setDrop] = useState(false);
 
-
   // Check if the current path is exactly '/web-stories/...'
   // Regex pattern to match paths that start with '/web-stories/' and have additional segments
   const webStoriesSubpathRegex = /^\/web-stories\/.+$/;
 
   // Check if the current path matches the regex pattern
   const isWebStoriesSubpath = webStoriesSubpathRegex.test(pathname);
-
 
   // const avatarRef = useRef<HTMLElement | null>(null);
   const ToggelOpen = useCallback(() => {
@@ -116,7 +113,6 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
 
   // const [isSticky, setIsSticky] = useState(true);
 
-  
   if (isWebStoriesSubpath) {
     // Return null or any other fallback UI when the path is a subpath of '/web-stories/'
     return null;
@@ -138,7 +134,7 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
           <div className="max-h-full flex gap-2">
             {menuState === "menu" ? (
               <Bars3Icon
-                className="w-6 text-blue-50 cursor-pointer md:hidden"
+                className="w-8 text-blue-50 cursor-pointer md:hidden"
                 onClick={() => {
                   onToggleMenu();
                   if (loginToken) {
@@ -163,7 +159,31 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
                 }}
               />
             ) : (
-              <></>
+              <Bars3Icon
+                className="w-8 text-blue-50 cursor-pointer md:hidden"
+                onClick={() => {
+                  onToggleMenu();
+                  if (loginToken) {
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu",
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu",
+                    });
+                  } else {
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu_Nologin",
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: "Home_Menu_Nologin",
+                    });
+                  }
+                }}
+              />
             )}
             {/* <div className="md:w-200 md:h-200 sm:w-150 sm:h-150 w-100 h-100"> */}
             <Link href={"/"}>
@@ -186,13 +206,16 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
           >
             <ul className="flex py-4 md:py-0 md:flex-row flex-col md:items-center md:gap-[3vw] gap-8">
               <div className="flex gap-4">
-                <Image
-                  src={Gurucool_Logo}
-                  width={130}
-                  height={130}
-                  alt="Gurucool"
-                  className="md:hidden"
-                />
+                <Link href="/">
+                  <Image
+                    src={Gurucool_Logo}
+                    width={130}
+                    height={130}
+                    alt="Gurucool"
+                    className="md:hidden"
+                  />
+                </Link>
+
                 <XMarkIcon
                   className="w-8 text-blue-50 cursor-pointer md:hidden transition delay-300 duration-300 ease-in-out"
                   onClick={onToggleMenu}
@@ -366,17 +389,17 @@ const Header = ({ loginToken }: { loginToken: string | undefined }) => {
             {loginToken ? (
               userDetails?.avatar?.url ? (
                 <div
-                onClick={() => {
-                  toggelDrop();
-                  sendGTMEvent({
-                    event: "buttonClicked",
-                    value: "Home_ProfileClick",
-                  });
-                  sendGAEvent({
-                    event: "buttonClicked",
-                    value: "Home_ProfileClick",
-                  });
-                }}
+                  onClick={() => {
+                    toggelDrop();
+                    sendGTMEvent({
+                      event: "buttonClicked",
+                      value: "Home_ProfileClick",
+                    });
+                    sendGAEvent({
+                      event: "buttonClicked",
+                      value: "Home_ProfileClick",
+                    });
+                  }}
                   className="cursor-pointer overflow-hidden flex justify-center items-center w-[25px] h-[25px] rounded-[50%] text-[10px] bg-[#512da8] text-[#c4c4c4] text-center  mx-auto xl:w-[40px] xl:h-[40px] xl:text-[20px] border-[2px] transition-all duration-300 border-transparent ease-out hover:border-white"
                 >
                   <Image

@@ -7,6 +7,7 @@ import BlogCards from "@/components/blogs/BlogCards";
 import Pagination from "@/components/ui/pagination";
 import TrendingGod from "@/components/trendingCardCrousel/trendingGod";
 import Filtertagbutton from "@/components/blogs/Filtertagbutton";
+import BreadCrumb from "@/components/BreadCrumb/BreadCrumb";
 
 const Blogmain = async ({
   params,
@@ -18,6 +19,8 @@ const Blogmain = async ({
   //Get All Blogs from this Action
   const data = await getAllblogs(1, 250);
   const data1 = await getAllTrendingblogs();
+  // console.log(data);
+
   // Published Blogs will be show in the browser which filter out all
   const publishedBlog = Array.isArray(data)
     ? data.filter((item: any) => item.isPublished)
@@ -63,10 +66,9 @@ const Blogmain = async ({
 
   return (
     <>
-      <div
-        className="max-w-6xl gap-5 mb-5 overflow-hidden mx-auto px-4 flex flex-col md:flex-row  md:px-0 box-border mt-5"
-       
-      >
+      <BreadCrumb />
+
+      <div className="max-w-6xl gap-5 mb-5 overflow-hidden mx-auto px-4 flex flex-col md:flex-row  md:px-0 box-border mt-5">
         {/* <div> */}
         {/* Filter Section  */}
         <div className="  flex md:flex-col h-fit items-[self-end]  md:pb-20  md:overflow-visible overflow-scroll no-scrollbar  md:border-r-2">

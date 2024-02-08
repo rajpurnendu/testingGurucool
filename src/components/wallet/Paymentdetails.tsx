@@ -21,6 +21,7 @@ import useRazorpay, { RazorpayOptions } from "react-razorpay";
 import { phonePeCheckoutHandler, razorpayCheckoutHandler } from "@/lib/actions";
 import { decryptedData, encryptData } from "@/lib/EncryptionDecryption";
 import { TESTING_URL } from "@/lib/apilinks";
+import BreadCrumb from "../BreadCrumb/BreadCrumb";
 
 const Paymentdetailscomponent = ({
   searchParams,
@@ -158,7 +159,7 @@ const Paymentdetailscomponent = ({
       couponCode: string,
       couponType: string
     ) => {
-      const data = await phonePeCheckoutHandler(
+      const url = await phonePeCheckoutHandler(
         loginToken,
         amount == 1 && firstUser ? 100 : amount,
         gst,
@@ -166,17 +167,13 @@ const Paymentdetailscomponent = ({
         couponCode,
         couponType
       );
-
-      if (data) {
-        window.location.assign(data);
-      }
-      // console.log(data);
     },
     [firstUser]
   );
 
   return (
     <>
+      <BreadCrumb />
       {loading ? (
         <div className="h-[100vh] w-[100vw] flex justify-center items-center">
           <Image src={Loading} height={100} width={100} alt="Loading..." />
@@ -184,16 +181,16 @@ const Paymentdetailscomponent = ({
       ) : (
         <div
           className="max-w-6xl mx-auto px-4 md:px-0 box-border"
-          style={{ marginTop: "10px", marginBottom: "50px" }}
+          style={{marginBottom: "50px" }}
         >
           <div className="md:w-[70%] md:m-auto">
             {/* Coupon Section  */}
             {data?.[0]?.couponApplied ? (
               <div
-                className="w-full h-[59px] border m-auto p-2 rounded-lg bg-[#FEFEFE] flex justify-between items-center px-3 md:h-[107px]"
+                className="w-full h-[59px] mb-[20px] border m-auto p-2 rounded-lg bg-[#FEFEFE] flex justify-between items-center px-3 md:h-[107px] md:my-[48px]"
                 style={{
                   boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.12)",
-                  marginBottom: "20px",
+                  // marginBottom: "20px",
                 }}
               >
                 <div className="flex flex-col justify-center">
@@ -231,10 +228,7 @@ const Paymentdetailscomponent = ({
                 </div>
               </div>
             ) : (
-              <div
-                className="w-full h-[50px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center mb-4 md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl"
-                style={{ marginBottom: "20px" }}
-              >
+              <div className="w-full h-[50px] mb-[20px] border m-auto py-2 px-3 rounded-lg border-[#965efbb2] flex justify-between items-center md:h-[104px] md:px-[23.62px] md:py-[15.75px] md:border-[1.5px] md:shadow-[0px_0px_7.873px_0px_rgba(0,0,0,0.3)] md:border-white md:rounded-2xl md:my-[48px]">
                 <div className="flex items-center gap-[16px] md:gap-[39px]">
                   <Image
                     src={Iconapplycoupon}
@@ -260,10 +254,9 @@ const Paymentdetailscomponent = ({
             )}
             {/* Order Summary  */}
             <div
-              className="w-full h-auto p-[10px] flex flex-col items-start gap-4 rounded-lg bg-[#FEFEFE]"
+              className="w-full h-auto mb-[20px] p-[10px] flex flex-col items-start gap-4 rounded-lg bg-[#FEFEFE] md:my-[48px]"
               style={{
                 boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.12)",
-                marginBottom: "20px",
               }}
             >
               <h2 className="text-[16px] font-medium text-[#222] md:text-[26px] md:font-semibold">
@@ -331,8 +324,8 @@ const Paymentdetailscomponent = ({
             </div>
             {/* Payment Method  */}
             <div
-              className="py-4 px-6 w-full h-auto border border-[#D9D9D9] rounded-xl bg-white flex flex-col justify-center items-start gap-[17px]"
-              style={{ marginBottom: "10px" }}
+              className="py-4 px-6 w-full mb-[10px] h-auto border border-[#D9D9D9] rounded-xl bg-white flex flex-col justify-center items-start gap-[17px] md:my-[48px]"
+              // style={{ marginBottom: "10px" }}
             >
               <h4 className="text-[18px] font-semibold md:text-[26px]">
                 Pay Via
@@ -432,7 +425,7 @@ const Paymentdetailscomponent = ({
                   onChange={handleChangePaymentMethod}
                 />
               </div>
-              <div className=" w-full border-dashed border-[1px] border-black" />
+              {/* <div className=" w-full border-dashed border-[1px] border-black" />
               <div className="py-[6px] px-1 flex justify-between w-full items-center">
                 <label htmlFor="phonepe" className="flex items-center">
                   <Image
@@ -455,7 +448,7 @@ const Paymentdetailscomponent = ({
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 md:h-[30px] md:w-[30px]"
                   onChange={handleChangePaymentMethod}
                 />
-              </div>
+              </div> */}
             </div>
 
             {/* Pay Now Button  */}
@@ -479,7 +472,7 @@ const Paymentdetailscomponent = ({
                   Proceed To Pay
                 </button>
               )}
-              {data?.[2]?.phonePay && paymentMethod === "phonepe" && (
+              {/* {data?.[2]?.phonePay && paymentMethod === "phonepe" && (
                 <button
                   className="w-full p-[10px] rounded-lg bg-[#965efbb2] text-white text-[16px] font-semibold md:w-[320px] md:h-[54px]"
                   onClick={() => {
@@ -497,7 +490,7 @@ const Paymentdetailscomponent = ({
                 >
                   Proceed To Pay
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         </div>

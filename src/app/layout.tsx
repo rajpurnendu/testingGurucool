@@ -8,6 +8,7 @@ import Head from "next/head";
 import Supportchat from "@/components/Supporchat/Supportchat";
 import Script from "next/script";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import MobileViewModal from "@/components/NaviagateToMobileModal/MobileViewModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     icon: ["/favicon.ico?v=4"],
     apple: ["/apple-touch-icon.png?v=4"],
     shortcut: ["/apple-touch-icon.png"],
-  },
+  }, // Add a comma here
 };
 
 export default function RootLayout({
@@ -32,6 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* <meta property="og:image" content="<generated>" />
+        <meta
+          property="og:image:alt"
+          content="Gurucool - Unlock Astrology Secrets with GuruCool astrologers"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" /> */}
+        <link rel="canonical" href="https://www.gurucool.life" key="canonical" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -63,6 +72,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Header loginToken={loginToken?.value} />
+        {/* <MobileViewModal loginToken={loginToken?.value}/> */}
         <Supportchat loginToken={loginToken?.value} />
         {children}
         <Mainfooter />

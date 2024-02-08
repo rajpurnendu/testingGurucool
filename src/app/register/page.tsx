@@ -62,9 +62,9 @@ const Register = () => {
     }
 
     // TODO: Registration process
-    console.log(formData)
+    // console.log(formData)
     registerNewUser({ ...formData, file: null, email: "" }).then((result) => {
-        console.log(result);
+        // console.log(result);
         toast.success("Registered Successfully")
         if (result?.success) {
           toast.success(result.message);

@@ -35,13 +35,13 @@ const TopBar = ({ state, fn, loginToken }: { state: boolean; fn: Function, login
                   sendGTMEvent({ event: 'buttonClicked', value: 'AppDownload_Header_Click' })
                   sendGAEvent({
                     event: "buttonClicked",
-                    value: "Get_Consultation",
+                    value: "AppDownload_Header_Click",
                   });
                 } else {
                   sendGTMEvent({ event: 'buttonClicked', value: 'AppDownload_Header_Click' })
                   sendGAEvent({
                     event: "buttonClicked",
-                    value: "Get_Consultation",
+                    value: "AppDownload_Header_Click",
                   });
                 }
               }}

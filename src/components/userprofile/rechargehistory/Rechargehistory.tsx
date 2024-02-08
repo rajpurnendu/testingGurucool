@@ -7,6 +7,7 @@ import ReactPaginate from "react-paginate";
 import { getUserprofile } from "@/lib/data";
 import "./style.css";
 import { TESTING_URL } from "@/lib/apilinks";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 
 function convertIst(date: string): string {
   const utcDate: Date = new Date(date);
@@ -95,7 +96,16 @@ const Rechargehistory = ({ loginToken }: { loginToken: string }) => {
                     "bg-[#e8dcff] text-[#4a5568]": !upi,
                   }
                 )}
-                onClick={handleUpi}
+                onClick={()=> {handleUpi()
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: "Consult_History_Call",
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: "Consult_History_Call",
+                  });
+                }}
               >
                 UPI
               </button>
@@ -109,7 +119,16 @@ const Rechargehistory = ({ loginToken }: { loginToken: string }) => {
                     "bg-[#e8dcff] text-[#4a5568]": upi,
                   }
                 )}
-                onClick={handleCard}
+                onClick={()=> {handleCard()
+                  sendGTMEvent({
+                    event: "buttonClicked",
+                    value: "Consult_History_Call",
+                  });
+                  sendGAEvent({
+                    event: "buttonClicked",
+                    value: "Consult_History_Call",
+                  });
+                }}
               >
                 CARD
               </button>

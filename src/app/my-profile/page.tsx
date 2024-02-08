@@ -1,3 +1,4 @@
+import BreadCrumb from "@/components/BreadCrumb/BreadCrumb";
 import Consultationhistory from "@/components/userprofile/consultationhistory/Consultationhistory";
 import Followingastrologers from "@/components/userprofile/following/Followingastrologers";
 import Rechargehistory from "@/components/userprofile/rechargehistory/Rechargehistory";
@@ -15,6 +16,7 @@ const Userprofile = ({
   const edit = searchParams?.edit || false;
   return (
     <>
+      <BreadCrumb />
       <Userdetails loginToken={loginToken?.value} edit={edit} />
       <Followingastrologers loginToken={loginToken?.value as string} />
       <Rechargehistory loginToken={loginToken?.value as string} />

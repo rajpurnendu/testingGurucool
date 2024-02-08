@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <>
+      <Head>
+        <link rel="canonical" href="http://localhost:3000/call-to-astrologers" key="canonical" />
+      </Head>
       <div className="max-w-[72rem] mx-auto px-4 mt-1">{children}</div>
     </>
   );

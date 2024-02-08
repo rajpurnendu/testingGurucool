@@ -5,7 +5,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import TrendingBogCard from "../blogs/TrendingBogCard";
+import TrendingBlogCard from "../blogs/TrendingBlogCard";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -32,7 +32,7 @@ const TrendingGod = ({ data1 }: any) => {
           items: 1.1,
           nav: false,
           center: false,
-          margin: 8
+          margin: 8,
         },
         600: {
           items: 1,
@@ -49,7 +49,7 @@ const TrendingGod = ({ data1 }: any) => {
       {data1
         // .splice((currentPage - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
         .map((blog: any, index: number) => (
-          <TrendingBogCard id={index} key={index} blog={blog} />
+          <TrendingBlogCard id={index} key={index} blog={blog} />
         ))}
     </OwlCarousel>
   );

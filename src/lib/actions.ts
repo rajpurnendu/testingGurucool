@@ -84,7 +84,8 @@ export async function verifyOtp(requestData: {
     // Handle errors during the fetch or JSON parsing
     console.error("Error:", error);
     // You can throw the error again if you want to propagate it further
-    throw error;
+    // throw error;
+    return error
   }
 }
 
@@ -338,29 +339,17 @@ export const phonePeCheckoutHandler = async (
       }
     );
 
-    // console.log(await response.json());
-
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const data = await response.json();
     redirectUrl = data?.data?.redirectUrl;
-    // console.log(redirectUrl);
-    return redirectUrl;
+    console.log(redirectUrl);
   } catch (error) {
-    console.log("-------------------------------", error);
-    // return error;
     throw new Error(`There was a problem with the fetch operation:: ${error}`);
   } finally {
     console.log("Request completed");
   }
-  // console.log(redirectUrl);
-  // redirect(redirectUrl);
+  redirect(redirectUrl);
 };
-
-// https://mercury-t2.phonepe.com/transact/pg?token=ZjYyNzQ5OTUzMWVlZWUwOTVlMTFiNTc4ZWRjNzQxNDUyMmUzNmNlY2FkMWMwMzEwMGE3NGRlZDU3ZjU4YTRiNDQ4ZTA0ODQ1MWUwZTg2ZGY2ZTk1N2M4YWRkYzZhNzE0Ojk3YzAxYTU2OTZiYmQ3MDk5NTNmOGZkODg0OTI5ZWQw
-
-// https://mercury-t2.phonepe.com/transact/pg?token=Y2E0OTI4MDcxN2QyYmE5ZDY4YjMyMjFhYzc0NWNhNjkyYjNmNTFjYmJjZTQ0NzQzNjVlYjk4NjExMmNiZTJiY2FiMzY5YWUzNmJkZWI1NTkyOThhOTFjMzc4OGZlNjIyOTU6M2YzZDMyODM2NDBhMDQ0YzUwNWRmY2MyNWRkMDRmYTQ
-
-//https://mercury-t2.phonepe.com/transact/pg?token=YzJlZmFjYTE3NzViODg2YjhkNzAzZjMyZjM5YzRmNzliMDYwZjliZDlhNTUwYzM0YTJiNDVlZjY5ZTU2NGM3NDljNThmMzIwMmFiMmM3ZmQ0YjE0NGM3MTY4MDRlZmI2ZGU6MDZmOWUxOWM1ODc2NjI0ZjAzYjE2NDU0MmZkNmVjMjc

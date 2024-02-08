@@ -16,21 +16,6 @@ import PhoneInput, {
 } from "react-phone-number-input";
 import "./Loginmodal.css";
 import Carousel from "../Crousels/Crousel";
-// import dynamic from "next/dynamic";
-
-// declare global {
-//   interface Window {
-//     $: JQueryStatic;
-//     jQuery: JQueryStatic;
-//   }
-// }
-// var $ = require("jquery");
-// if (typeof window !== "undefined") {
-//   window.$ = window.jQuery = require("jquery");
-// }
-// const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
-//   ssr: false,
-// });
 
 export default function Loginmodal() {
   const [showModal, setShowModal] = React.useState(true);

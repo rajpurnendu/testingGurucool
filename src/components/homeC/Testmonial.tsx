@@ -1,19 +1,18 @@
-import ReusableCard2 from "./reusableCard2";
 import Image from "next/image";
-
 import { TestmonialData, card3 } from "./arraytext";
+import TestimonialCard from "./TestimonialCard";
 
 const Testmonial = () => {
   return (
     <div>
       <div className="xl:w-[72rem] w-auto m-auto mt-[36px] xl:mt-[3.75rem]">
         <div className="px-[20px]">
-          <h3 className="text-center text-white xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
+          <h3 className="text-center  xl:text-[2.125rem] text-base font-semibold xl:mb-[20px]">
             Testimonials
           </h3>
           <p
-            className="text-center text-sm xl:text-xl xl:mb-[1.87rem] mb-[1rem] font-normal
-        text-white
+            className="text-center text-neutral-500 text-sm xl:text-xl xl:mb-[1.87rem] mb-[1rem] font-normal
+        
         leading-[25px]
         "
           >
@@ -23,11 +22,11 @@ const Testmonial = () => {
         </div>
         <div className="card px-5 py-2 xl:py-0  mb-[32px] xl:mb-[3.75rem] no-scrollbar flex m-auto flex-row items-start xl:justify-center xl:gap-[2rem] gap-[0.5rem] xl:overflow-visible md:overflow-y-visible overflow-x-scroll">
           {TestmonialData.map((data, index) => (
-            <ReusableCard2 key={index} data={data} />
+            <TestimonialCard key={index} data={data} />
           ))}
         </div>
       </div>
-      <div className="bg-transparent xl:py-[12px] xl:px-[20px] py-[3px] px-[12px]">
+      <div className="md:bg-[#F7F5FF] bg-none xl:py-[12px] xl:px-[20px] py-[3px] px-[12px]">
         <div className="flex mx-auto items-center justify-center xl:gap-[59px] gap-[10.8px] ">
           {card3?.map((data, index) => (
             <Cards
@@ -58,7 +57,7 @@ const Cards = ({
   desc: string;
 }) => {
   return (
-    <div className="flex min-w-[108px] md:w-[343px] flex-col gap-[18px] animate-pulse relative shadow bg-white  xl:rounded-[18px]  rounded-[4.83px] xl:w-[343px] border border-violet-500 border-opacity-70 items-start p-[4.3px]  xl:p-[16px]">
+    <div className="flex min-w-[108px] md:w-[343px] flex-col gap-[18px]  relative shadow bg-white  xl:rounded-[18px]  rounded-[4.83px] xl:w-[343px] border border-violet-500 border-opacity-70 items-start p-[4.3px]  xl:p-[16px]">
       <div>
         <h3 className="font-semibold  text-violet-500 text-[10px] md:text-[20px] xl:text-[26px]">
           {text1}

@@ -18,7 +18,7 @@ const Userdetails = async ({
   const userDetails = loginToken && (await getUserprofile(loginToken));
   return (
     <div
-      className="max-w-6xl my-0 pr-4 pl-4 pt-8 box-border border border-solid border-[#965efb] rounded-[10px] mb-[15px] mt-[15px] ml-4 mr-4 md:mx-auto"
+      className="max-w-6xl my-0 pr-4 pl-4 pt-8 box-border border border-solid border-[#965efb] rounded-[10px] mb-[15px]  ml-4 mr-4 md:mx-auto"
       
     >
       {/* User Image  */}
